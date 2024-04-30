@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#AddCat" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newBranchModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
 
         </div>
 
@@ -51,7 +51,7 @@
                         <td>Jedi diah Araceli</td>
                        
                         <td>
-                          <button type="button" id="edit_cat_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_branch_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
@@ -76,71 +76,119 @@
 
 <!--------------All Modal-------------------->
   
-  <div class="modal fade" id="AddCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">ADD New Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="addcat" >
-                        <div class="card-body">
+   <div class="modal fade" id="newBranchModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">New Branch</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" id="addcat" >
+                <div class="card-body">
 
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                             <input type="text" class="form-control" id="cat_name" name="cat_name"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Branch Name</label>
+                      <input type="text" placeholder="Branch Name" class="form-control">
+                    </div>      
                   </div>
-                </div>
-              </div><!-- End Add Modal-->
-
-                <div class="modal fade" id="editCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="upcat" >
-                        <div class="card-body">
-
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                            <input type="hidden" name="hidden_cat_id" id="hidden_cat_id">
-                             <input type="text" class="form-control" name="upCatName" id="upCatName"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Location</label>
+                      <select name="selectLocation" id="" class="form-select">
+                        <option value="">Sipalay City</option>
+                      </select>
+                    </div>      
                   </div>
-                </div>
-              </div><!-- End Edit Modal-->
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Select Branch Manager ( Optional )</label>
+                      <select name="selectBM" id="" class="form-select">
+                      <option value="">Select</option>
+                      <option value="">James Canlas</option>
+                      </select>
+                    </div>      
+                  </div>
+
+
+                </div>                       
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
+            </div>
+        </form>
+          </div>
+        </div>
+      </div><!-- End Add Modal-->
+
+      <div class="modal fade" id="editBranchModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Branch</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" id="addcat" >
+                <div class="card-body">
+
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Branch Name</label>
+                      <input type="text" placeholder="Branch Name" class="form-control">
+                    </div>      
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Location</label>
+                      <select name="selectLocation" id="" class="form-select">
+                        <option value="">Sipalay City</option>
+                      </select>
+                    </div>      
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="">Select Branch Manager ( Optional )</label>
+                      <select name="selectBM" id="" class="form-select">
+                      <option value="">Select</option>
+                      <option value="">James Canlas</option>
+                      </select>
+                    </div>      
+                  </div>
+
+
+                </div>                       
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
+            </div>
+        </form>
+          </div>
+        </div>
+      </div><!-- End Add Modal-->
+
 
 <!---------------end of all Modal---------------------->
 
-
-
-
   </main> <!------------- end of Main ----->
   
+  <script>
+$(document).ready(function(){
+
+    $(document).on('click','#edit_branch_btn',function(e){
+        e.preventDefault();
+
+        $("#editBranchModal").modal('show');
+
+
+    });
+
+})
+
+
+  </script>

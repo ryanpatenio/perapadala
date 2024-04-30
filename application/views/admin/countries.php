@@ -1,12 +1,12 @@
 
 <main id="main" class="main">
     <div class="pageTitle">
-      <h1>Jobs</h1>
+      <h1>Countries</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?=base_url();?>admin">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Jobs</li>
+          <li class="breadcrumb-item active">Countries</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newJobModalt" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newCountryModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
 
         </div>
 
@@ -33,7 +33,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Job Title</th>                  
+                    <th>Country Name</th>                  
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -44,10 +44,10 @@
 
                       <tr>
                         <td>1</td>
-                        <td>Branch Manager</td>
+                        <td>Philippines</td>
                        
                         <td>
-                          <button type="button" id="edit_job_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_country_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
@@ -72,31 +72,23 @@
 
 <!--------------All Modal-------------------->
   
-  <div class="modal fade" id="newJobModal" tabindex="-1">
+  <div class="modal fade" id="newCountryModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Job Title</h5>
+                      <h5 class="modal-title">New Country</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <form method="POST" id="addcat" >
                         <div class="card-body">
 
-                          <div class="row mb-2">
+                          <div class="row">
                             <div class="col">
-                              <label for="validationDefault01" class="form-label">Job Title</label>
-                              <input type="text" class="form-control" id="jobname" name="jobname"  required>       
-                            </div>
+                                <label for="validationDefault01" class="form-label">Country Name</label>
+                                <input type="text" class="form-control" id="cat_name" name="cat_name"  required> 
+                            </div>                                 
                           </div>
-                          <div class="row mb-2">
-                            <div class="col">
-                              <label for="validationDefault01" class="form-label">Job Code</label>
-                              <input type="text" name="jobCode" id="job-code" class="form-control" required>    
-                            </div>
-                          </div>
-
-
                         </div>                       
                      
                     </div>
@@ -109,29 +101,23 @@
                 </div>
               </div><!-- End Add Modal-->
 
-            <div class="modal fade" id="editJobModal" tabindex="-1">
+                <div class="modal fade" id="editCountryModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Update Category</h5>
+                      <h5 class="modal-title">Update Country</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       <form method="POST" id="upcat" >
-                      <div class="card-body">
-                          <div class="row mb-2">
-                            <div class="col">
-                              <label for="validationDefault01" class="form-label">Job Title</label>
-                              <input type="text" class="form-control" id="jobname" name="jobname"  required>       
-                            </div>
-                          </div>
-                          <div class="row mb-2">
-                            <div class="col">
-                              <label for="validationDefault01" class="form-label">Job Code</label>
-                              <input type="text" name="jobCode" id="job-code" class="form-control" required>    
-                            </div>
-                          </div>
-                      </div>                      
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="validationDefault01" class="form-label">Country Name</label>
+                                    <input type="text" class="form-control" id="edit_country" name="edit_country"  required> 
+                                </div>                                 
+                           </div>
+                        </div>                       
                      
                     </div>
                     <div class="modal-footer">
@@ -141,21 +127,21 @@
                 </form>
                   </div>
                 </div>
-            </div><!-- End Edit Modal-->
+              </div><!-- End Edit Modal-->
 
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
-
   
-
+  
+   
   <script>
 $(document).ready(function(){
 
-    $(document).on('click','#edit_job_btn',function(e){
+    $(document).on('click','#edit_country_btn',function(e){
         e.preventDefault();
 
-        $("#editJobModal").modal('show');
+        $("#editCountryModal").modal('show');
 
 
     });

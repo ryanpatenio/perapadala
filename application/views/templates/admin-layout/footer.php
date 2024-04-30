@@ -3,7 +3,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-       <strong><span>Jedi Diah's Bakeshop Management System</span></strong>. All Rights Reserved <?php $year = (new DateTime)->format("Y"); echo $year; ?>
+       <strong><span>LBB Pera Padala!</span></strong>. All Rights Reserved <?php $year = (new DateTime)->format("Y"); echo $year; ?>
     </div>
     <div class="credits">
       <!-- All the links in the footer should remain intact. -->

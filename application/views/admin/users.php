@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#AddCat" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newUserModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
 
         </div>
 
@@ -40,23 +40,16 @@
                 </thead>
                 
                 <tbody>
-
-
-
                       <tr>
                         <td>1</td>
                         <td>Henry Loaf</td>
                         <td>Sub-admin</td>
                        
                         <td>
-                          <button type="button" id="edit_cat_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_user_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
-
-                
-             
-                     
 
                 </tbody>
               </table>
@@ -66,79 +59,126 @@
         </div>
       </div>
    
-
-
     </section>
-
-
 
 <!--------------All Modal-------------------->
   
-  <div class="modal fade" id="AddCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">ADD New Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="addcat" >
-                        <div class="card-body">
-
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                             <input type="text" class="form-control" id="cat_name" name="cat_name"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
-                  </div>
+  <div class="modal fade" id="newUserModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+                <div class="modal-body">
+                  <form method="POST" id="userForm" >
+                      <div class="card-body">
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Name</label>
+                              <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Name"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="email" name="email" placeholder="E-mail"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Password</label>
+                              <input type="password" class="form-control" id="password" name="password" placeholder="password"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Role</label>
+                              <select name="role" id="role" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="1">Super Admin</option>
+                                <option value="1">Sub Admin</option>
+                                
+                              </select>  
+                            </div> 
+                        </div>
+                      </div>                                  
                 </div>
-              </div><!-- End Add Modal-->
-
-                <div class="modal fade" id="editCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="upcat" >
-                        <div class="card-body">
-
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                            <input type="hidden" name="hidden_cat_id" id="hidden_cat_id">
-                             <input type="text" class="form-control" name="upCatName" id="upCatName"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
-                  </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
                 </div>
-              </div><!-- End Edit Modal-->
+            </form>
+        </div>
+      </div>
+  </div><!-- End Add Modal-->
+
+  <div class="modal fade" id="upUserModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+                <div class="modal-body">
+                  <form method="POST" id="upUserForm" >
+                  <div class="card-body">
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Name</label>
+                              <input type="text" class="form-control" id="fullname" name="upfullname" placeholder="Name"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="up-email" name="upemail" placeholder="E-mail"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Password</label>
+                              <input type="password" class="form-control" id="up-password" name="uppassword" placeholder="password"  required>      
+                            </div> 
+                        </div>
+                        <div class="row mb-2">                  
+                            <div class="col">
+                              <label for="validationDefault01" class="form-label">Role</label>
+                              <select name="uprole" id="up-role" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="1">Super Admin</option>
+                                <option value="1">Sub Admin</option>
+                                
+                              </select>  
+                            </div> 
+                        </div>
+                      </div>                                 
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary" name="updateUser" id="update-user" value="Save">
+                </div>
+            </form>
+        </div>
+      </div>
+  </div><!-- End edit Modal-->
 
 <!---------------end of all Modal---------------------->
 
-
-
-
   </main> <!------------- end of Main ----->
   
+  <script>
+
+  $(document).ready(function(){
+
+      $(document).on('click','#edit_user_btn',function(e){
+          e.preventDefault();
+
+          $("#upUserModal").modal('show');
+
+
+      });
+
+  })
+
+</script> 

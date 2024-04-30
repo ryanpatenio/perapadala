@@ -158,5 +158,54 @@ class AdminController extends CI_Controller{
      $this->load->view('admin/'.$page,$data);
      $this->load->view('templates/admin-layout/footer');
     }
+    public function countries_index(){
+        $page = "countries";
+
+        
+        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
+         show_404();
+
+        }
+        $data['sample'] = 'data';
+
+
+     $this->load->view('templates/admin-layout/header');
+     $this->load->view('templates/admin-layout/sidebar');
+     $this->load->view('admin/'.$page,$data);
+     $this->load->view('templates/admin-layout/footer');
+    }
+    public function regions_index(){
+        $page = "regions";
+
+        
+        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
+         show_404();
+
+        }
+        $data['sample'] = 'data';
+
+
+     $this->load->view('templates/admin-layout/header');
+     $this->load->view('templates/admin-layout/sidebar');
+     $this->load->view('admin/'.$page,$data);
+     $this->load->view('templates/admin-layout/footer');
+    }
+    public function locations_index(){
+        $page = "locations";
+
+        
+        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
+         show_404();
+
+        }
+        $data['sample'] = 'data';
+
+
+     $this->load->view('templates/admin-layout/header');
+     $this->load->view('templates/admin-layout/sidebar');
+     $this->load->view('admin/'.$page,$data);
+     $this->load->view('templates/admin-layout/footer');
+    }
+
 
 }

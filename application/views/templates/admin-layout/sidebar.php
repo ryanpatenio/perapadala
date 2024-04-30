@@ -45,15 +45,33 @@
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed transact" data-value="trans" href="admin-job-title">
+        <a class="nav-link collapsed" data-value="trans" href="admin-job-title">
           <i class="bi bi-briefcase"></i>
           <span>Jobs</span>
+        </a>
+      </li><!-- End Jobs Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed " data-value="trans" href="admin-countries">
+          <i class="bi bi-geo-alt"></i>
+          <span>Countries</span>
+        </a>
+      </li><!-- End Jobs Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed " data-value="trans" href="admin-regions">
+          <i class="bi bi-geo-alt"></i>
+          <span>Regions</span>
+        </a>
+      </li><!-- End Jobs Page Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-value="trans" href="admin-locations">
+          <i class="bi bi-geo-alt"></i>
+          <span>Locations</span>
         </a>
       </li><!-- End Jobs Page Nav -->
 
 
         <li class="nav-item">
-        <a class="nav-link collapsed us"data-value="user" href="admin-users">
+        <a class="nav-link collapsed"data-value="user" href="admin-users">
           <i class="bi bi-people"></i>
           <span>Users</span>
         </a>
