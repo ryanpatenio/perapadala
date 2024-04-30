@@ -21,8 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#AddCat" type="button"><i class="bi bi-plus-circle"> New</i></button>
-
+          
         </div>
 
 
@@ -52,7 +51,7 @@
                        
                         <td>
                           
-                          <button type="button" class="btn btn-primary bi bi-search"> Details</button>
+                          <button type="button" id="view_btn" class="btn btn-primary bi bi-search"> Details</button>
                         </td>
                       </tr>
 
@@ -75,72 +74,85 @@
 
 
 <!--------------All Modal-------------------->
-  
-  <div class="modal fade" id="AddCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">ADD New Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="addcat" >
-                        <div class="card-body">
+ 
+<div class="modal fade" id="viewEmployeeModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Employee Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+           
+              <div class="card-body">
 
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                             <input type="text" class="form-control" id="cat_name" name="cat_name"  required>       
-                          </div>
+                <div class="row mb-2 mt-2">                           
+                  <div class="col">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="lname"  class="form-control" placeholder="first name"readonly>
+                  </div>  
+                  <div class="col">
+                    <label for="fname">Last Name</label>
+                    <input type="text" id="lname"  class="form-control" placeholder="last name" readonly>
+                  </div>   
+                </div>
+                
+                <div class="row mb-2">                           
+                  <div class="col">
+                    <label for="email">Email</label>
+                    <input type="email" id="email"  class="form-control" readonly>
+                  </div>  
+                  
+                </div>
+                <div class="row mb-2">                           
+                  <div class="col">
+                    <label for="contact">Contact</label>
+                    <input type="text" id="contact" class="form-control" readonly>
+                  </div>  
+                  <div class="col">
+                    <label for="address">Address</label>
+                    <input type="text" id="address"  class="form-control" readonly>
+                  </div>   
+                </div>
 
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
+                <div class="row mb-2">
+                  <div class="col">
+                    <label for="Job Title">Job Title</label>
+                    <input type="text" id="job-title" class="form-control" value="" readonly>
+                  </div>
+                  <div class="col">
+                    <label for="branch">Assigned Branch</label>
+                   <input type="text" class="form-control" id="assigned-branch" value="" readonly>
                   </div>
                 </div>
-              </div><!-- End Add Modal-->
-
-                <div class="modal fade" id="editCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="upcat" >
-                        <div class="card-body">
-
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                            <input type="hidden" name="hidden_cat_id" id="hidden_cat_id">
-                             <input type="text" class="form-control" name="upCatName" id="upCatName"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
-                  </div>
-                </div>
-              </div><!-- End Edit Modal-->
-
+              </div>                                            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            
+          </div>
+      
+        </div>
+      </div>
+</div><!-- End Add Modal-->
 <!---------------end of all Modal---------------------->
-
-
-
-
   </main> <!------------- end of Main ----->
   
+ 
+
+  
+  <script>
+$(document).ready(function(){
+
+    $(document).on('click','#view_btn',function(e){
+        e.preventDefault();
+
+        $("#viewEmployeeModal").modal('show');
+
+
+    });
+
+})
+
+
+  </script>

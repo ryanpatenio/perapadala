@@ -84,7 +84,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method="POST" id="upcat" >
+            
               <div class="card-body">
 
                 <div class="row mb-2">                
@@ -161,9 +161,9 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
+           
           </div>
-      </form>
+   
         </div>
       </div>
     </div><!-- End Edit Modal-->

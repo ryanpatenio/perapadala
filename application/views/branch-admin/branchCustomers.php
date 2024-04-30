@@ -21,8 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#AddCat" type="button"><i class="bi bi-plus-circle"> New</i></button>
-
+         
         </div>
 
 
@@ -33,8 +32,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Customer Name</th> 
-                    <th>Transaction Type</th>
+                    <th>Customer Name</th>                  
                     <th>Date</th>               
                     <th>Action</th>
                   </tr>
@@ -46,12 +44,11 @@
 
                       <tr>
                         <td>1</td>
-                        <td>James Bulkman</td>
-                        <td><button class="btn btn-success btn-sm">Sender</button></td>
+                        <td>James Bulkman</td>                       
                         <td>April 29 2024</td>
                        
                         <td>
-                          <button type="button" id="edit_cat_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_customer_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
@@ -76,71 +73,64 @@
 
 <!--------------All Modal-------------------->
   
-  <div class="modal fade" id="AddCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">ADD New Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="addcat" >
-                        <div class="card-body">
 
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                             <input type="text" class="form-control" id="cat_name" name="cat_name"  required>       
-                          </div>
+<div class="modal fade" id="editCustomerModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Customer</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" id="upcat" >
+                <div class="card-body">
 
-
-                        </div>                       
-                     
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="validationDefault01" class="form-label">Customer Name</label>                  
+                      <input type="text" class="form-control" name="upCustomerName" id="upCustomerName"  required>  
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
                   </div>
-                </div>
-              </div><!-- End Add Modal-->
-
-                <div class="modal fade" id="editCat" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update Category</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="validationDefault01" class="form-label">Contact</label>                  
+                      <input type="text" class="form-control" name="upContact" id="upContact"  required>  
                     </div>
-                    <div class="modal-body">
-                      <form method="POST" id="upcat" >
-                        <div class="card-body">
-
-                          <div class="row">
-                            
-                            <label for="validationDefault01" class="form-label">Category Name</label>
-                            <input type="hidden" name="hidden_cat_id" id="hidden_cat_id">
-                             <input type="text" class="form-control" name="upCatName" id="upCatName"  required>       
-                          </div>
-
-
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
                   </div>
-                </div>
-              </div><!-- End Edit Modal-->
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="validationDefault01" class="form-label">Adress</label>                  
+                      <input type="text" class="form-control" name="upAddress" id="upAddress"  required>  
+                    </div>
+                  </div>
+                </div>                       
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
+            </div>
+        </form>
+          </div>
+        </div>
+</div><!-- End Edit Modal-->
 
-<!---------------end of all Modal---------------------->
-
-
-
+  <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
-  
+   
+  <script>
+      $(document).ready(function(){
+
+          $(document).on('click','#edit_customer_btn',function(e){
+              e.preventDefault();
+
+              $("#editCustomerModal").modal('show');
+
+
+          });
+
+      })
+
+
+  </script>
