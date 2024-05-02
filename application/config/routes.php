@@ -28,7 +28,15 @@ $route['branch-customers'] = 'branchAdminController/branchCustomers_index';
 $route['branch-transactions'] = 'branchAdminController/branchTransactions_index';
 $route['branch-My-profile'] = 'branchAdminController/branchMyProfile_index';
 
+##Jobs Route
+$route['admin-addJob'] = 'jobController/addJob';
+$route['admin-getJob'] = 'jobController/getJob';
+$route['admin-updateJob'] = 'jobController/updateJob';
 
+##countries Route
+$route['admin-addCountry'] = 'countriesController/addCountry';
+$route['admin-editCountry'] = 'countriesController/editCountry';
+$route['admin-updateCountry'] = 'countriesController/updateCountry';
 #end of Branch admin Routes
 
 

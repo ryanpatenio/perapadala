@@ -39,23 +39,24 @@
                 </thead>
                 
                 <tbody>
-
-
-
+                <?php
+                    
+                    $i = 1;
+                    foreach ($countries as $country) { ?>
                       <tr>
-                        <td>1</td>
-                        <td>Philippines</td>
+                        <td><?= $i;?></td>
+                        <td><?= $country->name ?></td>
                        
                         <td>
-                          <button type="button" id="edit_country_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_country_btn" data-id="<?= $country->country_id?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
 
-                
-             
-                     
 
+                <?php $i++;   }
+              
+                  ?>
                 </tbody>
               </table>
             </div>
@@ -80,13 +81,13 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <form method="POST" id="addcat" >
+                      <form method="POST" id="countryForm" >
                         <div class="card-body">
 
                           <div class="row">
                             <div class="col">
                                 <label for="validationDefault01" class="form-label">Country Name</label>
-                                <input type="text" class="form-control" id="cat_name" name="cat_name"  required> 
+                                <input type="text" class="form-control" id="country-name" name="country_name"  required> 
                             </div>                                 
                           </div>
                         </div>                       
@@ -101,33 +102,34 @@
                 </div>
               </div><!-- End Add Modal-->
 
-                <div class="modal fade" id="editCountryModal" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update Country</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form method="POST" id="upcat" >
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="validationDefault01" class="form-label">Country Name</label>
-                                    <input type="text" class="form-control" id="edit_country" name="edit_country"  required> 
-                                </div>                                 
-                           </div>
-                        </div>                       
-                     
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
-                    </div>
-                </form>
-                  </div>
+        <div class="modal fade" id="editCountryModal" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Update Country</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              </div><!-- End Edit Modal-->
+                <div class="modal-body">
+                  <form method="POST" id="upCountryForm" >
+                    <input type="hidden" id="up-country-id" name="upCountryId">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <label for="validationDefault01" class="form-label">Country Name</label>
+                                <input type="text" class="form-control" id="up-country-name" name="upCountryName"  required> 
+                            </div>                                 
+                        </div>
+                    </div>                       
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary" name="save" id="save" value="Save">
+                </div>
+            </form>
+              </div>
+            </div>
+        </div><!-- End Edit Modal-->
 
 <!---------------end of all Modal---------------------->
 
@@ -138,13 +140,102 @@
   <script>
 $(document).ready(function(){
 
+  const addModal = $('#newCountryModal');
+  const editModal = $('#editCountryModal');
+
+  $('#countryForm').submit(function(e){
+    e.preventDefault();
+
+    const formData = $(this).serialize();
+
+      $.ajax({
+        url:'<?= base_url();?>admin-addCountry',
+        method:'post',
+        data:formData,
+        dataType:'json',
+
+        success:function(response){
+          //console.log(response);
+          formModalClose(addModal,$('#countryForm'));
+          if(response.message == 'success'){
+            message('New Country added Successfully!','success');
+          }
+        },
+
+        error:function(xhr,status,error){
+          console.log(xhr.responseText);
+          if(xhr.status == 400){
+            msg('Opps! unexpected Error!','error');
+          }
+        }
+
+      });
+
+  })
+
+
     $(document).on('click','#edit_country_btn',function(e){
         e.preventDefault();
 
-        $("#editCountryModal").modal('show');
+        //clear the form firt
+        resetForm($('#upCountryForm'));
+
+        const id = $(this).attr('data-id');
+        $.ajax({
+            url:'<?=base_url();?>admin-editCountry',
+            method:'post',
+            data:{id:id},
+            dataType:'json',
+
+            success:function(data){
+              //console.log(data)
+              $('#up-country-id').val(data.country_id);
+              $('#up-country-name').val(data.name);
+              $("#editCountryModal").modal('show');
+
+
+            },
+            error:function(xhr,status,error){
+              console.log(xhr.responseText);
+              if(xhr.status == 400){
+                msg('Oops! Unexpected Error!','error');
+              }
+            }
+
+        }); 
 
 
     });
+
+    $('#upCountryForm').submit(function(e){
+      e.preventDefault();
+
+      const formData = $(this).serialize();
+      
+        $.ajax({
+          url:'<?=base_url();?>admin-updateCountry',
+          method:'post',
+          data:formData,
+          dataType:'json',
+
+          success:function(response){
+           //console.log(response)
+            formModalClose(editModal,$('#upCountryForm'));
+            if(response.message == 'success'){
+              message('Country Updated Successfully!','success');
+            }
+          },
+
+          error:function(xhr,status,error){
+            console.log(xhr.responseText)
+            if(xhr.status == 400){
+              msg('Oops! Unexpected error!','error');
+            }
+          }
+          
+        });
+
+    })
 
 })
 

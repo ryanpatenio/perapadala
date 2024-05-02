@@ -4,6 +4,16 @@
 
 class AdminController extends CI_Controller{
 
+        public function __construct()
+        {
+            parent::__construct();
+            $this->load->library('form_validation');
+            $this->load->model('jobModel');
+            $this->load->model('CountriesModel');
+            $this->load->library('response');
+        }
+
+
     public function render(){
         $page = "index";
 
@@ -100,8 +110,8 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
-
+        $data['jobs'] = $this->jobModel->fetchJob();
+      
 
      $this->load->view('templates/admin-layout/header');
      $this->load->view('templates/admin-layout/sidebar');
@@ -166,7 +176,7 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['countries'] = $this->CountriesModel->getCountries();
 
 
      $this->load->view('templates/admin-layout/header');

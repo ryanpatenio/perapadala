@@ -77,6 +77,12 @@ function msg($text='',$msg_type=''){
     thisForm.get(0).reset();
   }
 
+  const formModalClose = (modalName,thisForm) => {
+    $(modalName).modal('hide');
+    thisForm.get(0).reset();
+
+  }
+
  
     // var chart = new ApexCharts(document.querySelector(apexChart), options);
     // chart.render();
