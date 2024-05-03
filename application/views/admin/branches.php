@@ -41,24 +41,45 @@
                 </thead>
                 
                 <tbody>
+  
+                <?php 
+                  
+                  $i = 1;
+                  foreach ($branches as $branch) { ?>                   
+                    
+                    <tr>
+                        <td><?= $i;?></td>
+                        <td><?=$branch->branch_name; ?></td>
+                        <td><?= $branch->location; ?></td>
+                        <td>
+                        <?php
+                        //check if Bm is Null
+                        $bm = $branch->BM;
+                        $status = '';
+                        $color = '';
+                        if($bm === '' || $bm === null || $bm === 'null'){
+                          $status = 'No Assigned Branch Manager';
+                          $color = 'text-danger';
+                        }else{
+                          $status =  $branch->BM;
+                          $color = '';
+                        }
 
-
-
-                      <tr>
-                        <td>1</td>
-                        <td>Bacolod Branch</td>
-                        <td>Bacolod City | Lacson St.</td>
-                        <td>Jedi diah Araceli</td>
+                        ?>
+                        
+                        <?=$status ?>
+                      
+                      </td>
                        
                         <td>
-                          <button type="button" id="edit_branch_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_branch_btn" data-id="<?=$branch->branch_id ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
                       </tr>
 
-                
-             
-                     
+                 <?php $i++; }
+
+                ?>
 
                 </tbody>
               </table>
@@ -84,29 +105,43 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form method="POST" id="addcat" >
+              <form method="POST" id="newBranchForm" >
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Branch Name</label>
-                      <input type="text" placeholder="Branch Name" class="form-control">
+                      <input type="text" name="branchName" placeholder="Branch Name" class="form-control" required>
                     </div>      
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Location</label>
-                      <select name="selectLocation" id="" class="form-select">
-                        <option value="">Sipalay City</option>
+                      <select name="location" id="" class="form-select"required>
+                        <?php
+                        
+                        foreach ($locations as $location) { ?>
+                            <option value="<?= $location->location_id?>">(Phil) <strong id="region"><?= $location->region_name?></strong>| <strong id="prov"><?= $location->province_name?></strong> | <strong id="city"> <?= $location->city?></strong> | <strong id="street"><?= $location->street_name;?></strong></option>
+                       <?php }
+                        
+                        ?>
+
                       </select>
                     </div>      
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Select Branch Manager ( Optional )</label>
-                      <select name="selectBM" id="" class="form-select">
-                      <option value="">Select</option>
-                      <option value="">James Canlas</option>
+                      <select name="BM" id="" class="form-select">
+                          <option option value="">Select</option>
+                          <?php
+                          foreach ($BMemployees as $employee) { ?>
+                              <option value="<?=$employee->employee_id ?>"><?=$employee->employee_name?> (BM)</option>
+
+                        <?php  }
+                          
+                          
+                          ?>
                       </select>
                     </div>      
                   </div>
@@ -132,29 +167,51 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form method="POST" id="addcat" >
+              <form method="POST" id="upBranchForm" >
+
+                <input type="hidden" name="branch_id" id="current-branch-id">
+                <input type="hidden" name="currentBMhidden" id="current-bm-hidden">
+                <input type="hidden" id="current-location-hidden" name="currentLocationHidden">            
+
+
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Branch Name</label>
-                      <input type="text" placeholder="Branch Name" class="form-control">
+                      <input type="text" placeholder="Branch Name" name="branch" id="branch-name" class="form-control">
                     </div>      
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Location</label>
-                      <select name="selectLocation" id="" class="form-select">
-                        <option value="">Sipalay City</option>
+                      <select name="location" id="" class="form-select"required>
+                        <option value="" id="current-location"></option>
+                        <?php
+                        
+                        foreach ($locations as $location) { ?>
+                            <option value="<?= $location->location_id?>">(Phil) <strong id="region"><?= $location->region_name?></strong>| <strong id="prov"><?= $location->province_name?></strong> | <strong id="city"> <?= $location->city?></strong> | <strong id="street"><?= $location->street_name;?></strong></option>
+                       <?php }
+                        
+                        ?>
+
                       </select>
                     </div>      
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="">Select Branch Manager ( Optional )</label>
-                      <select name="selectBM" id="" class="form-select">
-                      <option value="">Select</option>
-                      <option value="">James Canlas</option>
+                      <select name="BM" id="BM" class="form-select">
+                          <option value="" id="current-BM"></option>
+                        
+                          <?php
+                          foreach ($BMemployees as $employee) { ?>
+                              <option value="<?=$employee->employee_id ?>"><?=$employee->employee_name?> (BM)</option>
+
+                        <?php  }
+                          
+                          
+                          ?>
                       </select>
                     </div>      
                   </div>
@@ -179,12 +236,127 @@
   
   <script>
 $(document).ready(function(){
+  const addModal = $('#newBranchModal');
+  const editModal = $('#editBranchModal');
+
+  var newOption = $('<option>', {
+      value: 'rm',
+      text: 'Remove Branch Manager',
+      id:'rm'
+    });
+   
+  $('#newBranchForm').submit(function(e){
+    e.preventDefault()
+
+    const formData = $(this).serialize();
+      $.ajax({
+          url:'<?=base_url();?>admin-add-branch',
+          method:'post',
+          data:formData,
+          dataType:'json',
+
+          success:function(response){
+            //console.log(response)
+            formModalClose(addModal,$('#newBranchForm'));
+            if(response.message == 'success'){
+              message('New Branch Created Successfully!','success');
+            }
+          },
+
+          error:function(xhr,status,error){
+            console.log(xhr.responseText);
+
+            if(xhr.status == 400){
+              msg('Oops! unexpected error return Validation_errors!','error');
+            }
+            if(xhr.status == 500){
+              msg('Oops! unexpected Server Error!','error');
+            }
+          }
+
+      });
+
+  })
 
     $(document).on('click','#edit_branch_btn',function(e){
         e.preventDefault();
+        //remove first the append remove option
+        $('#rm').remove();
 
-        $("#editBranchModal").modal('show');
+       $('#current-bm-hidden').val('');
 
+        //lets reset edit form first
+        resetForm($('#upBranchForm'));
+
+        const id = $(this).attr('data-id');
+          $.ajax({
+            url:"<?= base_url();?>admin-edit-location",
+            method:'post',
+            data:{id:id},
+            dataType:'json',
+
+            success:function(data){
+              //console.log(data);
+              $("#editBranchModal").modal('show');
+
+              //set the current location
+              $("#current-location-hidden").val(data.location_id);
+
+              $('#current-branch-id').val(data.branch_id);
+              $('#branch-name').val(data.branch_name);
+              $('#current-location').val(data.location_id);
+              $('#current-location').text(data.province_name+' |'+data.city+' |'+data.street_name);
+              
+              if(data.BM === null || data.BM === ''){
+                $('#current-BM').val('');
+                $('#current-BM').text('select');
+              }else{
+                $('#current-BM').val(data.employee_id);
+                $('#current-bm-hidden').val(data.employee_id);
+                $('#current-BM').text(data.BM);
+               //append option for in case the user want to remove the Branch Manager
+                $('#BM').append(newOption);
+              }
+              
+            
+            },
+
+            error:function(xhr,status,error){
+              console.log(xhr.responseText);
+            }
+
+
+          });
+
+       
+
+
+    });
+
+    $('#upBranchForm').submit(function(e){
+      e.preventDefault();
+
+      const formData = $(this).serialize();
+
+        $.ajax({
+          url:'<?= base_url();?>admin-updateBranch',
+          method:"post",
+          data:formData,
+          dataType:'json',
+
+          success:function(response){
+            console.log(response);
+            formModalClose(editModal,$('#upBranchForm'));
+            if(response.message == 'success'){
+              message('Branch Updated Successfully!','success');
+            }
+          },
+
+          error:function(xhr,status,error){
+            console.log(xhr.responseText);
+          }
+
+        });
 
     });
 

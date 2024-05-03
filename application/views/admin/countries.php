@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newCountryModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <!-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newCountryModal" type="button"><i class="bi bi-plus-circle"> New</i></button> -->
 
         </div>
 

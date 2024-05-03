@@ -37,6 +37,21 @@ $route['admin-updateJob'] = 'jobController/updateJob';
 $route['admin-addCountry'] = 'countriesController/addCountry';
 $route['admin-editCountry'] = 'countriesController/editCountry';
 $route['admin-updateCountry'] = 'countriesController/updateCountry';
+
+##Region Route
+$route['admin-addRegion'] = 'regionController/addRegion';
+$route['admin-editRegion'] = 'regionController/editRegion';
+$route['admin-updateRegion'] = 'regionController/updateRegion';
+
+##location Route
+$route['admin-add-location'] = 'locationController/addLocation';
+$route['admin-editLocation'] = 'locationController/editLocation';
+$route['admin-update-location'] = 'locationController/updateLocation';
+
+##Branch Route
+$route['admin-add-branch'] = 'adminBranchController/addBranch';
+$route['admin-edit-location'] = 'adminBranchController/editBranch';
+$route['admin-updateBranch'] = 'adminBranchController/updateBranch';
 #end of Branch admin Routes
 
 

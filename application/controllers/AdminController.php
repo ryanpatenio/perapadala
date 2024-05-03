@@ -10,7 +10,12 @@ class AdminController extends CI_Controller{
             $this->load->library('form_validation');
             $this->load->model('jobModel');
             $this->load->model('CountriesModel');
+            $this->load->model('RegionModel');
+            $this->load->model('LocationModel');
+            $this->load->model('EmployeesModel');
+            $this->load->model('AdminBranchModel');
             $this->load->library('response');
+        
         }
 
 
@@ -59,7 +64,9 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['locations'] = $this->LocationModel->noAssignLocation();
+        $data['BMemployees'] = $this->EmployeesModel->fetchBmEmployeesNotAlreadyAssign();
+        $data['branches'] = $this->AdminBranchModel->fetchBranches();
 
 
      $this->load->view('templates/admin-layout/header');
@@ -192,13 +199,14 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['countries'] = $this->CountriesModel->getCountries();
+        $data['regions'] = $this->RegionModel->fetchRegions();
 
-
-     $this->load->view('templates/admin-layout/header');
-     $this->load->view('templates/admin-layout/sidebar');
-     $this->load->view('admin/'.$page,$data);
-     $this->load->view('templates/admin-layout/footer');
+        
+        $this->load->view('templates/admin-layout/header');
+        $this->load->view('templates/admin-layout/sidebar');
+        $this->load->view('admin/'.$page,$data);
+        $this->load->view('templates/admin-layout/footer');
     }
     public function locations_index(){
         $page = "locations";
@@ -208,8 +216,10 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
-
+        $data['locations'] = $this->LocationModel->fetchLocations();
+        $data['countries'] = $this->CountriesModel->getCountries();
+        $data['regions'] = $this->RegionModel->fetchRegions();
+       
 
      $this->load->view('templates/admin-layout/header');
      $this->load->view('templates/admin-layout/sidebar');

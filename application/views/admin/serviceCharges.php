@@ -1,12 +1,12 @@
 
 <main id="main" class="main">
     <div class="pageTitle">
-      <h1>Service Charges / Fees</h1>
+      <h1>Service Charge / Fees</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?=base_url();?>admin">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Service Charges</li>
+          <li class="breadcrumb-item active">Service Charge</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
