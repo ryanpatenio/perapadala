@@ -112,7 +112,7 @@ public function updateBranch($data){
         //user didn't change the location
         #note it is important to check the location if it is change coz the location table has a column for "assign"
 
-        $oldLocation = $location_id;
+        $oldLocation = $location_id;//ss
 
         //check if the user remove the Branch Manager
          if($employee_id == 'rm'){
@@ -130,7 +130,7 @@ public function updateBranch($data){
 
             //then lets remove the assign status in the employees table into 0
             $updateEmployeeAssignStatus = $this->db->where('employee_id',$hiddenCurrentBM_ID)
-                ->update('employees',['bm_status'=>0]);
+                ->update('employees',['bm_status'=>0,'branch_id'=>0]);
 
         
             //return 1 mean success
@@ -138,25 +138,38 @@ public function updateBranch($data){
 
          }else{
              //lets check if the user select a branch manager
-                if($employee_id === null || $employee_id === ''){
-                    //no changes in the form or no selected BM
-                    $update = $this->db->where('branch_id',$branch_id)
+            if($employee_id == $hiddenCurrentBM_ID){
+                //echo 'same BM';
+                $update = $this->db->where('branch_id',$branch_id)
                     ->update('branches',$receiveData);
                     return 1;
-        
-                }else{
-                    //expected theres a selected BM in the form
-                    $update = $this->db->where('branch_id',$branch_id)
+
+            }elseif($employee_id === null || $employee_id === ''){
+                //echo 'No selected';
+                $update = $this->db->where('branch_id',$branch_id)
+                ->update('branches',$receiveData);
+                return 1;
+
+            }elseif($employee_id != $hiddenCurrentBM_ID){
+                //echo 'selected Diff BM';
+                $update = $this->db->where('branch_id',$branch_id)
                     ->update('branches',$receiveData);
 
-                    //lets update also the employee table column bm_status into 1 mean already assigned
-                    $updateBMstatus = $this->db->where('employee_id',$employee_id)
-                    ->update('employees',['bm_status'=>1]);
-                    return 1;
-        
-                }
+                //lets update also the !!"SELECTED"!! employee table column bm_status into 1 mean already assigned
+                $updateBMstatus = $this->db->where('employee_id',$employee_id)
+                ->update('employees',['bm_status'=>1,'branch_id'=>$branch_id]);
 
+                #lets update the OLD BM employee branch_id and bm_status
+                $updateEmployeeStatus = $this->db->where('employee_id',$hiddenCurrentBM_ID)
+                ->update('employees',[
+                    'branch_id'=> 0,
+                    'bm_status' => 0
+                ]);
+                return 1;
 
+            }else{
+                echo 'else';
+            }
          }
         
         
@@ -184,7 +197,7 @@ public function updateBranch($data){
 
                 //then lets remove the assign status in the employees table into 0
                 $updateEmployeeAssignStatus = $this->db->where('employee_id',$hiddenCurrentBM_ID)
-                    ->update('employees',['bm_status'=>0]);
+                    ->update('employees',['bm_status'=>0,'branch_id'=>0]);
                 
                 //update the selected location assign status into 1
                 $updateSelectedLocation = $this->db->where('location_id',$location_id)
@@ -198,42 +211,68 @@ public function updateBranch($data){
                 return 1;
 
             }else{
-                //lets check if the user select a branch manager
-                    if($employee_id === null || $employee_id === ''){
-                        //no changes in the form or no selected BM
-                        $update = $this->db->where('branch_id',$branch_id)
-                        ->update('branches',$receiveData);
+                #lets check if the user select a branch manager
+                #lets check if the user select a branch manager
+            if($employee_id == $hiddenCurrentBM_ID){
+                //echo 'same BM';
+                $update = $this->db->where('branch_id',$branch_id)
+                    ->update('branches',$receiveData);
 
-                         //update the selected location assign status into 1
-                        $updateSelectedLocation = $this->db->where('location_id',$location_id)
-                        ->update('locations',['assign'=>1]);
+                #update the selected location assign status into 1
+                 $updateSelectedLocation = $this->db->where('location_id',$location_id)
+                 ->update('locations',['assign'=>1]);
 
-                        //update Old Location Assign Status
-                    $updateOldLocationStatus2 = $this->db->where('location_id',$hiddenLocation)
-                    ->update('locations',['assign'=>0]);
+                 #update Old Location Assign Status
+                 $updateOldLocationStatus2 = $this->db->where('location_id',$hiddenLocation)
+                 ->update('locations',['assign'=>0]);
 
-                        return 1;
-            
-                    }else{
-                        //expected theres a selected BM in the form
-                        $update = $this->db->where('branch_id',$branch_id)
-                        ->update('branches',$receiveData);
+                return 1;
 
-                        //lets update also the employee table column bm_status into 1 mean already assigned
-                        $updateBMstatus = $this->db->where('employee_id',$employee_id)
-                        ->update('employees',['bm_status'=>1]);
+            }elseif($employee_id === null || $employee_id === ''){
+                //echo 'No selected';
+                $update = $this->db->where('branch_id',$branch_id)
+                ->update('branches',$receiveData);
 
-                        //update the selected location assign status into 1
-                        $updateSelectedLocation = $this->db->where('location_id',$location_id)
-                        ->update('locations',['assign'=>1]);
 
-                        //update Old Location Assign Status
-                        $updateOldLocationStatus3 = $this->db->where('location_id',$hiddenLocation)
-                        ->update('locations',['assign'=>0]);
+                 //update the selected location assign status into 1
+                 $updateSelectedLocation = $this->db->where('location_id',$location_id)
+                 ->update('locations',['assign'=>1]);
 
-                        return 1;
-            
-                    }
+                 //update Old Location Assign Status
+                 $updateOldLocationStatus2 = $this->db->where('location_id',$hiddenLocation)
+                 ->update('locations',['assign'=>0]);
+
+                 return 1;
+
+            }elseif($employee_id != $hiddenCurrentBM_ID){
+                //echo 'selected Diff BM';
+                $update = $this->db->where('branch_id',$branch_id)
+                    ->update('branches',$receiveData);
+
+                //lets update also the !!"SELECTED"!! employee table column bm_status into 1 mean already assigned
+                $updateBMstatus = $this->db->where('employee_id',$employee_id)
+                ->update('employees',['bm_status'=>1,'branch_id'=>$branch_id]);
+
+                #lets update the OLD BM employee branch_id and bm_status
+                $updateEmployeeStatus = $this->db->where('employee_id',$hiddenCurrentBM_ID)
+                ->update('employees',[
+                    'branch_id'=> 0,
+                    'bm_status' => 0
+                ]);
+
+                 //update the selected location assign status into 1
+                 $updateSelectedLocation = $this->db->where('location_id',$location_id)
+                 ->update('locations',['assign'=>1]);
+
+                 //update Old Location Assign Status
+                 $updateOldLocationStatus3 = $this->db->where('location_id',$hiddenLocation)
+                 ->update('locations',['assign'=>0]);
+
+                return 1;
+
+            }else{
+                echo 'else';
+            }
 
 
             }

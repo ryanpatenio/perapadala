@@ -56,7 +56,7 @@ class JobController extends CI_controller{
 
     public function updateJob(){
         $this->form_validation->set_rules('upJobName','Job Name','required');
-        $this->form_validation->set_rules('upJobCode','Job COde','required');
+       # $this->form_validation->set_rules('upJobCode','Job COde','required');
 
         if ($this->form_validation->run() == FALSE) {
             // Form validation failed

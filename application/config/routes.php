@@ -8,7 +8,7 @@ $route['admin'] = 'adminController/render';
 
 #admin Routes
 $route['admin-employees'] = 'adminController/employee_index';
-$route['admin-brances'] = 'adminController/branches_index';
+$route['admin-branches'] = 'adminController/branches_index';
 $route['admin-customers'] = 'adminController/customer_index';
 $route['admin-transactions'] = 'adminController/transaction_index';
 $route['admin-job-title'] = 'adminController/jobs_index';
@@ -52,6 +52,16 @@ $route['admin-update-location'] = 'locationController/updateLocation';
 $route['admin-add-branch'] = 'adminBranchController/addBranch';
 $route['admin-edit-location'] = 'adminBranchController/editBranch';
 $route['admin-updateBranch'] = 'adminBranchController/updateBranch';
+
+##employees Route
+$route['admin-addEmployee'] = 'employeesController/addEmployee';
+$route['admin-edit-employee'] = 'employeesController/editEmployee';
+$route['admin-update-employee'] = 'employeesController/updateEmployee';
+$route['admin-get-employee-name'] = 'employeesController/getEmployee';
+$route['admin-assignEmployee'] = 'employeesController/assignEmployee';
+$route['admin-get-assignBranch'] = 'employeesController/getEmployeeAssignBranch';
+$route['admin-removeAssignBranch'] = 'employeesController/removeAssignBranch';
+$route['admin-get-employee-details'] = 'employeesController/getEmployeeDetails';
 #end of Branch admin Routes
 
 

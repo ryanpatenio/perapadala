@@ -46,8 +46,10 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
-
+        $data['jobs'] = $this->jobModel->fetchJob();
+        $data['employees'] = $this->EmployeesModel->fetchEmployees();
+        $data['branches'] = $this->BranchModel->fetchBranch();
+        
 
      $this->load->view('templates/admin-layout/header');
      $this->load->view('templates/admin-layout/sidebar');

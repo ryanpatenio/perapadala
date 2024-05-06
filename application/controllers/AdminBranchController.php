@@ -62,6 +62,7 @@ class AdminBranchController extends CI_Controller{
             return $this->response->status(validation_errors(),400);
         }else{
             $data = $this->input->post();
+            //echo json_encode($data);
             $update = $this->AdminBranchModel->updateBranch($data);
             if($update == 1){
                 //success

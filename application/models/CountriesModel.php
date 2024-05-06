@@ -26,7 +26,7 @@ class CountriesModel extends CI_Model{
         
         $insert = $this->db->insert('countries',$data);
 
-        if($insert == 1){
+        if($insert){
             return 1;
         }
         return 2;

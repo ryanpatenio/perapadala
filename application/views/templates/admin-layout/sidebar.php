@@ -23,7 +23,7 @@
 
 
       <li class="nav-item">
-      <a class="nav-link collapsed cat" data-value="cate" href="<?= base_url();?>admin-brances">
+      <a class="nav-link collapsed cat" data-value="cate" href="<?= base_url();?>admin-branches">
         <i class="bi bi-geo-alt"></i>
         <span>Branches</span>
       </a>

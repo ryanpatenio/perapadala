@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-           <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newJobModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <!-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#newJobModal" type="button"><i class="bi bi-plus-circle"> New</i></button> -->
 
         </div>
 
@@ -128,12 +128,7 @@
                               <input type="text" class="form-control" id="up-job-name" name="upJobName"  required>       
                             </div>
                           </div>
-                          <div class="row mb-2">
-                            <div class="col">
-                              <label for="validationDefault01" class="form-label">Job Code</label>
-                              <input type="text" name="upJobCode" id="up-job-code" class="form-control" required>    
-                            </div>
-                          </div>
+                          
                       </div>                      
                      
                     </div>

@@ -276,7 +276,7 @@ $(document).ready(function(){
 
       });
 
-  })
+  });
 
     $(document).on('click','#edit_branch_btn',function(e){
         e.preventDefault();
@@ -323,6 +323,9 @@ $(document).ready(function(){
 
             error:function(xhr,status,error){
               console.log(xhr.responseText);
+              if(xhr.status == 500){
+                msg('Oops! unexpected Internal Server Error!','error');
+              }
             }
 
 
@@ -338,25 +341,46 @@ $(document).ready(function(){
 
       const formData = $(this).serialize();
 
-        $.ajax({
-          url:'<?= base_url();?>admin-updateBranch',
-          method:"post",
-          data:formData,
-          dataType:'json',
+      swal({
+            title: "Are you sure you want Update this Branch?",
+            text:'Please Click the `OK` Button to Continue!',
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+      }).then((willconfirmed) => {
 
-          success:function(response){
-            console.log(response);
-            formModalClose(editModal,$('#upBranchForm'));
-            if(response.message == 'success'){
-              message('Branch Updated Successfully!','success');
-            }
-          },
+        if(willconfirmed){
+          
+            $.ajax({
+                url:'<?= base_url();?>admin-updateBranch',
+                method:"post",
+                data:formData,
+                dataType:'json',
 
-          error:function(xhr,status,error){
-            console.log(xhr.responseText);
-          }
+                success:function(response){
+                  //console.log(response);
+                  formModalClose(editModal,$('#upBranchForm'));
+                  if(response.message == 'success'){
+                    message('Branch Updated Successfully!','success');
+                  }
+                },
 
-        });
+                error:function(xhr,status,error){
+                  //console.log(xhr.responseText);
+                  if(xhr.status == 400){
+                    msg('Oops! unexpected error return Validation errors','error');
+                  }
+                  if(xhr.status == 500){
+                    msg('Oops Unexpected Internal Server Error!','error');
+                  }
+                }
+
+              });
+
+         }
+      });
+
+       
 
     });
 

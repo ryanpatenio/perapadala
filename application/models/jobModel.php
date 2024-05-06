@@ -21,6 +21,18 @@ class jobModel extends CI_model{
         return array();
     }
 
+    public function fetchBM(){
+        $query = $this->db->select('job_id,name,job_code')
+                ->from('job')
+                ->where('job_code = "BM"')
+                ->get();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+    }
+
 
     public function addJob($data){
 
@@ -52,8 +64,8 @@ class jobModel extends CI_model{
         $update = $this->db->where('job_id',$id)
             ->update('job',
             [
-                'name' => $data['upJobName'],
-                'job_code' => $data['upJobCode']
+                'name' => $data['upJobName']
+                
 
             ]      
          );
