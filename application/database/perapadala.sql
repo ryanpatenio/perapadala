@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2024 at 12:18 AM
+-- Generation Time: May 06, 2024 at 11:16 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -30,9 +30,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `branches` (
   `branch_id` int(11) NOT NULL,
   `branch_name` varchar(50) NOT NULL DEFAULT '0',
-  `employee_id` int(11) NOT NULL DEFAULT 0,
+  `employee_id` int(11) DEFAULT 0,
   `location_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `branches`
+--
+
+INSERT INTO `branches` (`branch_id`, `branch_name`, `employee_id`, `location_id`) VALUES
+(13, 'Bata Branch', 1, 4),
+(14, 'Jaro Branch', 3, 5),
+(15, 'Lacson Branch', 0, 1),
+(16, 'Kabankalan Branch', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -62,7 +72,6 @@ CREATE TABLE `countries` (
 --
 
 INSERT INTO `countries` (`country_id`, `name`) VALUES
-(1, 'Canada'),
 (2, 'Philippines');
 
 -- --------------------------------------------------------
@@ -90,11 +99,25 @@ CREATE TABLE `employees` (
   `lname` varchar(50) NOT NULL DEFAULT '0',
   `email` varchar(50) NOT NULL DEFAULT '0',
   `password` varchar(50) NOT NULL DEFAULT '0',
-  `branch_id` int(11) NOT NULL DEFAULT 0,
+  `contact` varchar(50) NOT NULL DEFAULT '0',
+  `address` varchar(50) NOT NULL DEFAULT '0',
+  `branch_id` int(11) DEFAULT 0,
   `job_id` int(11) NOT NULL DEFAULT 0,
   `hire_date` date NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 0
+  `employee_status` int(11) NOT NULL DEFAULT 1,
+  `bm_status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`employee_id`, `fname`, `lname`, `email`, `password`, `contact`, `address`, `branch_id`, `job_id`, `hire_date`, `employee_status`, `bm_status`) VALUES
+(1, 'Jed', 'Araceli', 'jed@gmail.com', '$2y$10$05a/zajGkCnKndx8lL0IOOT.mVZoVoHudOkVAULpwZ9', '09770772409', 'Isabela', 13, 1, '2024-05-08', 1, 1),
+(2, 'Dennis', 'Ong', 'dennis@yahoo.com', '123', '09770772409', 'Hinigaran', 0, 2, '2024-05-04', 1, 0),
+(3, 'Daryl', 'Ong', 'daryl@gmail.com', '123', '0', '0', 14, 1, '2024-05-04', 1, 1),
+(9, 'Lester Tyler', 'May Mckenzie', 'zerycir@mailinator.com', '$2y$10$DHJxSproMlvt/BDHfPqxR.tzvPBPB292c1zcpcT/C/q', '01-Oct-1980', '12-Jun-2001', 0, 2, '2023-07-25', 1, 0),
+(10, 'Nerea Sosa', 'Cathleen Ewing', 'hatiw@mailinator.com', '$2y$10$mJCm8q5TgMP9RthqR1ZiFOgxkWPfNH65PwKZq1TFfrx', 'Sydney Charles', 'Joseph Callahan', 0, 1, '1970-02-25', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -127,8 +150,20 @@ CREATE TABLE `locations` (
   `province_name` varchar(50) NOT NULL DEFAULT '0',
   `city` varchar(50) NOT NULL DEFAULT '0',
   `region_id` int(11) NOT NULL DEFAULT 0,
-  `street_name` varchar(50) NOT NULL DEFAULT '0'
+  `street_name` varchar(50) NOT NULL DEFAULT '0',
+  `assign` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`location_id`, `province_name`, `city`, `region_id`, `street_name`, `assign`) VALUES
+(1, 'Negros Occidental', 'Bacolod', 3, 'Lacson St', 1),
+(2, 'Negros Occidental', 'Kabankalan City', 3, 'Brgy 1', 1),
+(3, 'Iloilo', 'Iloilo City', 3, 'Brgy 1', 0),
+(4, 'Negros Occidental', 'Bacolod City', 3, 'Purok Riverside, Bata', 1),
+(5, 'Ilo-ilo', 'Jaro', 3, 'Bagdag St', 1);
 
 -- --------------------------------------------------------
 
@@ -141,6 +176,15 @@ CREATE TABLE `regions` (
   `name` varchar(50) NOT NULL DEFAULT '0',
   `country_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `regions`
+--
+
+INSERT INTO `regions` (`region_id`, `name`, `country_id`) VALUES
+(1, 'Region 8', 2),
+(2, 'Region 7', 2),
+(3, 'Region 6', 2);
 
 -- --------------------------------------------------------
 
@@ -272,7 +316,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `charges`
@@ -296,25 +340,25 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `job`
 --
 ALTER TABLE `job`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `regions`
 --
 ALTER TABLE `regions`
-  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
