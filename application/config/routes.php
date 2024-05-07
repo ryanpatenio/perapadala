@@ -62,6 +62,11 @@ $route['admin-assignEmployee'] = 'employeesController/assignEmployee';
 $route['admin-get-assignBranch'] = 'employeesController/getEmployeeAssignBranch';
 $route['admin-removeAssignBranch'] = 'employeesController/removeAssignBranch';
 $route['admin-get-employee-details'] = 'employeesController/getEmployeeDetails';
+
+##service Charge Fee Route
+$route['admin-add-service-fee'] = 'serviceFeeController/addFee';
+$route['admin-get-service-fee'] = 'serviceFeeController/getFee';
+$route['admin-update-fee'] = 'serviceFeeController/updateFee';
 #end of Branch admin Routes
 
 

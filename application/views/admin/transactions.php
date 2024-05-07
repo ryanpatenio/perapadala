@@ -87,7 +87,7 @@
             
               <div class="card-body">
 
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Transaction Code</label>                
                     <input type="text" class="form-control"  readonly>  
@@ -97,18 +97,18 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Sender</label>                
                     <input type="text" class="form-control"  readonly>  
                   </div>  
-                  <div class="col mb-2">
+                  <div class="col">
                   <label for="validationDefault01" class="form-label">Sender Contact</label>                
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
 
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Receiver</label>                
                     <input type="text" class="form-control"  readonly>  
@@ -118,7 +118,7 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Purpose of Transaction</label>                
                     <input type="text" class="form-control"  readonly>  
@@ -128,7 +128,7 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Branch Name</label>                
                     <input type="text" class="form-control"  readonly>  
@@ -138,7 +138,7 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">                
+                <div class="row mb-1">                
                   <div class="col">
                   <label for="validationDefault01" class="form-label">Amount</label>                
                     <input type="text" class="form-control"  readonly>  
@@ -148,7 +148,7 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">
+                <div class="row">
                   <div class="d-flex align-item-center justify-content-center mt-5">
                     <button class="btn btn-primary  btn-gradient">In Progress</button>
                   </div>

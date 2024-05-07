@@ -169,8 +169,8 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
-
+        $data['serviceFees'] = $this->ServiceFeeModel->fetchServiceCharge();
+        
 
      $this->load->view('templates/admin-layout/header');
      $this->load->view('templates/admin-layout/sidebar');

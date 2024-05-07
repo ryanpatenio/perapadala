@@ -38,17 +38,43 @@
                 </thead>
                 
                 <tbody>
+                  <?php 
+                  $i = 1;
 
-                      <tr>
-                        <td>1</td>
-                        <td>2%</td>
-                        <td>Default</td>
+                  foreach ($serviceFees as $fee) {
+                    ?>
+                    <tr>
+                        <td><?= $i?></td>
+                        <td><?=$fee->percent ?>%</td>
+                        <td>
+                    <?php
+                    $status = '';
+
+                    if($fee->is_default == 1){
+                      #default #set Status int DEFAULT
+                      $status = 'DEFAULT';
+                    }else{
+                      $status = 'NOT DEFAULT';
+                    }
+                    echo $status;
+
+                      ?>
+
+
+                        </td>
                        
                         <td>
-                          <button type="button" id="edit_serviceCharge_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_serviceCharge_btn" data-id="<?=$fee->charge_id?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
-                      </tr>
+                    </tr>
+
+            <?php
+                $i++;   }
+
+
+                  ?>
+                     
 
                 </tbody>
               </table>
@@ -77,15 +103,15 @@
                       <div class="row mb-2">                        
                           <div class="col">
                             <label for="validationDefault01" class="form-label">Service Charge (%)</label>
-                            <input type="number" class="form-control" id="service-charge" name="serviceCharge"  required>   
+                            <input type="number" class="form-control" id="" name="serviceCharge" step="any"  min="0.5" max="1000"   required>   
                           </div>    
                       </div>
                       <div class="row">                        
                           <div class="col">
                             <label for="validationDefault01" class="form-label">Default</label>
-                            <select name="defaut" id="default" class="form-control">
-                              <option value="default">Defaut</option>
-                              <option value="notdefault">Not Default</option>
+                            <select class="form-select" name="this_def" id="this-def" required>
+                              <option value="1">Default</option>
+                              <option value="0">Not Default</option>
                             </select>
                           </div>    
                       </div>
@@ -109,19 +135,22 @@
           </div>
               <div class="modal-body">
                 <form method="POST" id="upServiceChargeForm" >
+                  <input type="hidden" id="charge-id" name="id">
+                  <input type="hidden" id="old-default" name="old_default">
                     <div class="card-body">
                       <div class="row mb-2">                        
                           <div class="col">
                             <label for="validationDefault01" class="form-label">Service Charge (%)</label>
-                            <input type="number" class="form-control" id="up-service-charge" name="upServiceCharge"  required>   
+                            <input type="number" class="form-control" id="service-charge" name="serviceCharge"  required>   
                           </div>    
                       </div>
                       <div class="row">                        
                           <div class="col">
                             <label for="validationDefault01" class="form-label">Default</label>
-                            <select name="upDefaut" id="up-default" class="form-control">
-                              <option value="default">Defaut</option>
-                              <option value="notdefault">Not Default</option>
+                            <select name="is_default" id="is-default" class="form-control">
+                              <option value="" id="current-default"></option>
+                              <option value="1">Default</option>
+                              <option value="0">Not Default</option>
                             </select>
                           </div>    
                       </div>
@@ -140,18 +169,5 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
-  <script>
 
-  $(document).ready(function(){
-
-      $(document).on('click','#edit_serviceCharge_btn',function(e){
-          e.preventDefault();
-
-          $("#upServiceChargeModal").modal('show');
-
-
-      });
-
-  })
-
-</script> 
+<script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/serviceCharge.js"></script>
