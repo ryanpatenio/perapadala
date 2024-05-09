@@ -53,53 +53,12 @@
     </div>
   </div>
 <script type="text/javascript" src="<?= base_url();?>assets/swal/sweet.js"></script>
-
+<script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/msg.js"></script>
 
 
   <script type="text/javascript">
 
-    function message($text='',$msg_type=''){
-     swal($text, {
-                icon: $msg_type,
-              }).then((confirmed)=>{
-                 window.location.reload();
-
-         });
-  }
-  function msgThenRedirect(text,message,url){
-     swal(text, {
-                icon: message,
-              }).then((confirmed)=>{
-                 window.location.href=url
-
-         });
-  }
-
-
-function msg($text='',$msg_type=''){
-     swal($text, {
-                icon: $msg_type,
-              });
-  }
-
-  const resetForm = (thisForm)=>{
-    thisForm.get(0).reset();
-  }
-
-  const formModalClose = (modalName,thisForm) => {
-    $(modalName).modal('hide');
-    thisForm.get(0).reset();
-
-  }
-  const res = (param) => {
-    console.log(param);
-  }
-
-  const modalClose = (modalName) => {
-    $(modalName).modal('hide');
-  }
-
- 
+    
     // var chart = new ApexCharts(document.querySelector(apexChart), options);
     // chart.render();
 

@@ -21,7 +21,7 @@ $route['admin-service-fee'] = 'adminController/serviceCharge_index';
 #end of Admin Routes
 
 
-#branch admin Routes
+#branch admin Routes ######################
 $route['branch-admin'] = 'branchAdminController/render';
 $route['branch-employees'] = 'branchAdminController/branchEmployees_index';
 $route['branch-customers'] = 'branchAdminController/branchCustomers_index';
@@ -67,9 +67,18 @@ $route['admin-get-employee-details'] = 'employeesController/getEmployeeDetails';
 $route['admin-add-service-fee'] = 'serviceFeeController/addFee';
 $route['admin-get-service-fee'] = 'serviceFeeController/getFee';
 $route['admin-update-fee'] = 'serviceFeeController/updateFee';
-#end of Branch admin Routes
+#end of Branch admin Routes ########################
 
 
+###USER ROUTE#########################################
+
+#create Transaction #route
+$route['get-fee'] = 'branchTransactionController/getFee';
+$route['user-create-transaction'] = 'branchTransactionController/createTransaction';
+
+$route['print-transaction/(:any)'] = 'branchTransactionController/printTransaction/$1';
+
+###End of USER ROUTE ###########################
 
 
 $route['checkCode'] = 'checkCodeController/render';

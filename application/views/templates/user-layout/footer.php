@@ -12,7 +12,7 @@
             </div>
         </section>
         <!-- App badge section-->
-        <section class="bg-gradient-primary-to-secondary" id="download">
+        <section class="bg-gradient-primary-to-secondary get-app" id="download">
             <div class="container px-5">
                 <h2 class="text-center text-white font-alt mb-4">Get the app now!</h2>
                 <div class="d-flex flex-column flex-lg-row align-items-center justify-content-center">
@@ -118,7 +118,8 @@
 
     </body>
 </html>
-
+<script type="text/javascript" src="<?= base_url();?>assets/swal/sweet.js"></script>
+<script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/msg.js"></script>
 <script>
 
 $(document).ready(function(){

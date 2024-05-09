@@ -14,18 +14,18 @@
                                     Transaction Information
                                 </div>
                                 <div class="card-body py-4">
-                                   
+                                   <form method="post" id="transactionForm">
                                     <div class="row">
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Name of Sender </label>
-                                                <input type="text" class="form-control"  id="" placeholder="">
+                                                <input type="text" name="nameOfSender"  class="form-control"  id="n-sender" placeholder="" required>
                                             </div>                                       
                                         </div>
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Address </label>
-                                                <input type="text" class="form-control"  id="" placeholder="">
+                                                <input type="text" name="senderAddress" class="form-control"  id="s-address" placeholder="" required>
                                             </div>                                       
                                         </div>
                                    
@@ -34,13 +34,13 @@
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Name of Receiver </label>
-                                                <input type="text" class="form-control"  id="" placeholder="">
+                                                <input type="text" name="nameOfReceiver" class="form-control"  id="n-receiver" placeholder="" required>
                                             </div>                                       
                                         </div>
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">address </label>
-                                                <input type="text" class="form-control" id="" placeholder="">
+                                                <input type="text" name="receiverAddress" class="form-control" id="r-address" placeholder="" required>
                                             </div>                                       
                                         </div>
                                    
@@ -49,51 +49,56 @@
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Sender Contact Number  </label>
-                                                <input type="text" class="form-control"  id="" placeholder="">
+                                                <input type="text" name="senderContact" class="form-control"  id="s-contact" placeholder="" required>
                                             </div>                                       
                                         </div>
                                        
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Receiver Contact Number</label>
-                                                <input type="text" class="form-control"  id="" placeholder="">
+                                                <input type="text" name="receiverContact" class="form-control"  id="r-contact" placeholder=""required>
                                             </div>                                       
                                         </div>                                   
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 mb-2">
                                             <label for="" class="form-label mb-2 ">Relationship to the Sender: </label>
-                                            <input type="text" class="form-control" placeholder="Relationship">
+                                            <input type="text" name="senderRelation" id="rel-sender" class="form-control" placeholder="Relationship" required>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <label for="" class="form-label mb-2 ">Purpose of Transaction: </label>
-                                            <input type="text" class="form-control" placeholder="Purpose of transaction">
+                                            <input type="text" name="purpose" class="form-control" id="purpose" placeholder="Purpose of transaction" required>
                                         </div>
                                     
                                     </div>
                                     
 
                                     <div class="row mt-2">
-                                        <div class="col-md-6 mb-2">
+                                        <div class="col-md-5 mb-2">
                                             <label for="" class="form-label mb-2">Amount : </label>
-                                            <input type="number" class="form-control" placeholder="Amount">
+                                            <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount" required>
                                         </div>
-                                        <div class="col-md-6 mb-2">
+                                        <div class="col-md-2 mb-2">
+                                            <label for="" class="form-label mb-2">Percent : </label>
+                                            <input type="text" name="percent" id="percent" data-id="" readonly class="form-control text-danger" placeholder="Fee" required>
+                                        </div>
+                                        <div class="col-md-5 mb-2">
                                             <label for="" class="form-label mb-2">Fee : </label>
-                                            <input type="number" readonly class="form-control" placeholder="Fee">
+                                            <input type="number" name="fee" id="fee" readonly class="form-control" placeholder="Fee" required>
                                         </div>
                                     </div>
+
          
                                     <div class="row">
                                         <div class="d-grid">
-                                            <button type="button" class="btn btn-success btn-gradient p-2 mt-2">Send</button>
+                                            <button type="submit" id="send-btn" class="btn btn-success btn-gradient p-2 mt-2">Send</button>
                                         </div>
                                     </div>
                                    
                                 </div>
                             </div>
                            
-                           
+                            </form>
                         </div>
                     </div>
 
@@ -101,3 +106,4 @@
                 </div>
             </div>
         </section>
+        <script type="text/javascript" src="<?= base_url();?>assets/js/user/sendTransaction.js"></script>

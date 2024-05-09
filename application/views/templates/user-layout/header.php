@@ -15,10 +15,45 @@
         <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="<?=base_url()?>css/styles.css" rel="stylesheet" />
+        
+        <!----Crypto Library ---->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
 
         <!----- Jquery 3.1 CDN ---->
         <script src="<?= base_url();?>assets/admin-assets/vendor/jquery-min.js"></script>
+
+        <style>
+        @media print {
+            /* Hide the header when printing */
+            .navbar {
+                display: none;
+            }
+            .cta {
+                display: none;
+            }
+            footer{
+                display: none;
+            }
+            .get-app{
+                display: none;
+            }
+            .ct-title{
+                display: none;
+            }
+            .ct-hr{
+                display: none;
+            }
+            .btn-print{
+                display: none;
+            }
+            .pt{
+                display: none;
+            }
+        }
+     </style>
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -40,8 +75,8 @@
                          <!-- <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Our Service</a></li>
                          <li class="nav-item"><a class="nav-link me-lg-3" href="#download">Download</a></li> -->
                          <li class="nav-item px-1 "><a class="btn btn-success rounded-pill px-3 mb-2 mb-lg-0"  data-bs-toggle="modal" data-bs-target="#CodeModal">Claim</a></li>
-                         <li class="nav-item px-1"><a class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0"  href="sendTransaction">Send Money</a></li>
-                         <li class="nav-item px-1"><a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0"  href="branchTransaction">All Transaction</a></li>
+                         <li class="nav-item px-1"><a class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0"  href="<?=base_url();?>sendTransaction">Send Money</a></li>
+                         <li class="nav-item px-1"><a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0"  href="<?=base_url();?>branchTransaction">All Transaction</a></li>
 
                             <?php  
                         }else{ ?>
