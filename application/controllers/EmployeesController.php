@@ -18,7 +18,7 @@ class EmployeesController extends CI_Controller{
         $this->form_validation->set_rules('fname','First Name','required');
         $this->form_validation->set_rules('lname','Last Name','required');
         $this->form_validation->set_rules('email','E-mail','required');
-        $this->form_validation->set_rules('password','Password','required');
+        $this->form_validation->set_rules('password','Password','trim|required');
         $this->form_validation->set_rules('contact','Contact','required');
         $this->form_validation->set_rules('address','Address','required');
         $this->form_validation->set_rules('job','Job Title','required');
@@ -41,18 +41,17 @@ class EmployeesController extends CI_Controller{
         }else{
 
             //set Data to insert 
+            $insertData = array(
+                'fname' => $data['fname'],
+                'lname' => $data['lname'],
+                'email' => $data['email'],
+                'password' => password_hash($data['password'], PASSWORD_DEFAULT), // Hashing the password
+                'contact' => $data['contact'],
+                'address' => $data['address'],
+                'job_id' => $data['job'],
+                'hire_date' => $data['hireDate']
+            );
             
-        $insertData = array(
-            'fname' => $data['fname'],
-            'lname' => $data['lname'],
-            'email' => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
-            'contact' => $data['contact'],
-            'address' => $data['address'],
-            'job_id' => $data['job'],
-            'hire_date' => $data['hireDate']
-          
-        );
 
 
             $insert = $this->EmployeesModel->addEmployee($insertData);

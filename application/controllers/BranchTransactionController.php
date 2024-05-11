@@ -36,7 +36,7 @@ class BranchTransactionController extends CI_Controller{
         }
     
        
-        
+       
         $transaction_data = $this->BranchTransactionModel->getTransactionData($id); // Replace 'Your_model' and 'getTransactionData' with appropriate names
     
         if (!$transaction_data) {
@@ -103,6 +103,46 @@ class BranchTransactionController extends CI_Controller{
             }
         }
       
+    }
+
+    public function checkMyCode(){
+        $this->form_validation->set_rules('code','Transaction Code','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('code_null',400);
+        }else{
+            $code = trim($this->input->post('code'));
+            $data = $this->BranchTransactionModel->getTransactionDataByCode($code);
+
+            if($data != 2){
+                header('Content-Type: application/json');
+                echo json_encode(['message'=> 'success','id'=>$data['transaction_id']]);
+            }else{
+                header('Content-Type: application/json');
+                return $this->response->status('No_data_found',401);
+            }
+            
+            
+        }
+    }
+
+    public function claimTransaction(){
+        $id = $this->input->post('id');
+                // Check if ID is null or empty
+            if ($id === null || $id === '') {
+                // Return a JSON response with a status code of 400
+                return $this->response->status('id_null',400);
+            } else {
+                #req into API MODEL
+                $claim = $this->BranchTransactionModel->claimTransaction($id);
+                if($claim !== 2){
+                    #success
+                    return $this->response->status('success',200);
+                }else{
+                    return $this->response->status('error',500);
+                }
+             
+            }
     }
 
     // Decryption function

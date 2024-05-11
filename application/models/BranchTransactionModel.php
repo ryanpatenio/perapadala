@@ -102,7 +102,7 @@ class BranchTransactionModel extends CI_Model{
 
     public function getTransactionData($trans_id){
         $query = $this->db
-                ->select('t.transaction_id, t.transaction_code, t.transaction_date, c.name AS senderName, c.contact AS senderContact, c.address AS senderAddress, td.receiver_name AS receiverName, td.receiver_address AS receiverAddress, td.receiver_contact AS receiverContact, td.amount, td.purpose, td.sender_relation')
+                ->select('t.transaction_id,t.status,t.transaction_claimed, t.transaction_code, t.transaction_date, c.name AS senderName, c.contact AS senderContact, c.address AS senderAddress, td.receiver_name AS receiverName, td.receiver_address AS receiverAddress, td.receiver_contact AS receiverContact, td.amount, td.purpose, td.sender_relation,td.fee')
                 ->from('transactions t')
                 ->join('transaction_details td', 't.transaction_id = td.transaction_id')
                 ->join('customer c', 'c.customer_id = td.sender_customer_id')
@@ -114,6 +114,31 @@ class BranchTransactionModel extends CI_Model{
         }else{
             return 2;
         }
+    }
+
+    public function getTransactionDataByCode($code){
+        $query = $this->db
+                ->select('t.transaction_id,t.status, t.transaction_code, t.transaction_date, c.name AS senderName, c.contact AS senderContact, c.address AS senderAddress, td.receiver_name AS receiverName, td.receiver_address AS receiverAddress, td.receiver_contact AS receiverContact, td.amount, td.purpose, td.sender_relation')
+                ->from('transactions t')
+                ->join('transaction_details td', 't.transaction_id = td.transaction_id')
+                ->join('customer c', 'c.customer_id = td.sender_customer_id')
+                ->where('t.transaction_code', $code)
+                ->get();
+
+        if($query->num_rows() > 0){
+            return $query->row_array();
+        }else{
+            return 2;
+        }
+    }
+    #id of transaction table# let set into 1 means claimed
+    public function claimTransaction($id){
+        $update = $this->db->where('transaction_id',$id)
+        ->update('transactions',['status' => 1,'transaction_claimed'=>date('Y-m-d H:i:s')]);
+        if($update){
+            return 1;
+        }
+        return 2;
     }
 
    public function generateRandomCodeWithDate() {

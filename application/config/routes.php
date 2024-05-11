@@ -75,15 +75,26 @@ $route['admin-update-fee'] = 'serviceFeeController/updateFee';
 #create Transaction #route
 $route['get-fee'] = 'branchTransactionController/getFee';
 $route['user-create-transaction'] = 'branchTransactionController/createTransaction';
-
 $route['print-transaction/(:any)'] = 'branchTransactionController/printTransaction/$1';
+
+##check Transaction Code
+$route['checkMyCode'] = 'branchTransactionController/checkMyCode';
+$route['claim-transaction'] = 'branchTransactionController/claimTransaction';
 
 ###End of USER ROUTE ###########################
 
 
-$route['checkCode'] = 'checkCodeController/render';
+$route['checkCode/(:any)'] = 'checkCodeController/render/$1';
 $route['sendTransaction'] = 'sendTransactionController/render';
 $route['branchTransaction'] = 'branchTransactionController/render';
+
+#login Process
+$route['emp-login'] = 'loginController/user_login_process';
+
+#end of Login
+
+#logout
+$route['log-out'] = 'loginController/logout';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

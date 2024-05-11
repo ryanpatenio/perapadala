@@ -20,39 +20,28 @@
         <!----Crypto Library ---->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
+        <script>
+            $(document).on('click', '.keep-open', function (e) {
+                e.stopPropagation();
+            });
+    </script>
+      
+
 
         <!----- Jquery 3.1 CDN ---->
         <script src="<?= base_url();?>assets/admin-assets/vendor/jquery-min.js"></script>
-
         <style>
-        @media print {
-            /* Hide the header when printing */
-            .navbar {
-                display: none;
+            .dot {
+
+                width: 8px;
+                height: 8px;
+                background-color: green;
+                border-radius: 50%;
+                display: inline-block;
+                margin-left: 5px; /* Adjust as needed */
             }
-            .cta {
-                display: none;
-            }
-            footer{
-                display: none;
-            }
-            .get-app{
-                display: none;
-            }
-            .ct-title{
-                display: none;
-            }
-            .ct-hr{
-                display: none;
-            }
-            .btn-print{
-                display: none;
-            }
-            .pt{
-                display: none;
-            }
-        }
-     </style>
+
+        </style>
 
     </head>
     <body id="page-top">
@@ -65,38 +54,46 @@
                     <i class="bi-list"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                       
-                        <?php
-                        $login = false;
-                        
-                        if(!$login){
-                            ?>
-                         <!-- <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Our Service</a></li>
-                         <li class="nav-item"><a class="nav-link me-lg-3" href="#download">Download</a></li> -->
-                         <li class="nav-item px-1 "><a class="btn btn-success rounded-pill px-3 mb-2 mb-lg-0"  data-bs-toggle="modal" data-bs-target="#CodeModal">Claim</a></li>
-                         <li class="nav-item px-1"><a class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0"  href="<?=base_url();?>sendTransaction">Send Money</a></li>
-                         <li class="nav-item px-1"><a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0"  href="<?=base_url();?>branchTransaction">All Transaction</a></li>
-
-                            <?php  
-                        }else{ ?>
-
-                          
-                            
-                   <?php     }
-                        
-                        
-                        ?>
-                    </ul>
-                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
-                        <span class="d-flex align-items-center">
-                            <i class="bi-lock-fill me-2"></i>
-                            <span class="small">Login</span>
-                        </span>
-                    </button>
-                  
-                    
+    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+        <?php
+        $loggedIn = $this->session->userdata('logged_in');
+        
+        if(!$loggedIn){
+            ?>
+            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <span class="d-flex align-items-center">
+                    <i class="bi-lock-fill me-2"></i>
+                    <span class="small">Login</span>
+                </span>
+            </button>
+        <?php  
+        } else { ?>
+            <li class="nav-item px-1">
+                <a class="btn btn-success rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#CodeModal">Claim</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0" href="<?=base_url();?>sendTransaction">Send Money</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" href="<?=base_url();?>branchTransaction">All Transaction</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle keep-open" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <!-- Display logged-in user's name -->
+                    <?= $this->session->userdata['emp_name']; ?>
+                    <span class="dot"></span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item " href="#" id="logout">Logout</a>
                 </div>
+            </li>
+        <?php } ?>
+    </ul>
+</div>
+
             </div>
         </nav>
       

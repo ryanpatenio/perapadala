@@ -52,21 +52,21 @@
                      
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <input class="form-control" name="email" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                 <label for="email">Email address</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                              <!-- Password address input-->
                              <div class="form-floating mb-3">
-                                <input class="form-control" id="password" type="password" placeholder="Password" data-sb-validations="required,password" />
+                                <input class="form-control" name="password" id="password" type="password" placeholder="Password" data-sb-validations="required,password" />
                                 <label for="password">Password</label>
                                 <div class="invalid-feedback" data-sb-feedback="password:required">An Password is required.</div>
                                 
                             </div>
                           
                             <div class="d-grid">
-                                <button class="btn btn-primary rounded-pill btn-lg">Login</button>
+                                <button type="submit" class="btn btn-primary rounded-pill btn-lg">Login</button>
                             </div>
                             
                         </form>
@@ -85,18 +85,18 @@
                     </div>
                     <div class="modal-body border-0 p-4">
                         
-                        <form id="CodeForm">
+                        <form id="codeForm" method="post">
                                                
                              <!-- Password address input-->
                              <div class="form-floating mb-3">
-                                <input class="form-control" id="password" type="text" placeholder="Put your Code Here!..." data-sb-validations="required,code" />
+                                <input class="form-control" name="code" id="code" type="text" placeholder="Put your Code Here!..." data-sb-validations="required,code" />
                                 <label for="Code">Code</label>
                                 <div class="invalid-feedback" data-sb-feedback="code:required">An Password is required.</div>
                                 
                             </div>
                           
                             <div class="d-grid">
-                                <button class="btn btn-primary rounded-pill btn-lg" id="btn-search-code">Search</button>
+                                <button type="submit" class="btn btn-primary rounded-pill btn-lg" id="btn-search-code">Search</button>
                             </div>
                             
                         </form>
@@ -120,16 +120,12 @@
 </html>
 <script type="text/javascript" src="<?= base_url();?>assets/swal/sweet.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/msg.js"></script>
+<script type="text/javascript" src="<?= base_url();?>assets/js/user/login.js"></script>
+<script type="text/javascript" src="<?= base_url();?>assets/js/user/code.js"></script>
 <script>
 
 $(document).ready(function(){
-
-    $('#btn-search-code').click(function(e){
-        e.preventDefault();
-
-        location.href="<?php base_url(); ?>checkCode";
-
-    });
+  
 
 });
 
