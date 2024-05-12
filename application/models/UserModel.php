@@ -13,5 +13,18 @@ class UserModel extends CI_Model {
         $query = $this->db->get_where('employees', array('email' => $email));
         return $query->row();
     }
+    public function getBranch_id_of_emp($id){
+        $query  =   $this->db->select('e.employee_id, b.branch_id, b.branch_name')
+                ->from('employees e')
+                ->join('branches b', 'e.branch_id = b.branch_id')
+                ->where('e.employee_id',$id)
+                ->get();
+                
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return 2;
+        }
+    }
 
 }

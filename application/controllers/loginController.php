@@ -29,15 +29,57 @@ class LoginController extends CI_Controller {
             if ($user && password_verify($password, $user->password)) {
                 // Login successful, set session data and redirect to dashboard
                 #job title 1=Branch Manager 2 = Branch Personnel
-                $user_data = array(
-                    'emp_id' => $user->employee_id,
-                    'emp_email' => $user->email,
-                    'emp_name'=> $user->fname.' '.$user->lname,
-                    'job_title'=>$user->job_id,
-                    'logged_in' => TRUE
-                );
-                $this->session->set_userdata($user_data);
-                return $this->response->status('success', 200);
+                
+                
+               
+                if($user->branch_id === 0 || $user->branch_id === '0'){
+                    #no Assign Branch #he must contact the administrator first
+                    return $this->response->status('no_branch_assign',400);
+                }else{
+                    #has branch assigned
+
+                     #getting the branch name
+                     $branch_name = $this->UserModel->getBranch_id_of_emp($user->employee_id);
+
+                     #1 is for Branch Manager 2 is for BRanch Personnel
+                     $job_title = '';
+                     if($user->job_id == 1){
+                        #BM
+                        $job_title = 'BM';
+                     }else{
+                        #BP
+                        $job_title = 'BP';
+                     }
+
+                    $user_data = array(
+                        'emp_id' => $user->employee_id,
+                        'emp_email' => $user->email,
+                        'emp_name'=> $user->fname.' '.$user->lname,
+                        'job_title'=>$job_title,
+                        'branch_id' =>$user->branch_id,
+                        'branch_name' => $branch_name->branch_name,
+                        'role' => 'user',
+                        'logged_in' => TRUE
+                    );
+                    
+                    $this->session->set_userdata($user_data);
+
+                   
+
+                    #lets check if this employee is a Branch Manager or Branch Personnel
+                    #job_id = 1 'Branch Manager & job_id = 2 'Branch Personnel
+                    if($user->job_id === 2 || $user->job_id === '2'){
+                        #branch Personnel
+                        return $this->response->status('success_bp', 200);
+                    }else{
+                        #branch Manager
+                        return $this->response->status('success_bm', 200);
+                    }
+
+                
+                    
+                }
+                
             } else {
                 // Login failed, reload login view with error message
                 return $this->response->status('Invalid', 400);

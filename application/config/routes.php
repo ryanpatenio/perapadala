@@ -70,6 +70,10 @@ $route['admin-update-fee'] = 'serviceFeeController/updateFee';
 #end of Branch admin Routes ########################
 
 
+
+
+
+
 ###USER ROUTE#########################################
 
 #create Transaction #route
@@ -81,12 +85,17 @@ $route['print-transaction/(:any)'] = 'branchTransactionController/printTransacti
 $route['checkMyCode'] = 'branchTransactionController/checkMyCode';
 $route['claim-transaction'] = 'branchTransactionController/claimTransaction';
 
+
+#check Code and Transaction Code || Branch transaction
+$route['checkCode/(:any)'] = 'checkCodeController/render/$1';
+$route['sendTransaction'] = 'sendTransactionController/render';
+
+$route['branchTransaction'] = 'branchTransactionController/render_transaction_index';
+$route['get-transaction'] = 'branchTransactionController/getTransaction';
+
 ###End of USER ROUTE ###########################
 
 
-$route['checkCode/(:any)'] = 'checkCodeController/render/$1';
-$route['sendTransaction'] = 'sendTransactionController/render';
-$route['branchTransaction'] = 'branchTransactionController/render';
 
 #login Process
 $route['emp-login'] = 'loginController/user_login_process';

@@ -23,8 +23,8 @@ class BranchTransactionModel extends CI_Model{
 
     public function createTransaction($data){
       
-        #change this if we done create a login 
-        $emp_id = '2';
+        #session employee_id 
+        $emp_id = $this->session->userdata('emp_id');
 
 
         #customer Data To insert
@@ -42,7 +42,8 @@ class BranchTransactionModel extends CI_Model{
             'transaction_code' => $transactionCode,
             'percent' => $data['percent'],
             'transaction_date' => date('Y-m-d H:i:s'),          
-            'employee_id'=> $emp_id
+            'employee_id'=> $emp_id,
+            'branch_id' => $this->session->userdata['branch_id']
         );
 
        
@@ -139,6 +140,23 @@ class BranchTransactionModel extends CI_Model{
             return 1;
         }
         return 2;
+    }
+
+    public function getBranchTransactionsByEmployeeId($emp_id){
+        $result = $this->db->select('t.transaction_id, t.transaction_code, c.name, td.amount, t.transaction_date, CONCAT(e.fname, " ", e.lname) AS employee_incharge')
+                  ->from('employees e')
+                  ->join('branches b', 'e.branch_id = b.branch_id')
+                  ->join('transactions t', 'e.employee_id = t.employee_id')
+                  ->join('transaction_details td', 't.transaction_id = td.transaction_id')
+                  ->join('customer c', 'c.customer_id = td.sender_customer_id')
+                  ->where('e.employee_id', $emp_id)
+                  ->get();
+        if($result->num_rows() > 0){
+            return $result->result();
+        }else{
+            return 2;
+        }         
+
     }
 
    public function generateRandomCodeWithDate() {

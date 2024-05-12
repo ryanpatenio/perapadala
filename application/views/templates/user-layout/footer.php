@@ -116,12 +116,16 @@
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
     </body>
 </html>
 <script type="text/javascript" src="<?= base_url();?>assets/swal/sweet.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/msg.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/js/user/login.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/js/user/code.js"></script>
+<script type="text/javascript" src="<?= base_url();?>assets/js/user/branch-transaction.js"></script>
 <script>
 
 $(document).ready(function(){

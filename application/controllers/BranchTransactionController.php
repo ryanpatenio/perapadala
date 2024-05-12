@@ -11,7 +11,7 @@ class BranchTransactionController extends CI_Controller{
 
     }
 
-    public function render(){
+    public function render_transaction_index(){
 
         $page = "allTransaction";
 
@@ -20,11 +20,18 @@ class BranchTransactionController extends CI_Controller{
             show_404();
 
            }
-           $data['sample'] = 'data';
-
+           $allDataTransactions = $this->BranchTransactionModel->getBranchTransactionsByEmployeeId($this->session->userdata['emp_id']);
+           if($allDataTransactions !== 2){
+            $data['all_branch_transactions'] = $allDataTransactions;
+           }
+          $data['sample'] = '';
+   
 
         $this->load->view('templates/user-layout/header');
         $this->load->view('user/'.$page,$data);
+
+        $this->load->view('templates/user-layout/modal');
+        
         $this->load->view('templates/user-layout/footer');
     }
 
@@ -143,6 +150,24 @@ class BranchTransactionController extends CI_Controller{
                 }
              
             }
+    }
+
+    public function getTransaction(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('error_null',400);
+        }else{
+            #id not empty
+            $data = $this->BranchTransactionModel->getTransactionData($id);
+            if($data !== 2){
+                #success
+                echo json_encode($data);
+            }else{
+                #error
+                return $this->response->status('error',400);
+            }
+        }
     }
 
     // Decryption function

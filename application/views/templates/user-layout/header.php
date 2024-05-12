@@ -41,14 +41,55 @@
                 margin-left: 5px; /* Adjust as needed */
             }
 
+            @media print {
+            /* Hide the header when printing */
+            .navbar {
+                display: none;
+            }
+            .cta {
+                display: none;
+            }
+            footer{
+                display: none;
+            }
+            .get-app{
+                display: none;
+            }
+            
+            .ct-hr{
+                display: none;
+            }
+            .btn-print{
+                display: none;
+            }
+            .pt{
+                display: none;
+            }
+        }
+
         </style>
+
+
 
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
             <div class="container px-5">
-                <a class="navbar-brand fw-bold" href="<?= base_url()?>">LBB Pera Padala & Money Changer ( Branch Name )</a>
+            <?php
+                $branch_name = '';
+                $getBranch =$this->session->userdata('branch_name');
+                
+                if($getBranch === '' || $getBranch === null){
+                    $branch_name = '';
+                }else{
+                    $branch_name = $getBranch;
+                }
+            
+            
+            ?>
+
+                <a class="navbar-brand fw-bold" href="<?= base_url()?>">LBB Pera Padala & Money Changer ( <?=$branch_name ?> )</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="bi-list"></i>
@@ -85,7 +126,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Settings</a>
+                   
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item " href="#" id="logout">Logout</a>
                 </div>

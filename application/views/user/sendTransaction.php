@@ -49,14 +49,14 @@
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Sender Contact Number  </label>
-                                                <input type="text" name="senderContact" class="form-control"  id="s-contact" placeholder="" required>
+                                                <input type="text" name="senderContact" maxlength="11" class="form-control"  id="s-contact" placeholder="" required>
                                             </div>                                       
                                         </div>
                                        
                                         <div class="col-md-6 mb-2">                                        
                                             <div class="mb-0">
                                                 <label for="" class="form-label">Receiver Contact Number</label>
-                                                <input type="text" name="receiverContact" class="form-control"  id="r-contact" placeholder=""required>
+                                                <input type="text" name="receiverContact" maxlength="11" class="form-control"  id="r-contact" placeholder=""required>
                                             </div>                                       
                                         </div>                                   
                                     </div>

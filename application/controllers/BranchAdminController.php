@@ -2,6 +2,29 @@
 
 class BranchAdminController extends CI_Controller{
 
+    public function __construct()
+    {
+        parent::__construct();
+    
+        // Load necessary helpers and libraries
+        $this->load->helper('url');
+        $this->load->library('session');
+    
+        // Check if the user is logged in
+        if (!$this->session->userdata('logged_in')) {
+            // Redirect to login page
+            redirect(base_url());
+        }
+    
+        // Check if the user is admin or branch manager
+        $user_role = $this->session->userdata('job_title');
+        if ($user_role !== 'admin' && $user_role !== 'BM') {
+            // Show unauthorized access error or redirect to a different page
+            show_error('Unauthorized access', 403);
+        }
+    }
+    
+
     public function render(){
         $page = "index";
 
@@ -10,6 +33,8 @@ class BranchAdminController extends CI_Controller{
          show_404();
 
         }
+      
+
         $data['sample'] = 'data';
 
 

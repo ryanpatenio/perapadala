@@ -13,8 +13,11 @@ $(document).ready(function () {
             
             success: function (resp) {
                 res(resp);
-                if (resp.message == 'success') {
-                    message('Login Successfully!', 'success');
+                if (resp.message == 'success_bm') {
+                    msgThenRedirect('Login Successfully!', 'success','/perapadala/branch-admin');
+                }
+                if (resp.message == 'success_bp') {
+                    msgThenRedirect('Login Successfully!', 'success','/perapadala');
                 }
             },
 
@@ -22,6 +25,9 @@ $(document).ready(function () {
                 res(xhr.responseText);
                 if (xhr.responseJSON.message == 'Invalid') {
                     msg('Invalid Username or Password!', 'error');
+                }
+                if (xhr.responseJSON.message == 'no_branch_assign') {
+                    msg('Account Found! But No Branch Assign Yet!, Contact your Administrator! Before you can use the System', 'info');
                 }
             }
 
@@ -49,8 +55,9 @@ $(document).ready(function () {
                 method: 'get',
                 
                 success: function (resp) {
+                    res(resp)
                     if (resp.message == 'success') {
-                        window.location.reload();
+                        msgThenRedirect('Logout Successfully!', 'success','/perapadala');
                    }
                 },
                 error: function (xhr, status, error) {
