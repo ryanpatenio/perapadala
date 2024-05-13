@@ -9,6 +9,21 @@ class BranchTransactionController extends CI_Controller{
         parent::__construct();
 
 
+         // Check if the user is logged in
+         if (!$this->session->userdata('logged_in')) {
+            // Redirect to login page
+            redirect(base_url());
+        }
+    
+        // Check if the user is admin or branch Personnel
+        $job_title = $this->session->userdata('job_title');
+        $user_role = $this->session->userdata('role');
+        if ($user_role !== 'user' && $job_title !== 'BP') {
+            // Show unauthorized access error or redirect to a different page
+            show_error('Unauthorized access', 403);
+        }
+
+
     }
 
     public function render_transaction_index(){
@@ -157,6 +172,71 @@ class BranchTransactionController extends CI_Controller{
 
         if($id === null || $id === ''){
             return $this->response->status('error_null',400);
+        }else{
+            #id not empty
+            $data = $this->BranchTransactionModel->getTransactionData($id);
+            if($data !== 2){
+                #success
+                echo json_encode($data);
+            }else{
+                #error
+                return $this->response->status('error',400);
+            }
+        }
+    }
+
+    public function updateTransaction(){
+        $this->form_validation->set_rules('sender_name','Sender Name','required');
+        $this->form_validation->set_rules('sender_address','Sender Address','required');
+        $this->form_validation->set_rules('receiver_name','receiver Name','required');
+        $this->form_validation->set_rules('receiver_address','receiver address','required');
+        $this->form_validation->set_rules('sender_contact','Sender Contact','required');
+        $this->form_validation->set_rules('receiver_contact','Receiver Contact','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status(validation_errors(),400);
+        }else{
+            $data = $this->input->post();
+            $customer_id = $data['customer_id'];
+            $transaction_id = $data['trans_id'];
+            $trans_detail_id = $data['trans_detail_id'];
+
+            $trans_details_data = array(
+                'receiver_name' => $data['receiver_name'],
+                'receiver_contact' => $data['receiver_contact'],
+                'receiver_address' => $data['receiver_address']
+
+            );
+
+            $customer_data = array(
+                'name' => $data['sender_name'],
+                'contact' => $data['sender_contact'],
+                'address' => $data['sender_address']
+
+            );
+
+            if($customer_id === null || $customer_id === '' && $transaction_id === null || $transaction_id === '' && $trans_detail_id === null || $trans_detail_id == ''){
+                #null important ID
+                return $this->response->status('error_null',400);
+            }else{
+
+               $update = $this->BranchTransactionModel->updateTransaction($customer_data,$trans_details_data, $customer_id, $trans_detail_id);
+               if($update != 2){
+                return $this->response->status('success',200);
+               }else{
+                 return $this->response->status('error',500);
+               }
+            }
+
+           
+        }
+    }
+
+    public function viewTransaction(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null',400);
         }else{
             #id not empty
             $data = $this->BranchTransactionModel->getTransactionData($id);

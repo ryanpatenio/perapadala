@@ -92,6 +92,8 @@ $route['sendTransaction'] = 'sendTransactionController/render';
 
 $route['branchTransaction'] = 'branchTransactionController/render_transaction_index';
 $route['get-transaction'] = 'branchTransactionController/getTransaction';
+$route['update-branch-transaction'] = 'branchTransactionController/updateTransaction';
+$route['view-transaction'] = 'branchTransactionController/viewTransaction';
 
 ###End of USER ROUTE ###########################
 

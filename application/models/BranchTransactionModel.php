@@ -103,7 +103,7 @@ class BranchTransactionModel extends CI_Model{
 
     public function getTransactionData($trans_id){
         $query = $this->db
-                ->select('t.transaction_id,t.status,t.transaction_claimed, t.transaction_code, t.transaction_date, c.name AS senderName, c.contact AS senderContact, c.address AS senderAddress, td.receiver_name AS receiverName, td.receiver_address AS receiverAddress, td.receiver_contact AS receiverContact, td.amount, td.purpose, td.sender_relation,td.fee')
+                ->select('t.transaction_id,td.transaction_details_id,td.sender_customer_id,t.status,t.transaction_claimed, t.transaction_code, t.transaction_date, c.name AS senderName, c.contact AS senderContact, c.address AS senderAddress, td.receiver_name AS receiverName, td.receiver_address AS receiverAddress, td.receiver_contact AS receiverContact, td.amount, td.purpose, td.sender_relation,td.fee')
                 ->from('transactions t')
                 ->join('transaction_details td', 't.transaction_id = td.transaction_id')
                 ->join('customer c', 'c.customer_id = td.sender_customer_id')
@@ -157,6 +157,27 @@ class BranchTransactionModel extends CI_Model{
             return 2;
         }         
 
+    }
+    public function updateTransaction($custData,$trans_details_data, $cust_id, $trans_detail_id){
+        #update the customer Table First
+        $updateCustomer = $this->db->where('customer_id',$cust_id)
+                ->update('customer',$custData);
+        
+                if($updateCustomer){
+                    $updateTrans_details = $this->db->where('transaction_details_id',$trans_detail_id)
+                    ->update('transaction_details',$trans_details_data);
+                    if($updateTrans_details){
+                        return 1;
+                    }else{
+                        #failed to update Transaction
+                        return 2;
+                    }
+                }else{
+                    #failed to update customer
+                    return 2;
+                }
+        
+       
     }
 
    public function generateRandomCodeWithDate() {

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const profileModal = $('#profileModal');
     
     $('#codeForm').submit(function (e) {
         e.preventDefault();
@@ -97,6 +98,13 @@ $(document).ready(function () {
             alert('null');
         }
 
+    });
+
+    $(document).on('click', '#profile-btn', function (e) {
+        e.preventDefault();
+        const id = $(this).attr('data-id');
+
+        profileModal.modal('show');
     });
 
 });

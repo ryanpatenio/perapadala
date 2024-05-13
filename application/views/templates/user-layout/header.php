@@ -125,7 +125,7 @@
                     <span class="dot"></span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Profile</a>
+                    <a class="dropdown-item" href="#" id="profile-btn" data-id="<?=$this->session->userdata['emp_id']; ?>">Profile</a>
                    
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item " href="#" id="logout">Logout</a>
