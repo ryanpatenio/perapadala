@@ -250,6 +250,93 @@ class BranchTransactionController extends CI_Controller{
         }
     }
 
+    public function getProfile(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null',400);
+        }else{
+           $data = $this->UserModel->getBranchPersonnelProfile($id);
+           if($data != 2){
+            echo json_encode($data);
+           }else{
+            return $this->response->status('error',500);
+           }
+        }
+    }
+
+    public function updateProfile(){
+        $this->form_validation->set_rules('fname','First Name','required');
+        $this->form_validation->set_rules('lname','Last Name','required');
+        $this->form_validation->set_rules('email','E-mail','trim|required');
+        $this->form_validation->set_rules('contact','Contact Number','required');
+        $this->form_validation->set_rules('address','Address','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('error_val',400);
+        }else{
+            #init data array
+            $data = $this->input->post();
+
+            #get the employee ID 
+            $emp_id = $this->input->post('emp_id');
+
+            #get the password
+            $password = $this->input->post('pass');
+
+            #check if not null Both
+            if($emp_id === null || $emp_id === ''){
+                #return Error
+                return $this->response->status('null_id',400);
+            }else{
+                #not null proceed!
+                #check the password if the owner change it
+                if($password === null || $password === ''){
+                    #user didn't change it
+                    #set here a Data to To Insert
+                    $dataUpdate = array(
+                        'fname' => $data['fname'],
+                        'lname' => $data['lname'],
+                        'email' => $data['email'],
+                        'contact' => $data['contact'],
+                        'address' => $data['address']
+
+                    );
+                    #update
+                    $update = $this->UserModel->updateBpProfile($dataUpdate,$emp_id);
+                    if($update != 2){
+                        #success
+                        return $this->response->status('success',200);
+                    }else{
+                        #failed
+                        return $this->response->status('error',500);
+                    }
+                }else{
+                    #user change the password
+                    $dataUpdate = array(
+                        'fname' => $data['fname'],
+                        'lname' => $data['lname'],
+                        'email' => $data['email'],
+                        'contact' => $data['contact'],
+                        'address' => $data['address'],
+                        'password' => password_hash($data['pass'],PASSWORD_DEFAULT)
+                    );
+
+                    #update it
+                    $update = $this->UserModel->updateBpProfile($dataUpdate,$emp_id);
+                    if($update != 2){
+                        #success
+                        return $this->response->status('success',200);
+                    }else{
+                        #failed
+                        return $this->response->status('error',500);
+                    }
+                }
+            }
+        }
+       
+    }
+
     // Decryption function
     private function decryptData($encryptedData, $key) {
         // Decode the encrypted data from Base64

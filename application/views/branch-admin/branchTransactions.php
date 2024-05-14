@@ -41,17 +41,44 @@
                 </thead>
                 
                 <tbody>
+                     <?php
+                    $i = 1;
+
+                    foreach ($transactions as $transaction) {
+                      ?>
                      <tr>
-                        <td>1</td>
-                        <td>BSDW23S3SE</td>
-                        <td>April 4 2024</td>
-                        <td><button class="btn btn-success btn-sm">In Progress</button></td>
+                        <td><?=$i; ?></td>
+                        <td><?=$transaction->transaction_code; ?></td>
+                        <td><?=date('F j Y g:ia', strtotime($transaction->transaction_date)) ?></td>
+                        <td>
+                          <?php
+                          $status = '';
+                          $color = '';
+
+                          if($transaction->status == 0 || $transaction->status === '0'){
+                            $status = 'IN PROGRESS';
+                            $color = 'warning';
+                          }else{
+                            $status = 'CLAIMED';
+                            $color = 'success';
+                          }
+                          
+                          
+                          ?>
+                        <button class="btn btn-<?=$color; ?> btn-sm"><?= $status; ?></button></td>
                        
                         <td>
-                          <button type="button" id="view_btn" data-id="" class="btn btn-primary bi bi-search">View</button>
-                          <button type="button" id="edit_trans_btn" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="view_btn" data-id="<?= $transaction->transaction_id; ?>" class="btn btn-primary bi bi-search">View</button>
+                          <button type="button" id="edit_trans_btn" data-id="<?= $transaction->transaction_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                         </td>
                       </tr>
+
+
+                    <?php $i++;
+                    }
+
+
+                    ?>  
                 </tbody>
               </table>
             </div>
@@ -323,8 +350,8 @@
                     <input type="text" class="form-control"  readonly>  
                   </div>     
                 </div>
-                <div class="row mb-2">
-                  <div class="d-flex align-item-center justify-content-center mt-5">
+                <div class="row">
+                  <div class="d-flex align-item-center justify-content-center">
                     <button class="btn btn-primary  btn-gradient">In Progress</button>
                   </div>
                 </div>

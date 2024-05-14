@@ -93,7 +93,7 @@ class EmployeesController extends CI_Controller{
                         $dataToInsert = array(
                             'fname' => $data['fname'],
                             'lname' => $data['lname'],
-                            'email' => $data['email'],
+                            'email' => $data['up_email'],
                             'contact' => $data['contact'],
                             'address' => $data['address'],
                             'hire_date' => $data['hireDate'],
@@ -113,7 +113,7 @@ class EmployeesController extends CI_Controller{
                         $dataToInsert = array(
                             'fname' => $data['fname'],
                             'lname' => $data['lname'],
-                            'email' => $data['email'],
+                            'email' => $data['up_email'],
                             'contact' => $data['contact'],
                             'address' => $data['address'],
                             'hire_date' => $data['hireDate'],
@@ -134,7 +134,7 @@ class EmployeesController extends CI_Controller{
     public function updateEmployee(){
         $this->form_validation->set_rules('fname','First Name','required');
         $this->form_validation->set_rules('lname','Last Name','required');
-        $this->form_validation->set_rules('email','E-mail','required');
+        $this->form_validation->set_rules('up_email','E-mail','required');
         $this->form_validation->set_rules('contact','Contact','required');
         $this->form_validation->set_rules('address','Address','required');
         $this->form_validation->set_rules('hireDate','Hire Date','required');
@@ -149,74 +149,133 @@ class EmployeesController extends CI_Controller{
 
             #check if not null
             if($id === null || $id === ''){
-             #id is null
-              return $this->response->status('id_null',400);
+            #id is null
+            return $this->response->status('id_null',400);
             }else{
-                #id null
-                
-                #check if email is not exist
-                $exist = $this->EmployeesModel->emailExistWithID($data['email'],$id);
+            #id null
 
-                if($exist == 2){
-                    #email exist
-                    return $this->response->status('email_exist',400);
-                }else{
-                    #email not exist
-
-                    #check if this user is BM or branch Manager is already assign in the branches so that you cant change his job title into branch personnel
-                    $BM_already_assign = $this->EmployeesModel->checkEmployeeIfBMisAlreadyAssigned($id);
-                    $employeeJobTitle = $this->EmployeesModel->checkEmployeeJobTitle($id);
-                    $hasBranchAssign = $this->EmployeesModel->checkEmployeeAssignStatus($id);
-
-                    #check if the selected Job Title is not the same as the old Job Title
-                    if($data['old_job'] == $data['job']){
-                        #no changes
-                        #no need to check if it is BM or BP
-                        $this->funcUpdateEmployee($data,$id);
-
-                    }else{
-                        ##theres a changes in Job Title so That we must check if this user is a BM or has branch assigned area so that the user will not automatically change the job title to avoid conflict in the algorithm in the admin branches Page
-                        if($employeeJobTitle == 'BP'){
-                            if($hasBranchAssign == 1){
-                                //has no branch assign
-                                $this->funcUpdateEmployee($data,$id);
-                            }else{
-                                #has branch assign
-                                return $this->response->status('BP_hasBranch_assign',400);
-                            }
-                        }elseif($employeeJobTitle == 'BM'){
-                           
-                            if($hasBranchAssign == 1){
-                                //has No branch assign
-                                $this->funcUpdateEmployee($data,$id);
-                            }else{
-                                #has branch assigned
-                                if($BM_already_assign == 1){
-                                    return $this->response->status('bm_assigned',400);
-                                }
-                            }
-                        }elseif($employeeJobTitle == 'AS'){
-                            if($hasBranchAssign == 1){
-                                //has No branch assign
-                                $this->funcUpdateEmployee($data,$id);
-                            }else{
-                                #has branch assign
-                                return $this->response->status('AS_hasBranch_assign',400);
-                            }
+                $old_email = $data['old_email'];
+                $new_email = $data['up_email'];
+                if($old_email != $new_email){
+                    #changes in email
+                    #check if the new email is already exist in the db
+                    #check if email is not exist
+                    $exist = $this->EmployeesModel->checkEmailExist($new_email);              
+                        if($exist == 1){
+                            #email exist
+                            return $this->response->status('email_exist',400);
                         }else{
-                            echo 'error1';
+                            #email not exist
+
+                            #check if this user is BM or branch Manager is already assign in the branches so that you cant change his job title into branch personnel
+                            $BM_already_assign = $this->EmployeesModel->checkEmployeeIfBMisAlreadyAssigned($id);
+                            $employeeJobTitle = $this->EmployeesModel->checkEmployeeJobTitle($id);
+                            $hasBranchAssign = $this->EmployeesModel->checkEmployeeAssignStatus($id);
+
+                            #check if the selected Job Title is not the same as the old Job Title
+                            if($data['old_job'] == $data['job']){
+                                #no changes
+                                #no need to check if it is BM or BP
+                                $this->funcUpdateEmployee($data,$id);
+
+                            }else{
+                                ##theres a changes in Job Title so That we must check if this user is a BM or has branch assigned area so that the user will not automatically change the job title to avoid conflict in the algorithm in the admin branches Page
+                                if($employeeJobTitle == 'BP'){
+                                    if($hasBranchAssign == 1){
+                                        //has no branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assign
+                                        return $this->response->status('BP_hasBranch_assign',400);
+                                    }
+                                }elseif($employeeJobTitle == 'BM'){
+                                    
+                                    if($hasBranchAssign == 1){
+                                        //has No branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assigned
+                                        if($BM_already_assign == 1){
+                                            return $this->response->status('bm_assigned',400);
+                                        }
+                                    }
+                                }elseif($employeeJobTitle == 'AS'){
+                                    if($hasBranchAssign == 1){
+                                        //has No branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assign
+                                        return $this->response->status('AS_hasBranch_assign',400);
+                                    }
+                                }else{
+                                    echo 'error1';
+                                }
+
+                            }
+
+
                         }
+                }else{
+                             #no changes in email
 
-                    }
+                    
+                            #check if this user is BM or branch Manager is already assign in the branches so that you cant change his job title into branch personnel
+                            $BM_already_assign = $this->EmployeesModel->checkEmployeeIfBMisAlreadyAssigned($id);
+                            $employeeJobTitle = $this->EmployeesModel->checkEmployeeJobTitle($id);
+                            $hasBranchAssign = $this->EmployeesModel->checkEmployeeAssignStatus($id);
+
+                            #check if the selected Job Title is not the same as the old Job Title
+                            if($data['old_job'] == $data['job']){
+                                #no changes
+                                #no need to check if it is BM or BP
+                                $this->funcUpdateEmployee($data,$id);
+
+                            }else{
+                                ##theres a changes in Job Title so That we must check if this user is a BM or has branch assigned area so that the user will not automatically change the job title to avoid conflict in the algorithm in the admin branches Page
+                                if($employeeJobTitle == 'BP'){
+                                    if($hasBranchAssign == 1){
+                                        //has no branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assign
+                                        return $this->response->status('BP_hasBranch_assign',400);
+                                    }
+                                }elseif($employeeJobTitle == 'BM'){
+                                    
+                                    if($hasBranchAssign == 1){
+                                        //has No branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assigned
+                                        if($BM_already_assign == 1){
+                                            return $this->response->status('bm_assigned',400);
+                                        }
+                                    }
+                                }elseif($employeeJobTitle == 'AS'){
+                                    if($hasBranchAssign == 1){
+                                        //has No branch assign
+                                        $this->funcUpdateEmployee($data,$id);
+                                    }else{
+                                        #has branch assign
+                                        return $this->response->status('AS_hasBranch_assign',400);
+                                    }
+                                }else{
+                                    echo 'error1';
+                                }
+
+                            }
 
 
+                        }
                 }
+                
+               
 
 
             }
      
-        }
     }
+    
 
     public function getEmployee(){
         $id = $this->input->post('id');

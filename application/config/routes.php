@@ -18,15 +18,6 @@ $route['admin-locations'] = 'adminController/locations_index';
 $route['admin-users'] = 'adminController/users_index';
 $route['admin-profile'] = 'adminController/profile_index';
 $route['admin-service-fee'] = 'adminController/serviceCharge_index';
-#end of Admin Routes
-
-
-#branch admin Routes ######################
-$route['branch-admin'] = 'branchAdminController/render';
-$route['branch-employees'] = 'branchAdminController/branchEmployees_index';
-$route['branch-customers'] = 'branchAdminController/branchCustomers_index';
-$route['branch-transactions'] = 'branchAdminController/branchTransactions_index';
-$route['branch-My-profile'] = 'branchAdminController/branchMyProfile_index';
 
 ##Jobs Route
 $route['admin-addJob'] = 'jobController/addJob';
@@ -67,6 +58,24 @@ $route['admin-get-employee-details'] = 'employeesController/getEmployeeDetails';
 $route['admin-add-service-fee'] = 'serviceFeeController/addFee';
 $route['admin-get-service-fee'] = 'serviceFeeController/getFee';
 $route['admin-update-fee'] = 'serviceFeeController/updateFee';
+
+#end of Admin Routes
+
+
+#branch admin Routes for Branch Manager ######################
+$route['branch-admin'] = 'branchAdminController/render';
+$route['branch-employees'] = 'branchAdminController/branchEmployees_index';
+$route['branch-customers'] = 'branchAdminController/branchCustomers_index';
+$route['branch-transactions'] = 'branchAdminController/branchTransactions_index';
+$route['branch-My-profile'] = 'branchAdminController/branchMyProfile_index';
+
+#Employees
+$route['get-branch-employee'] = 'branchAdminController/getEmployee';
+
+#customers
+$route['edit-branch-customer'] = 'branchAdminController/getCustomer';
+$route['update-branch-customer'] = 'branchAdminController/updateCustomer';
+
 #end of Branch admin Routes ########################
 
 
@@ -94,6 +103,11 @@ $route['branchTransaction'] = 'branchTransactionController/render_transaction_in
 $route['get-transaction'] = 'branchTransactionController/getTransaction';
 $route['update-branch-transaction'] = 'branchTransactionController/updateTransaction';
 $route['view-transaction'] = 'branchTransactionController/viewTransaction';
+
+#user Profile
+$route['get-bp-profile'] = 'branchTransactionController/getProfile';
+$route['update-bp-profile'] = 'branchTransactionController/updateProfile';
+
 
 ###End of USER ROUTE ###########################
 

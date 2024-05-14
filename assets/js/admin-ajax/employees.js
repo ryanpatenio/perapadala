@@ -60,6 +60,8 @@ $(document).ready(function(){
 
           success:function(data){
             $('#e-id').val(data.employee_id);
+
+            $('#old-email').val(data.email);
             
             $('#edit-fname').val(data.fname);
             $('#edit-lname').val(data.lname);
@@ -116,7 +118,7 @@ $(document).ready(function(){
                 dataType:'json',
 
                 success:function(response){
-                  //res(response)
+                 // res(response)
                   formModalClose(editModal,$('#updateForm'));
                   if(response.message == 'success'){
                     message('Employee Updated Successfully!','success');

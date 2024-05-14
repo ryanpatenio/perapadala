@@ -24,8 +24,7 @@
           
         </div>
 
-
-
+  
           <div class="card-body">
             <div class="table-responsive">
               <table class="table datatable table-light" id="dataTable" width="100%" cellspacing="0">
@@ -34,31 +33,37 @@
                     <th>No.</th>
                     <th>Name</th>
                     <th>Hire Date</th>
-                    <th>Job Title</th>                  
+                    <th>Job Title</th>
+                    <th>Branch</th>                  
                     <th>Action</th>
                   </tr>
                 </thead>
                 
                 <tbody>
 
-
-
-                      <tr>
-                        <td>1</td>
-                        <td>Patricio Tan</td>
-                        <td>January 4 2020</td>
-                        <td>Branch Personnel</td>
-                       
-                        <td>
-                          
-                          <button type="button" id="view_btn" class="btn btn-primary bi bi-search"> Details</button>
-                        </td>
-                      </tr>
-
+                <?php
                 
-             
-                     
+                $i = 1;
+                foreach ($employees as $employee) {
+                  ?>
+                 
+                  <tr>
+                    <td><?=$i; ?></td>
+                    <td><?=$employee->name; ?></td>
+                    <td><?=date('F j Y - g:ia', strtotime($employee->hire_date)) ?></td>
+                    <td><?= $employee->job_title; ?></td>
+                    <td><?= $employee->branch_name; ?></td>
+                    <td>
+                      
+                      <button type="button" id="view_btn" data-id="<?=$employee->employee_id; ?>" class="btn btn-primary bi bi-search"> Details</button>
+                    </td>
+                  </tr>
 
+        <?php $i++;   }
+                
+                
+                
+                ?>
                 </tbody>
               </table>
             </div>
@@ -83,7 +88,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-           
+                <form id="viewEmployeesForm">
               <div class="card-body">
 
                 <div class="row mb-2 mt-2">                           
@@ -131,28 +136,10 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             
           </div>
-      
+                </form>
         </div>
       </div>
 </div><!-- End Add Modal-->
 <!---------------end of all Modal---------------------->
   </main> <!------------- end of Main ----->
-  
- 
-
-  
-  <script>
-$(document).ready(function(){
-
-    $(document).on('click','#view_btn',function(e){
-        e.preventDefault();
-
-        $("#viewEmployeeModal").modal('show');
-
-
-    });
-
-})
-
-
-  </script>
+  <script type="text/javascript" src="<?= base_url();?>assets/js/branch-manager/branch_employees.js"></script>

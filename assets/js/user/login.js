@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const loginModal = $('#loginModal');
    
     $('#loginForm').submit(function (e) {
         e.preventDefault();
@@ -12,7 +13,8 @@ $(document).ready(function () {
             dataType: 'json',
             
             success: function (resp) {
-                res(resp);
+                //res(resp);
+                formModalClose(loginModal, $('#loginForm'));
                 if (resp.message == 'success_bm') {
                     msgThenRedirect('Login Successfully!', 'success','/perapadala/branch-admin');
                 }

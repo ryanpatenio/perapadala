@@ -71,18 +71,33 @@
 
         </li> <!-- End Messages Nav -->
 
+        <?php
+        if(!$this->session->userdata['emp_id']){
+          redirect(base_url());
+        }
+
+        $name = $this->session->userdata['emp_name'];
+        $job_title = $this->session->userdata['job_title'];
+        if($job_title == 'BM'){
+          $job_name = 'Branch Manager';
+        }else{
+          $job_name = '';
+        }
+        
+        ?>
+
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;">James Harden</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;"><?= $name; ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
 
 
-              <h6>Ryan Wong</h6>
-              <span>Administrator</span>
+              <h6><?=$name; ?></h6>
+              <span><?=$job_name; ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -119,7 +134,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" id="sign_out_btn_ad">
+              <a class="dropdown-item d-flex align-items-center" href="#" id="sign_out_btn_ad">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>

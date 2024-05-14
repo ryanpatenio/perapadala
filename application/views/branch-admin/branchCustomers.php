@@ -39,23 +39,28 @@
                 </thead>
                 
                 <tbody>
-
-
-
-                      <tr>
-                        <td>1</td>
-                        <td>James Bulkman</td>                       
-                        <td>April 29 2024</td>
+              
+                <?php
+                
+                $i = 1;
+                foreach ($customers as $customer) {
+                  ?>
+                    <tr>
+                        <td><?=$i; ?></td>
+                        <td><?=$customer->name; ?></td>                       
+                        <td><?=date('F j Y - g:ia', strtotime($customer->transaction_date)) ?></td>
                        
                         <td>
-                          <button type="button" id="edit_customer_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_customer_btn" data-id="<?=$customer->customer_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
-                      </tr>
+                    </tr>
 
+
+                  <?php $i++;
+                }
                 
-             
-                     
+                ?>
 
                 </tbody>
               </table>
@@ -82,25 +87,26 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form method="POST" id="upcat" >
+              <form method="POST" id="updateCustomerForm" >
+                <input type="hidden" id="customer-id" name="customer_id">
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Customer Name</label>                  
-                      <input type="text" class="form-control" name="upCustomerName" id="upCustomerName"  required>  
+                      <input type="text" class="form-control" name="customer_name" id="customer-name"  required>  
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Contact</label>                  
-                      <input type="text" class="form-control" name="upContact" id="upContact"  required>  
+                      <input type="text" class="form-control" maxlength="11" name="contact" id="contact"  required>  
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Adress</label>                  
-                      <input type="text" class="form-control" name="upAddress" id="upAddress"  required>  
+                      <input type="text" class="form-control" name="address" id="address"  required>  
                     </div>
                   </div>
                 </div>                       
@@ -118,19 +124,4 @@
   <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
-   
-  <script>
-      $(document).ready(function(){
-
-          $(document).on('click','#edit_customer_btn',function(e){
-              e.preventDefault();
-
-              $("#editCustomerModal").modal('show');
-
-
-          });
-
-      })
-
-
-  </script>
+  <script type="text/javascript" src="<?= base_url();?>assets/js/branch-manager/branch_customer.js"></script>

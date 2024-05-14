@@ -39,10 +39,14 @@ class EmployeesModel extends CI_Model{
         return 2;
     }
     public function emailExistWithID($email,$id){
-        $query = $this->db->where('email',$email)
+        $query = $this->db->select('*')          
+            ->from('employees')
+            ->where('email',$email)
             ->where('employee_id',$id)
-            ->get('employees');
+            ->get();
+            
         if($query->num_rows() > 0){
+            #found Data
             return 1;
         }else{
             return 2;
@@ -266,6 +270,23 @@ class EmployeesModel extends CI_Model{
             return 2;
         }
 
+    }
+
+    
+    public function fetchMyEmployeesByBranch($branch_id){
+        $query = $this->db->select('e.employee_id, CONCAT(e.fname, " ", e.lname) AS name, e.hire_date, j.name AS job_title, b.branch_name')
+            ->from('employees e')
+            ->join('branches b', 'e.branch_id = b.branch_id')
+            ->join('job j', 'e.job_id = j.job_id')
+            ->where('b.branch_id', $branch_id)
+            ->where('j.job_id', 2) #2 means branch Personnel
+            ->get();
+
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
     }
     
 

@@ -176,6 +176,7 @@
                       <form method="POST" id="updateForm" >
                       <input type="hidden" name="id" id="e-id">
                       <input type="hidden" id="old-job" name="old_job">
+                      <input type="hidden" id="old-email" name="old_email">
 
                         <div class="card-body">
 
@@ -193,7 +194,7 @@
                             <div class="row mb-2">                           
                               <div class="col">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" id="edit-email" class="form-control" placeholder="E-mail">
+                                <input type="email" name="up_email" id="edit-email" class="form-control" placeholder="E-mail">
                               </div>  
                               <div class="col">
                                 <label for="password">Password</label>

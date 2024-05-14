@@ -180,6 +180,7 @@ class BranchTransactionModel extends CI_Model{
        
     }
 
+
    public function generateRandomCodeWithDate() {
         $code = '';
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

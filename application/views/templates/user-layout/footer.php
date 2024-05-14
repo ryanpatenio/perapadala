@@ -86,19 +86,19 @@
             <div class="modal-body">
                 <form id="profileForm">
                     <div class="card-body">
-                   
+                        <input type="hidden" id="emp-id" name="emp_id">
                         <div class="row">
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">First Name</label>
-                                    <input type="text" name=""  class="form-control" value="" name=""placeholder="">
+                                    <input type="text" name="fname"  class="form-control" id="fname" value="" required>
                                 </div>                                       
                             </div>
                             
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">Last Name</label>
-                                    <input type="text" name=""  class="form-control" value="" placeholder="">
+                                    <input type="text" name="lname"  class="form-control" id="lname" value=""  required>
                                 </div>                                       
                             </div>                                   
                         </div>
@@ -106,14 +106,14 @@
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">E-mail</label>
-                                    <input type="text" name=""  class="form-control" value="" name=""placeholder="">
+                                    <input type="email" name="email"  class="form-control" id="e-mail" value="" required>
                                 </div>                                       
                             </div>
                             
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
-                                    <label for="" class="form-label">Password</label>
-                                    <input type="password" name=""  class="form-control" value="" placeholder="">
+                                    <label for="" class="form-label">Password (optional)</label>
+                                    <input type="password" name="pass"  class="form-control" id="pass-word" value=""  >
                                 </div>                                       
                             </div>                                   
                         </div>
@@ -121,14 +121,14 @@
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">Contact</label>
-                                    <input type="text" name=""  class="form-control" value="" name=""placeholder="">
+                                    <input type="text" name="contact" maxlength="11"  class="form-control" id="contact" value=""  required>
                                 </div>                                       
                             </div>
                             
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">Address</label>
-                                    <input type="text" name=""  class="form-control" value="" placeholder="">
+                                    <input type="text" name="address"  class="form-control" id="address" value=""  required>
                                 </div>                                       
                             </div>                                   
                         </div>
@@ -136,14 +136,14 @@
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">Job Title</label>
-                                    <input type="text" name="" readonly  class="form-control text-danger" value="asd" name="">
+                                    <input type="text" name="" readonly  class="form-control text-danger" value="" id="job-title">
                                 </div>                                       
                             </div>
                             
                             <div class="col-md-6 mb-2">                                        
                                 <div class="mb-0">
                                     <label for="" class="form-label">Branch Assigned</label>
-                                    <input type="text" name=""readonly  class="form-control text-danger" value="asdas">
+                                    <input type="text" name="" readonly id="branch-assigned" class="form-control text-danger" value="">
                                 </div>                                       
                             </div>                                   
                         </div>
