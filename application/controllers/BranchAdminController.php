@@ -188,5 +188,100 @@ class BranchAdminController extends CI_Controller{
         }
     }
 
+    public function addBMTransaction(){
+        $this->form_validation->set_rules('nameOfSender','Name Of Sender','required');
+        $this->form_validation->set_rules('senderAddress','Sender Address','required');
+
+        $this->form_validation->set_rules('nameOfReceiver','Name of Receiver','required');
+        $this->form_validation->set_rules('receiverAddress','Receiver Address','required');
+
+        $this->form_validation->set_rules('senderContact','Sender Contact Number','required');
+        $this->form_validation->set_rules('receiverContact','Receiver Contact Number','required');
+
+        $this->form_validation->set_rules('senderRelation','Sender Relation','required');
+        $this->form_validation->set_rules('purpose','Purpose of Transaction','required');
+
+        $this->form_validation->set_rules('amount','Amount','required');
+        $this->form_validation->set_rules('percent','Percent Or Charges','required');
+        $this->form_validation->set_rules('fee','Fees','required');
+
+        $fee = $this->input->post('fee');
+
+        if($fee === '' || $fee === null){
+            return $this->response->status('fees_null',400);
+        }elseif($this->form_validation->run() == FALSE){
+            return $this->response->status(validation_errors(),400);
+        }else{
+            $data = $this->input->post();
+            
+            $insert = $this->BranchTransactionModel->createTransaction($data);
+
+            if(!empty($insert)){
+            //$this->session->set_flashdata('transaction_data', $data);
+
+               echo json_encode(['message'=> 'success','id'=>$insert['transaction_id']]);
+            }else{
+                return $this->response->status('error',500);
+            }
+        }
+      
+    }
+
+    public function getTransaction(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null');
+        }else{
+            $branch_id = $this->session->userdata['branch_id'];
+            if(!$branch_id){
+                #branch id not found
+                return $this->response->status('error',500);
+            }else{
+                #success
+                $data = $this->BranchTransactionModel->getBranchTransactionByBranch_ID_trans_ID($branch_id,$id);
+                echo json_encode($data);
+            }
+        }
+    }
+
+   public function updateBMTransaction(){
+        $this->form_validation->set_rules('name','Sender Name','required');
+        $this->form_validation->set_rules('address','Sender Address','required');
+        $this->form_validation->set_rules('receiver_name','Receiver Name','required');
+        $this->form_validation->set_rules('receiver_address','Receiver Address','required');
+        $this->form_validation->set_rules('contact','Sender Contact','required');
+        $this->form_validation->set_rules('receiver_contact','Receiver Contact','required');
+        $this->form_validation->set_rules('relation','Relation','required');
+        $this->form_validation->set_rules('purpose','Purpose Of Transaction','required');
+        $this->form_validation->set_rules('amount','Amount','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('validation_false',400);
+        }else{
+            $data = $this->input->post();
+            $fee = $this->input->post('fee');
+            $trans_id  = $this->input->post('transaction_id');
+            $customer_id = $this->input->post('customer_id');
+            $td_id = $this->input->post('transaction_details_id');
+
+            if($fee === null || $fee === '' && $trans_id === null || $trans_id === '' && $customer_id === null || $customer_id === '' || $td_id === null || $td_id === ''){
+                #fee is null
+                return $this->response->status('id_null',400);
+            }else{
+                #not null
+                //echo json_encode($data);
+                $update = $this->BranchTransactionModel->updateBranchTransactionBM($data);
+                if($update != 2){
+                    #success
+                    return $this->response->status('success',200);
+                }else{
+                    return $this->response->status('error',500);
+                }
+            }
+            
+        }
+
+   }
 
 }

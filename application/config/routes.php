@@ -76,6 +76,12 @@ $route['get-branch-employee'] = 'branchAdminController/getEmployee';
 $route['edit-branch-customer'] = 'branchAdminController/getCustomer';
 $route['update-branch-customer'] = 'branchAdminController/updateCustomer';
 
+
+#branch Transaction
+$route['add-bm-transaction'] = 'branchAdminController/addBMTransaction';
+$route['get-branch-transaction'] = 'branchAdminController/getTransaction';
+$route['get-transaction-data'] = 'branchAdminController/getTransaction';
+$route['update-bm-side-transaction'] = 'branchAdminController/updateBMTransaction';
 #end of Branch admin Routes ########################
 
 

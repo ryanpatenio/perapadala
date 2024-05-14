@@ -180,6 +180,89 @@ class BranchTransactionModel extends CI_Model{
        
     }
 
+    public function getBranchTransactionByBranch_ID_trans_ID($branch_id,$transaction_id){
+        $query =   $this->db->select([
+                      't.transaction_id',
+                      't.transaction_code',
+                      't.transaction_date',
+                      'c.name as customer_name',
+                      'c.contact',
+                      'c.address',
+                      'c.customer_id',
+                      'td.receiver_name',
+                      'td.receiver_address',
+                      'td.receiver_contact',
+                      'td.purpose',
+                      'td.sender_relation',
+                      'b.branch_name',
+                      'CONCAT(e.fname, " ", e.lname) as employee_incharge',
+                      'td.amount',
+                      'td.fee',
+                      't.status',
+                      'td.transaction_details_id'
+                  ])
+              ->from('transactions t')
+              ->join('transaction_details td', 't.transaction_id = td.transaction_id')
+              ->join('branches b', 't.branch_id = b.branch_id')
+              ->join('customer c', 'c.customer_id = td.sender_customer_id')
+              ->join('employees e', 'e.employee_id = t.employee_id')
+              ->where('b.branch_id', $branch_id)
+              ->where('t.transaction_id',$transaction_id)
+              ->get();
+
+          if($query->num_rows() > 0){
+              return $query->row_array();
+          }else{
+              return array();
+          }
+
+    }
+
+    public function updateBranchTransactionBM($data){
+        $transaction_id = $data['transaction_id'];
+        $customer_id = $data['customer_id'];
+        $td_id = $data['transaction_details_id'];
+
+        //unset
+        unset($data['transaction_id']);
+        unset($data['customer_id']);
+        unset($data['transaction_details_id']);
+
+        $customerData = array(
+            'name' => $data['name'],
+            'address' => $data['address'],
+            'contact' => $data['contact']
+
+        );
+
+        $trans_details_Data = array(
+            'receiver_name' => $data['receiver_name'],
+            'receiver_contact' => $data['receiver_contact'],
+            'receiver_address' => $data['receiver_address'],
+            'sender_relation' => $data['relation'],
+            'purpose' => $data['purpose'],
+            'amount' => $data['amount'],
+            'fee' => $data['fee']
+
+        );
+
+        $updateCustomer = $this->db->where('customer_id',$customer_id)
+                ->update('customer',$customerData);
+        if($updateCustomer){
+            #success
+            $updateTrans_details = $this->db->where('transaction_details_id',$td_id)
+                ->update('transaction_details',$trans_details_Data);
+            if($updateTrans_details){
+                return 1;
+            }else{
+                return 2;
+            }
+        }else{
+            return 2;
+        }
+
+    }
+
 
    public function generateRandomCodeWithDate() {
         $code = '';
