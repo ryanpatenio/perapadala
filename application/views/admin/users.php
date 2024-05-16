@@ -64,8 +64,8 @@
                         <td><?= $role; ?></td>
                        
                         <td>
-                          <button type="button" id="edit_user_btn" data-id="<?=$user->user_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
-                         <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
+                          <button type="button" id="edit_user_btn" data-id="<?=$user->user_id; ?>" class="btn btn-warning btn-sm bi bi-pencil"> Modify</button>
+                         <button type="button" data-id="<?=$user->user_id; ?>" id="remove-btn" class="btn btn-danger btn-sm bi bi-trash"> Remove</button>
                         </td>
                     </tr>
 
@@ -100,25 +100,25 @@
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="name" name="name" placeholder="Name"  required>      
+                              <input type="text" class="form-control"  name="name" placeholder="Name"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Email</label>
-                              <input type="email" class="form-control" id="email" name="email" placeholder="E-mail"  required>      
+                              <input type="email" class="form-control" name="email" placeholder="E-mail"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Password</label>
-                              <input type="password" class="form-control" id="password" name="password" placeholder="password"  required>      
+                              <input type="password" class="form-control"  name="password" placeholder="password"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Role</label>
-                              <select name="role" id="role" class="form-select" required>
+                              <select name="role"  class="form-select" required>
                                 <option value="">Select</option>
                                 <option value="1">Super Admin</option>
                                 <option value="2">Sub Admin</option>
@@ -145,31 +145,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
                 <div class="modal-body">
-                  <form method="POST" id="upUserForm" >
+                  <form method="POST" id="updateForm" >
+                      <input type="hidden" id="id" name="id">
+
                   <div class="card-body">
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="fullname" name="upfullname" placeholder="Name"  required>      
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Name"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Email</label>
-                              <input type="email" class="form-control" id="up-email" name="upemail" placeholder="E-mail"  required>      
+                              <input type="email" class="form-control" id="email" name="email" placeholder="E-mail"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Password</label>
-                              <input type="password" class="form-control" id="up-password" name="uppassword" placeholder="password"  required>      
+                              <input type="password" class="form-control" id="password" name="password" placeholder="password">      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Role</label>
-                              <select name="uprole" id="up-role" class="form-select" required>
-                                <option value="">Select</option>
+                              <select name="role" id="role" class="form-select" required>
+                                <option value="" id="current-role"></option>
+                                
                                 <option value="1">Super Admin</option>
                                 <option value="2">Sub Admin</option>
                                 

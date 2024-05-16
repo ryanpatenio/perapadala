@@ -15,7 +15,8 @@ class UserModel extends CI_Model {
     }
     public function get_user_by_email($email) {
         // Query the database to get user by username
-        $query = $this->db->get_where('user', array('email' => $email));
+        $query = $this->db->where('email',$email)
+            ->get('user');
         if($query->num_rows() > 0){
             #found data
             return 1;
@@ -126,11 +127,36 @@ class UserModel extends CI_Model {
 
     public function getAllSubUser(){
         $query = $this->db->where('role',2)
+            ->where('status',1)
             ->get('user');
         if($query->num_rows() > 0){
             return $query->result();
         }else{
             return array();
+        }
+    }
+   
+
+    public function getUserByID($id){
+        $query = $this->db->select('user_id,name,email,role')
+            ->from('user')
+            ->where('user_id',$id)
+            ->get();
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return 2;
+        }
+    }
+
+    public function updateUser($data,$id){
+        $update = $this->db->where('user_id',$id)
+            ->update('user',$data);
+
+        if($update){
+            return 1;
+        }else{
+            return 2;
         }
     }
 

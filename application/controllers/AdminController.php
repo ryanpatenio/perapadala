@@ -281,7 +281,8 @@ class AdminController extends CI_Controller{
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => password_hash($data['password'],PASSWORD_DEFAULT),
-            'role' => $data['role'] 
+            'role' => $data['role'],
+            'status' => 1
 
         );
 
@@ -303,6 +304,80 @@ class AdminController extends CI_Controller{
 
        
     }
+
+    public function getUser(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null',400);
+        }else{
+           
+
+            $data = $this->UserModel->getUserByID($id);
+            if($data !== 2){
+                #success
+                echo json_encode($data);
+            }else{
+                #failed
+                return $this->response->status('error',500);
+            }
+        }
+    }
+
+    public function updateUser() {
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'E-mail', 'required');
+        $this->form_validation->set_rules('role', 'Role', 'required');
+    
+        if ($this->form_validation->run() == FALSE) {
+            return $this->response->status('validation_errors', 400);
+        } else {
+            $data = $this->input->post();
+            $update_data = array(
+                'name' => $data['name'],                
+                'role' => $data['role']                
+            );
+    
+            $password = $this->input->post('password');
+    
+            // Fetch the existing user data from the database based on the user ID
+            $existing_user = $this->UserModel->getUserById($data['id']);
+            if ($existing_user !== null) {
+                // Check if the email is being changed
+                if ($existing_user->email != $data['email']) {
+                    // Email is being changed, so check if the new email already exists
+                    $existing_email = $this->UserModel->get_user_by_email($data['email']);
+    
+                    if ($existing_email == 1) {
+                        // Email already exists in the database for another user
+                        // Return error
+                        return $this->response->status('email_exist', 400);
+                    } else {
+                        $update_data['email'] = $data['email'];
+                    }
+                       
+                
+                }
+    
+                // Check if password is provided
+                if ($password !== null && $password !== '') {
+                    // Password is provided, update it
+                    $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
+                }
+               
+                // Update user data
+                $update = $this->UserModel->updateUser($update_data, $data['id']);
+                if ($update !== 2) {
+                    // Success
+                    return $this->response->status('success', 200);
+                } else {
+                    // Failed to update
+                    return $this->response->status('error', 500);
+                }
+            }
+        }
+    }
+    
 
 
 

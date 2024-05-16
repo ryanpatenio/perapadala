@@ -67,6 +67,8 @@ $route['admin-update-fee'] = 'serviceFeeController/updateFee';
 
 #user Routes
 $route['admin-add-user'] = 'adminController/addUser';
+$route['admin-get-user'] = 'adminController/getUser';
+$route['admin-update-user'] = 'adminController/updateUser';
 
 #end of Admin Routes
 
