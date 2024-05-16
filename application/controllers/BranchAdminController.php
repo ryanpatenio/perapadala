@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BranchAdminController extends CI_Controller{
 
@@ -9,6 +10,8 @@ class BranchAdminController extends CI_Controller{
         // Load necessary helpers and libraries
         $this->load->helper('url');
         $this->load->library('session');
+        $this->load->helper('security');
+        $this->load->library('upload');
     
         // Check if the user is logged in
         if (!$this->session->userdata('logged_in')) {
@@ -129,6 +132,33 @@ class BranchAdminController extends CI_Controller{
         $this->load->view('branch-admin/'.$page,$data);
         $this->load->view('templates/branch-admin-layout/footer');
      
+    }
+
+    public function printMe($transaction_id){
+        $page = 'printme';
+          
+        if(!file_exists(APPPATH.'views/branch-admin/'.$page.'.php')){
+            show_404();
+   
+           }
+        
+        $transaction_data = $this->BranchTransactionModel->getTransactionData($transaction_id); // Replace 'Your_model' and 'getTransactionData' with appropriate names
+    
+        if (!$transaction_data || $transaction_data === 2) {
+            show_404(); // If no data found for the provided ID, show 404 page
+        }
+        if($transaction_id === null || $transaction_id === ''){
+            show_404(); // If no data found for the provided ID, show 404 page
+        }
+    
+        // Pass the transaction data to the view
+        $data['transaction_data'] = $transaction_data;
+
+        
+        $this->load->view('templates/branch-admin-layout/header');
+        $this->load->view('templates/branch-admin-layout/sidebar');
+        $this->load->view('branch-admin/'.$page,$data);
+        $this->load->view('templates/branch-admin-layout/footer');
     }
 
     public function getEmployee(){
@@ -283,5 +313,107 @@ class BranchAdminController extends CI_Controller{
         }
 
    }
+
+   #profile
+   public function changePass(){
+
+    $this->form_validation->set_rules('currentPassword','Old Password','required');
+    $this->form_validation->set_rules('newPassword','New Password','required');
+    $this->form_validation->set_rules('re_Password','Re Enter Password','required');
+
+    if($this->form_validation->run() == FALSE){
+        return $this->response->status('validation_error',400);
+    }else{
+        $data = $this->input->post();
+        $emp_id = $this->session->userdata['emp_id'];
+        
+        $currentPassword = $data['currentPassword'];
+        $newPassword = $data['newPassword'];
+        $oldPassword = $this->UserModel->getEmployeeCurrentPassword($emp_id);
+
+        if ($oldPassword !== 2 && password_verify($currentPassword, $oldPassword->password)){
+           #same Password
+            $newData = array(
+                'emp_id' => $emp_id,
+                'newPass' => password_hash($newPassword,PASSWORD_DEFAULT)
+            );
+            $update = $this->UserModel->updateEmployeesPassword($newData);
+            if($update !== 2){
+                #success
+                return $this->response->status('success',200);
+            }else{
+                #failed
+                return $this->response->status('error',500);
+            }
+
+        }else{
+          #not same password
+          return $this->response->status('pass_failed',400);
+        }
+    }
+
+
+   }
+   
+
+   public function uploadAvatar() {
+
+        $this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
+        $this->form_validation->set_rules('lname', 'Last Name', 'required|alpha');
+
+        if ($this->form_validation->run() == FALSE) {
+            return $this->response->status('validation_errors', 400);
+        } else {
+            $first_name = $this->input->post('fname');
+            $last_name = $this->input->post('lname');
+            $emp_id = $this->session->userdata['emp_id'];
+
+            $insert_data = array(
+                'fname' => $this->security->xss_clean($first_name),
+                'lname' => $this->security->xss_clean($last_name)
+            );
+
+                if (!empty($_FILES['my_avatar']['name'])) {
+                    # Set up all configuration
+                    $config['upload_path'] = './uploads/avatar/';
+                    $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                    $config['max_size'] = 5120; // 5MB in KB
+                    $config['file_name'] = 'avatar_' . date('YmdHis');
+
+                    $this->upload->initialize($config);
+
+                    if (!$this->upload->do_upload('my_avatar')) {
+                        # Error in uploading
+                        $error = $this->upload->display_errors();
+                        return $this->response->status($error, 400);
+                    } else {
+                        # Get the upload data
+                        $data = $this->upload->data();
+                        $file_name = $data['file_name'];
+                        $insert_data['avatar'] = $file_name;
+
+                        # Update session with new avatar filename
+                        $this->session->set_userdata('avatar', $file_name);
+                    }
+                }
+
+                # Send it into the model
+                $upload = $this->UserModel->uploadAvatar($insert_data, $emp_id);
+                if ($upload !== 2) {
+                    # Success
+                    $this->session->set_userdata('fname', $first_name);
+                    $this->session->set_userdata('lname', $last_name);
+                    $this->session->set_userdata('emp_name', $first_name . ' ' . $last_name);
+                    return $this->response->status('success', 200);
+                } else {
+                    # Failed
+                    return $this->response->status('error', 500);
+                }
+          }
+
+    }
+
+
+
 
 }

@@ -55,10 +55,13 @@ class LoginController extends CI_Controller {
                         'emp_id' => $user->employee_id,
                         'emp_email' => $user->email,
                         'emp_name'=> $user->fname.' '.$user->lname,
+                        'fname' => $user->fname,
+                        'lname'=> $user->lname,
                         'job_title'=>$job_title,
                         'branch_id' =>$user->branch_id,
                         'branch_name' => $branch_name->branch_name,
                         'role' => 'user',
+                        'avatar'=> $user->avatar,
                         'logged_in' => TRUE
                     );
                     

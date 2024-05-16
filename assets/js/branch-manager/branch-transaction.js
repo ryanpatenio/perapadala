@@ -30,7 +30,10 @@ $(document).ready(function () {
                         res(resp);
                         resetForm($('#addForm'));
                         if (resp.message == 'success') {
-                            message('New Transaction Created Successfully!', 'success');
+                           
+                            const url = 'print-me/'+resp.id;
+                            // Send the encrypted transaction code via URL to printmepage.php
+                            msgThenRedirect('New Transaction Created Successfully','success',url)
                         }
                     },
         
@@ -51,7 +54,18 @@ $(document).ready(function () {
 
     });
 
+    $(document).on('click', '#print_trans_btn', function (e) {
+        e.preventDefault();
+        
+        const id = $(this).attr('data-id');
+       
+        const url = 'print-me/'+id;
+       // Delay the redirection by 1 second (1000 milliseconds)
+        setTimeout(function() {
+            window.location.href = url;
+        }, 1000);
 
+    });
     
     $(document).on('click','#view_btn',function(e){
         e.preventDefault();
@@ -307,6 +321,5 @@ const getFee = () => {
 
     });
 }
-
 
 getFee();

@@ -40,17 +40,41 @@
                 </thead>
                 
                 <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Henry Loaf</td>
-                        <td>Sub-admin</td>
+                  <?php 
+                  $i = 1;
+
+                  foreach ($sub_users as $user) { ?>
+                    <tr>
+                        <td><?= $i; ?></td>
+                        <td><?= $user->name; ?></td>
+                        <?php
+                        $role = '';
+                        if($user->role !== null || $user->role !== ''){
+                          if($user->role == 2){
+                            $role = 'SUB ADMIN';
+                          }else{
+                            $role = '';
+                          }
+                        }else{
+                          $role = '';
+                        }
+                        
+                        
+                        ?>
+                        <td><?= $role; ?></td>
                        
                         <td>
-                          <button type="button" id="edit_user_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="edit_user_btn" data-id="<?=$user->user_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
                         </td>
-                      </tr>
+                    </tr>
 
+
+               <?php $i++;   }
+                  
+                  
+                  ?>
+                      
                 </tbody>
               </table>
             </div>
@@ -76,7 +100,7 @@
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Name</label>
-                              <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Name"  required>      
+                              <input type="text" class="form-control" id="name" name="name" placeholder="Name"  required>      
                             </div> 
                         </div>
                         <div class="row mb-2">                  
@@ -97,7 +121,7 @@
                               <select name="role" id="role" class="form-select" required>
                                 <option value="">Select</option>
                                 <option value="1">Super Admin</option>
-                                <option value="1">Sub Admin</option>
+                                <option value="2">Sub Admin</option>
                                 
                               </select>  
                             </div> 
@@ -113,7 +137,7 @@
       </div>
   </div><!-- End Add Modal-->
 
-  <div class="modal fade" id="upUserModal" tabindex="-1">
+  <div class="modal fade" id="editUserModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -147,7 +171,7 @@
                               <select name="uprole" id="up-role" class="form-select" required>
                                 <option value="">Select</option>
                                 <option value="1">Super Admin</option>
-                                <option value="1">Sub Admin</option>
+                                <option value="2">Sub Admin</option>
                                 
                               </select>  
                             </div> 
@@ -166,19 +190,4 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
-  
-  <script>
-
-  $(document).ready(function(){
-
-      $(document).on('click','#edit_user_btn',function(e){
-          e.preventDefault();
-
-          $("#upUserModal").modal('show');
-
-
-      });
-
-  })
-
-</script> 
+  <script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/user.js"></script>

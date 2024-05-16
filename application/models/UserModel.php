@@ -13,6 +13,17 @@ class UserModel extends CI_Model {
         $query = $this->db->get_where('employees', array('email' => $email));
         return $query->row();
     }
+    public function get_user_by_email($email) {
+        // Query the database to get user by username
+        $query = $this->db->get_where('user', array('email' => $email));
+        if($query->num_rows() > 0){
+            #found data
+            return 1;
+        }else{
+            return 2;
+        }
+        
+    }
     public function getBranch_id_of_emp($id){
         $query  =   $this->db->select('e.employee_id, b.branch_id, b.branch_name')
                 ->from('employees e')
@@ -51,6 +62,75 @@ class UserModel extends CI_Model {
             return 1;
         }else{
             return 2;
+        }
+    }
+
+    public function updateEmployeesPassword($data){
+        $emp_id = $data['emp_id'];
+        $newPass = $data['newPass'];
+
+        //unset
+        unset($data['emp_id']);
+        unset($data['newPass']);
+
+        $update = $this->db->where('employee_id',$emp_id)
+            ->update('employees',['password'=>$newPass]);
+        if($update){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    public function getEmployeeCurrentPassword($emp_id){
+        $query = $this->db->where('employee_id',$emp_id)
+            ->get('employees');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return 2;
+        }
+    }
+
+    public function uploadAvatar($data,$id){
+        #employee_id
+        $emp_id = $id;
+
+        $upload = $this->db->where('employee_id',$emp_id)
+            ->update('employees',$data);
+        if($upload){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+
+
+    #for admin
+    public function getUsernameOFAdmin($email){
+        // Query the database to get user by username
+        $query = $this->db->get_where('employees', array('email' => $email));
+        return $query->row();
+    }
+
+    public function addUser($data){
+        $query = $this->db->insert('user',$data);
+
+        if($query){
+            return 1;
+        }
+
+        return 2;
+    }
+
+    public function getAllSubUser(){
+        $query = $this->db->where('role',2)
+            ->get('user');
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
         }
     }
 

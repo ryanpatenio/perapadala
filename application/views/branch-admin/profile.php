@@ -1,4 +1,42 @@
 
+<?php
+
+#Name
+
+if(!$this->session->userdata['emp_id']){
+  redirect(base_url());
+}
+
+$name = $this->session->userdata('emp_name');
+$fname = $this->session->userdata('fname');
+$lname = $this->session->userdata('lname');
+$job_title = $this->session->userdata['job_title'];
+if($job_title == 'BM'){
+  $job_name = 'Branch Manager';
+}else{
+  $job_name = '';
+}
+
+
+ #avatar
+ $avatar = $this->session->userdata('avatar');
+ $avatar_path = FCPATH . 'uploads/avatar/' . $avatar;
+ $default_avatar = base_url('assets/admin-assets/avatar/no_avatar.png');
+
+ if (file_exists($avatar_path) && !empty($avatar)) {
+     $avatar_url = base_url('uploads/avatar/' . $avatar);
+ } else {
+     $avatar_url = $default_avatar;
+ }
+
+
+
+
+
+?>
+
+
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -19,8 +57,8 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" alt="Profile" class="rounded-circle">
-              <h2>James Harden</h2>
+              <img src="<?= $avatar_url; ?>" alt="Profile" class="rounded-circle">
+              <h2><?= $name; ?></h2>
               <h3>Branch Manager</h3>
              
             </div>
@@ -61,12 +99,12 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Ryan Wong</div>
+                    <div class="col-lg-9 col-md-8"><?= $name; ?></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Admin</div>
+                    <div class="col-lg-9 col-md-8">Branch Manager</div>
                   </div>
 
                  
@@ -80,17 +118,15 @@
 
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" id="edit_profile_form" enctype="multipart/form-data">
+                  <form method="POST" id="profileAvatarForm" enctype="multipart/form-data">
                    
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" id="display_avatar" alt="Profile">
+                        <img src="<?= $avatar_url; ?>" id="display_avatar" alt="Profile">
                         <div class="pt-2">
 
-                        <input type="hidden" name="hidden_avatar" value="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg">
-                      
-                          <input type="file" id="temp_avatar" name="temp_avatar" accept="image/*" class="form-control" title="Upload new profile image">
+                          <input type="file" id="my-avatar" name="my_avatar"  accept="image/png, image/jpeg" class="form-control" title="Upload new profile image">
                           <!-- <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a> -->
                         </div>
                       </div>
@@ -100,12 +136,12 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fname" type="text" class="form-control" id="fname" value="Ryan">
+                        <input name="fname" type="text" class="form-control" id="fname" value="<?=$fname; ?>">
                       </div>
 
                       <label  for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-md-8 col-lg-9 mt-2">
-                        <input name="lname" type="text" class="form-control" id="lname" value="Wong">
+                        <input name="lname" type="text" class="form-control" id="lname" value="<?=$lname; ?>">
                       </div>
                     </div>
 
@@ -114,15 +150,7 @@
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
                       <div class="col-md-8 col-lg-9">
-
-                        <select id="edit_profile_job" class="form-control" name="edit_profile_job">
-
-                        
-                          <option value="">Admin</option>
-                        
-                         
-
-                        </select>                        
+                          <input type="text" class="form-control" readonly value="Branch Manager">                      
                       </div>
                     </div>
 
@@ -130,7 +158,9 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                   </form><!-- End Profile Edit Form -->
+                  <div id="status" class="alert" role="alert" style="display: none;"></div>
 
                 </div>
 
@@ -139,34 +169,34 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form method="POST" id="prof_changePass_form">
+                  <form method="POST" id="changePassForm">
 
                 
 
                     <div class="row mb-3">
                       <label for="current_Password" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="currentPassword" class="form-control" id="currentPassword">
+                        <input  type="password" name="currentPassword" class="form-control" id="currentPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="newPassword" class="form-control" id="newPassword">
+                        <input  type="password" name="newPassword" class="form-control" id="newPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label >
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="renewPassword" class="form-control" id="renewPassword">
+                        <input  type="password" name="re_Password" class="form-control" id="re-password"required>
                       </div>
                     </div>
                     <span id="error_message"></span>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" id="change-pass-btn" class="btn btn-primary">Change Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -183,4 +213,4 @@
 
   </main><!-- End #main -->
   
-
+  <script type="text/javascript" src="<?= base_url();?>assets/js/branch-manager/profile.js"></script>

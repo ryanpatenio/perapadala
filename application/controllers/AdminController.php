@@ -19,6 +19,40 @@ class AdminController extends CI_Controller{
         }
 
 
+    public function login_index(){
+        $page = "login";
+
+    
+        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
+            show_404();
+
+        }
+        $data['sample'] = 'data';
+    
+    
+         $this->load->view('templates/admin-layout/login-templates/header');
+   
+         $this->load->view('admin/'.$page,$data);
+         $this->load->view('templates/admin-layout/login-templates/footer');
+    }
+
+    public function loginProcess(){
+        $this->form_validation->set_rules('email','E-mail','required');
+        $this->form_validation->set_rules('password','Password','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('validation_errors',400);
+        }else{
+            $data = $this->input->post();
+
+
+            
+            echo json_encode($data);
+        }
+    }
+
+
+
     public function render(){
         $page = "index";
 
@@ -136,7 +170,7 @@ class AdminController extends CI_Controller{
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['sub_users'] = $this->UserModel->getAllSubUser();
 
 
      $this->load->view('templates/admin-layout/header');
@@ -228,6 +262,48 @@ class AdminController extends CI_Controller{
      $this->load->view('admin/'.$page,$data);
      $this->load->view('templates/admin-layout/footer');
     }
+
+    
+    #ADMIN User 
+    public function addUser(){
+        $this->form_validation->set_rules('name','Name','required');
+        $this->form_validation->set_rules('email','E-mail','required');
+        $this->form_validation->set_rules('password','Password','required');
+        $this->form_validation->set_rules('role','Role','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('validation_error',400);
+        }
+
+        $data = $this->input->post();
+        
+        $dataToInsert = array(
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => password_hash($data['password'],PASSWORD_DEFAULT),
+            'role' => $data['role'] 
+
+        );
+
+        #check email if exist
+        $email_exist  = $this->UserModel->get_user_by_email(trim($data['email']));
+        if($email_exist  == 1){
+            #email exist
+            return $this->response->status('email_exist',400);
+        }else{
+            #insert the Data
+            $insert = $this->UserModel->addUser($dataToInsert);
+            if($insert !== 2){
+                #success
+                return $this->response->status('success',200);
+            }else{
+                return $this->response->status('error',500);
+            }
+        }       
+
+       
+    }
+
 
 
 }

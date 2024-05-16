@@ -1,0 +1,5 @@
+cd C:\xampp\htdocs\perapadala
+mkdir uploads
+mkdir uploads\avatar
+
+directory**

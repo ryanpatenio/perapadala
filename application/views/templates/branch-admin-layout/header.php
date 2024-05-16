@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>LBB Pera Padala</title>
+  <title class="tle">LBB Pera Padala</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -38,6 +38,46 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  <style>
+     @media print {
+            /* Hide the header when printing */
+            .navbar {
+                display: none;
+            }
+            .sidebar{
+              display: none;
+            }
+            .header{
+              display: none;
+            }
+            .header-nav{
+              display: none;
+            }
+            .toggle-sidebar-btn{
+              display: none;
+            }
+            .logo{
+              display: none;
+            }
+            .lgs{
+              display: none;
+            }
+            .pageTitle{
+              display: none;
+            }
+            .btn-print{
+              display: none;
+            }
+            .tle{
+              display: none;
+            }
+            footer{
+              display: none;
+            }
+
+          }
+  </style>
 </head>
 
 <body>
@@ -47,7 +87,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="<?= base_url()?>" class="logo d-flex align-items-center">
-        <img src="<?= base_url();?>assets/admin-assets/img/logo.png" alt="">
+        <img class="lgs" src="<?= base_url();?>assets/admin-assets/img/logo.png" alt="">
         <span class="d-none d-lg-block " style="color: white;">Branch Admin</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn" style="color: white;"></i>
@@ -77,18 +117,33 @@
         }
 
         $name = $this->session->userdata['emp_name'];
+       
         $job_title = $this->session->userdata['job_title'];
         if($job_title == 'BM'){
           $job_name = 'Branch Manager';
         }else{
           $job_name = '';
         }
+
+
+        #avatar
+          $avatar = $this->session->userdata('avatar');
+          $avatar_path = FCPATH . 'uploads/avatar/' . $avatar;
+          $default_avatar = base_url('assets/admin-assets/avatar/no_avatar.png');
+
+          if (file_exists($avatar_path) && !empty($avatar)) {
+              $avatar_url = base_url('uploads/avatar/' . $avatar);
+          } else {
+              $avatar_url = $default_avatar;
+          }
+
+
         
         ?>
 
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" alt="Profile" class="rounded-circle">
+            <img src="<?= $avatar_url; ?>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;"><?= $name; ?></span>
           </a><!-- End Profile Iamge Icon -->
 

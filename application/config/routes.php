@@ -7,6 +7,12 @@ $route['default_controller'] = 'UserController';
 $route['admin'] = 'adminController/render';
 
 #admin Routes
+
+#login Routes
+$route['admin-login'] = 'adminController/login_index';
+$route['admin-login-process'] = 'adminController/loginProcess';
+
+
 $route['admin-employees'] = 'adminController/employee_index';
 $route['admin-branches'] = 'adminController/branches_index';
 $route['admin-customers'] = 'adminController/customer_index';
@@ -59,6 +65,9 @@ $route['admin-add-service-fee'] = 'serviceFeeController/addFee';
 $route['admin-get-service-fee'] = 'serviceFeeController/getFee';
 $route['admin-update-fee'] = 'serviceFeeController/updateFee';
 
+#user Routes
+$route['admin-add-user'] = 'adminController/addUser';
+
 #end of Admin Routes
 
 
@@ -82,6 +91,13 @@ $route['add-bm-transaction'] = 'branchAdminController/addBMTransaction';
 $route['get-branch-transaction'] = 'branchAdminController/getTransaction';
 $route['get-transaction-data'] = 'branchAdminController/getTransaction';
 $route['update-bm-side-transaction'] = 'branchAdminController/updateBMTransaction';
+
+#print
+$route['print-me/(:any)'] = 'branchAdminController/printMe/$1';
+
+#branch Manager Profile
+$route['bm-change-pass'] = 'branchAdminController/changePass';
+$route['bm-avatar-upload'] = 'branchAdminController/uploadAvatar';
 #end of Branch admin Routes ########################
 
 

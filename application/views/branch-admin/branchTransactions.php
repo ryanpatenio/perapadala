@@ -70,6 +70,7 @@
                         <td>
                           <button type="button" id="view_btn" data-id="<?= $transaction->transaction_id; ?>" class="btn btn-primary bi bi-search">View</button>
                           <button type="button" id="edit_trans_btn" data-id="<?= $transaction->transaction_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <button type="button" id="print_trans_btn" data-id="<?= $transaction->transaction_id; ?>" class="btn btn-success bi bi-fingerprint"> Print</button>
                         </td>
                       </tr>
 
