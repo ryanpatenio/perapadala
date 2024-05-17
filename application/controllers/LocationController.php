@@ -8,6 +8,9 @@ class locationController extends CI_Controller{
         $this->load->library('form_validation');      
         $this->load->library('response');
         $this->load->model('LocationModel');
+
+         #check auth
+         $this->auth_library->check_login_ADMIN();
     }
 
     public function addLocation(){

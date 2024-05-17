@@ -285,7 +285,7 @@ $('#amountadd').on('keyup', function () {
 const getFee = () => {
     
     $.ajax({
-        url: 'get-fee',
+        url: 'bm-get-fee',
         method: 'post',
         dataType: 'json',
         

@@ -24,6 +24,7 @@ $(document).ready(function () {
                 $('#customer-name').val(data.name);
                 $('#contact').val(data.contact);
                 $('#address').val(data.address);
+                editModal.modal('show');
 
             },
 
@@ -33,7 +34,7 @@ $(document).ready(function () {
 
         });
 
-        $("#editCustomerModal").modal('show');
+      
 
 
     });

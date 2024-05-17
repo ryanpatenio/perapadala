@@ -25,6 +25,21 @@ class AdminBranchModel extends CI_Model{
 
     }
 
+    public function fetchTransactions(){
+        $query = $this->db->select('t.transaction_id,t.transaction_code,t.transaction_date,b.branch_name,t.status')
+            ->from('transactions t')
+            ->join('branches b','t.branch_id = b.branch_id')
+            ->order_by('t.transaction_date','DESC')
+            ->get();
+
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            //empty array
+            return array();
+        }
+    }
+
     
 public function addBranch($data){
 
@@ -281,5 +296,39 @@ public function updateBranch($data){
     
 
 }
+
+#transaction
+    public function getTransactionByID($id){
+        $query = $this->db->select([
+                't.transaction_id', 
+                't.transaction_code', 
+                't.transaction_date', 
+                'c.name AS customer_name', 
+                'c.contact AS customer_contact', 
+                'td.receiver_name', 
+                'td.receiver_contact', 
+                'td.purpose', 
+                'td.sender_relation', 
+                'b.branch_name', 
+                'CONCAT(e.fname, " ", e.lname) AS employee_incharge', 
+                'td.amount', 
+                'td.fee', 
+                't.status'
+            ])
+            ->from('transactions t')
+            ->join('transaction_details td', 't.transaction_id = td.transaction_id')
+            ->join('employees e', 't.employee_id = e.employee_id')
+            ->join('customer c', 'td.sender_customer_id = c.customer_id')
+            ->join('branches b', 't.branch_id = b.branch_id')
+            ->where('t.transaction_id',$id)
+            ->get();
+
+        if($query->num_rows() > 0){
+            return $query->row_array();
+        }else{
+            return 2;
+        }
+        
+    }
 
 }

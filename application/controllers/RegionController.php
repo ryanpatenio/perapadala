@@ -7,6 +7,9 @@ class RegionController extends CI_Controller{
         $this->load->library('form_validation');      
         $this->load->library('response');
         $this->load->model('RegionModel');
+
+         #check auth
+         $this->auth_library->check_login_ADMIN();
     }
 
     public function addRegion(){

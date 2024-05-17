@@ -94,7 +94,7 @@
                 <div class="row mb-2 mt-2">                           
                   <div class="col">
                     <label for="fname">First Name</label>
-                    <input type="text" id="lname"  class="form-control" placeholder="first name"readonly>
+                    <input type="text" id="fname"  class="form-control" placeholder="first name"readonly>
                   </div>  
                   <div class="col">
                     <label for="fname">Last Name</label>

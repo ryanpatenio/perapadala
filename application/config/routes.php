@@ -4,12 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 $route['default_controller'] = 'UserController';
-$route['admin'] = 'adminController/render';
+$route['admin'] = 'dashboard/index';
 
 #admin Routes
 
 #login Routes
-$route['admin-login'] = 'adminController/login_index';
+$route['admin-login'] = 'dashboard/login_index';
 $route['admin-login-process'] = 'adminController/loginProcess';
 
 
@@ -69,11 +69,20 @@ $route['admin-update-fee'] = 'serviceFeeController/updateFee';
 $route['admin-add-user'] = 'adminController/addUser';
 $route['admin-get-user'] = 'adminController/getUser';
 $route['admin-update-user'] = 'adminController/updateUser';
+$route['admin-delete-user'] = 'adminController/deleteUser';
 
-#end of Admin Routes
+
+#transaction Routes
+$route['admin-get-branch-transaction'] = 'adminController/getTransaction';
+
+#customer Routes
+$route['admin-edit-customer'] = 'adminController/getCustomer';
+$route['admin-update-customer'] = 'adminController/updateCustomer';
+
+##################################end of Admin Routes############################
 
 
-#branch admin Routes for Branch Manager ######################
+####################branch admin Routes for Branch Manager ######################
 $route['branch-admin'] = 'branchAdminController/render';
 $route['branch-employees'] = 'branchAdminController/branchEmployees_index';
 $route['branch-customers'] = 'branchAdminController/branchCustomers_index';
@@ -89,6 +98,7 @@ $route['update-branch-customer'] = 'branchAdminController/updateCustomer';
 
 
 #branch Transaction
+$route['bm-get-fee'] = 'branchAdminController/getFee';
 $route['add-bm-transaction'] = 'branchAdminController/addBMTransaction';
 $route['get-branch-transaction'] = 'branchAdminController/getTransaction';
 $route['get-transaction-data'] = 'branchAdminController/getTransaction';
@@ -100,7 +110,7 @@ $route['print-me/(:any)'] = 'branchAdminController/printMe/$1';
 #branch Manager Profile
 $route['bm-change-pass'] = 'branchAdminController/changePass';
 $route['bm-avatar-upload'] = 'branchAdminController/uploadAvatar';
-#end of Branch admin Routes ########################
+#############################end of Branch admin Routes ########################
 
 
 
@@ -137,13 +147,14 @@ $route['update-bp-profile'] = 'branchTransactionController/updateProfile';
 
 
 
-#login Process
+#Employees login Process
 $route['emp-login'] = 'loginController/user_login_process';
 
 #end of Login
 
 #logout
 $route['log-out'] = 'loginController/logout';
+$route['admin-log-out'] = 'loginController/logoutAdmin';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

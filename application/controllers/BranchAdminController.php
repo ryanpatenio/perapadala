@@ -12,19 +12,10 @@ class BranchAdminController extends CI_Controller{
         $this->load->library('session');
         $this->load->helper('security');
         $this->load->library('upload');
-    
-        // Check if the user is logged in
-        if (!$this->session->userdata('logged_in')) {
-            // Redirect to login page
-            redirect(base_url());
-        }
-    
-        // Check if the user is admin or branch manager
-        $user_role = $this->session->userdata('job_title');
-        if ($user_role !== 'admin' && $user_role !== 'BM') {
-            // Show unauthorized access error or redirect to a different page
-            show_error('Unauthorized access', 403);
-        }
+
+
+        #check auth Branch Manager
+        $this->auth_library->check_login_USER_BM();
     }
     
 
@@ -313,6 +304,20 @@ class BranchAdminController extends CI_Controller{
         }
 
    }
+
+    
+
+   public function getFee(){
+        
+    $fee = $this->BranchTransactionModel->getPercentFee();
+    if(empty($fee)){
+        #no data found or theres no default value set in the charges table
+        #return json null
+        return $this->response->status('fee_null','400');
+    }else{
+        echo json_encode($fee);
+    }
+}
 
    #profile
    public function changePass(){

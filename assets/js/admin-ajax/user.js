@@ -146,5 +146,58 @@ $(document).ready(function () {
 
     });
 
+    $(document).on('click', '#remove-btn', function (e) {
+        e.preventDefault();
+
+        const id = $(this).attr('data-id');
+
+        swal({
+            title: "Are you sure you want to Delete this User?",
+            text:'Please Click the `OK` Button to Continue!',
+            icon: "info",
+            buttons: true,
+            dangerMode: true,
+        }).then((willconfirmed) => {
+
+                if(willconfirmed){
+                    $.ajax({
+                        url:'admin-delete-user',
+                        method: 'post',
+                        data: { id: id },
+                        dataType: 'json',
+                        
+                        beforeSend: function () {
+                            
+            
+                        },
+            
+                        success: function (resp) {
+                            //res(resp);
+                            if (resp.message == 'success') {
+                                message('User Remove Successfully!', 'success');
+                            }
+                        },
+            
+                        error: function (xhr, status, error) {
+                           // res(xhr.responseText);
+                            if (xhr.responseJSON.message == 'id_null') {
+                                msg('Oops! Unexpected Error Return ID Null', 'error');
+                            }
+                            if (xhr.status == 500) {
+                                msg('Oops! Unexpected Internal Server Error!', 'error');
+                            }
+                        }
+            
+                    });     
+                
+
+
+                }
+        });
+        
+      
+
+    });
+
 
 });

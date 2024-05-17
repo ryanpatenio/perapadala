@@ -108,7 +108,7 @@
                 </span>
             </button>
         <?php  
-        } else { ?>
+        } elseif($this->session->userdata('job_title') !== 'BM') { ?>
             <li class="nav-item px-1">
                 <a class="btn btn-success rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#CodeModal">Claim</a>
             </li>
@@ -131,7 +131,11 @@
                     <a class="dropdown-item " href="#" id="logout">Logout</a>
                 </div>
             </li>
-        <?php } ?>
+        <?php }else{ ?>
+            <button class="btn btn-sm btn-primary">
+            <a class="dropdown-item " href="#" id="logout">Logout</a>
+            </button>
+     <?php   } ?>
     </ul>
 </div>
 

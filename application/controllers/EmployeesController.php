@@ -9,6 +9,9 @@ class EmployeesController extends CI_Controller{
             $this->load->library('response');
             
             $this->load->model('EmployeesModel');
+
+             #check auth
+             $this->auth_library->check_login_ADMIN();
                   
            
         }

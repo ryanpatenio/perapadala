@@ -47,13 +47,15 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a class="btn btn-primary" href="logout.php">Logout</a>
+          <a class="btn btn-primary" href="#" id="logout-admin">Logout</a>
         </div>
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/moment.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/swal/sweet.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/js/msg.js"></script>
+<script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/logout.js"></script>
 
 
   <script type="text/javascript">
@@ -65,10 +67,6 @@
 
         
     //     }
-$(document).on('click','#sign_out_btn_ad',function(e){
-  e.preventDefault();
-  $('#logoutModal_AD').modal('show');
-});
 
 
 

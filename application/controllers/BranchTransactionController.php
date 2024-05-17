@@ -8,20 +8,8 @@ class BranchTransactionController extends CI_Controller{
     {
         parent::__construct();
 
-
-         // Check if the user is logged in
-         if (!$this->session->userdata('logged_in')) {
-            // Redirect to login page
-            redirect(base_url());
-        }
-    
-        // Check if the user is admin or branch Personnel
-        $job_title = $this->session->userdata('job_title');
-        $user_role = $this->session->userdata('role');
-        if ($user_role !== 'user' && $job_title !== 'BP') {
-            // Show unauthorized access error or redirect to a different page
-            show_error('Unauthorized access', 403);
-        }
+        #check auth Branch Manager
+        $this->auth_library->check_login_USER_BP();
 
 
     }

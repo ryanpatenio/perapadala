@@ -19,7 +19,7 @@ class UserModel extends CI_Model {
             ->get('user');
         if($query->num_rows() > 0){
             #found data
-            return 1;
+            return $query->row();
         }else{
             return 2;
         }
@@ -154,6 +154,17 @@ class UserModel extends CI_Model {
             ->update('user',$data);
 
         if($update){
+            return 1;
+        }else{
+            return 2;
+        }
+    }
+
+    //not totally deleted just update the status into 0 
+    public function deleteUser($id){
+        $query = $this->db->where('user_id',$id)
+            ->update('user',['status'=> 0]);
+        if($query){
             return 1;
         }else{
             return 2;

@@ -9,7 +9,9 @@ class JobController extends CI_controller{
             $this->load->library('form_validation');
             $this->load->model('jobModel');
 
-            
+            #check auth
+            $this->auth_library->check_login_ADMIN();
+        
            
     }
 

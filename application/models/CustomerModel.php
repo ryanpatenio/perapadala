@@ -24,6 +24,17 @@ class CustomerModel extends CI_Model{
             return array();
         }
     }
+
+    public function fetchAllCustomers(){
+        $query = $this->db->select('*')
+            ->from('customer')
+            ->get();
+        if($query->num_rows() > 0){
+            return $query->result();
+        }else{
+            return array();
+        }
+    }
   
     public function getCustomer($id){
         $query = $this->db->where('customer_id',$id)

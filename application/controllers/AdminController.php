@@ -1,5 +1,5 @@
 <?php 
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 class AdminController extends CI_Controller{
@@ -7,34 +7,12 @@ class AdminController extends CI_Controller{
         public function __construct()
         {
             parent::__construct();
-            $this->load->library('form_validation');
-            $this->load->model('jobModel');
-            $this->load->model('CountriesModel');
-            $this->load->model('RegionModel');
-            $this->load->model('LocationModel');
-            $this->load->model('EmployeesModel');
-            $this->load->model('AdminBranchModel');
-            $this->load->library('response');
+ 
+            $this->load->helper('security');
+           
         
         }
 
-
-    public function login_index(){
-        $page = "login";
-
-    
-        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
-            show_404();
-
-        }
-        $data['sample'] = 'data';
-    
-    
-         $this->load->view('templates/admin-layout/login-templates/header');
-   
-         $this->load->view('admin/'.$page,$data);
-         $this->load->view('templates/admin-layout/login-templates/footer');
-    }
 
     public function loginProcess(){
         $this->form_validation->set_rules('email','E-mail','required');
@@ -43,38 +21,72 @@ class AdminController extends CI_Controller{
         if($this->form_validation->run() == FALSE){
             return $this->response->status('validation_errors',400);
         }else{
-            $data = $this->input->post();
+
+
+            // Validation passed, attempt login
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+    
+            // Retrieve user from the database by email
+            $user = $this->UserModel->get_user_by_email($email);
+
+            if($user !== 2){
+                
+                if ($user && password_verify($password, $user->password)){
+                    #login successful
+                    #check if this user is not banned or removed
+                    if($user->status !== 0){
+                        #active user
+                        $role = '';
+                        if($user->role == 1 || $user->role == '1'){
+                            $role = 'SUPER_ADMIN';
+                        }else{
+                            $role = 'SUB_ADMIN';
+                        }
+                        
+                        #create session array
+                        $user_data = array(
+                            'user_id' => $user->user_id,
+                            'user_email' => $user->email,
+                            'user_name'=> $user->name,
+                            'role' => $role,
+                            'avatar'=> $user->avatar,
+                            'logged_in' => TRUE
+                        );
+                        
+                        $this->session->set_userdata($user_data);
+                        
+                        #return success
+                        return $this->response->status('success',200);
+
+                    }else{
+                        #status is 0 meant remove or inactive
+                        return $this->response->status('inactive',400);
+                        
+                    }
+                }else{
+                    #invalid email or password
+                    return $this->response->status('invalid_credentials',400);
+                }
+               
+            }else{
+                #invalid credentials
+                return $this->response->status('invalid_credentials',400);
+            }
 
 
             
-            echo json_encode($data);
+           
         }
     }
 
-
-
-    public function render(){
-        $page = "index";
-
-        
-        if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
-         show_404();
-
-        }
-        $data['sample'] = 'data';
-
-
-     $this->load->view('templates/admin-layout/header');
-     $this->load->view('templates/admin-layout/sidebar');
-     $this->load->view('admin/'.$page,$data);
-     $this->load->view('templates/admin-layout/footer');
-    }
 
     
 
     public function employee_index(){
         $page = "employees";
-
+         #check auth
+         $this->auth_library->check_login_ADMIN();
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -94,6 +106,8 @@ class AdminController extends CI_Controller{
 
     public function branches_index(){
         $page = "branches";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -114,13 +128,15 @@ class AdminController extends CI_Controller{
 
     public function customer_index(){
         $page = "customer";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['customers'] = $this->CustomerModel->fetchAllCustomers();
 
 
      $this->load->view('templates/admin-layout/header');
@@ -131,13 +147,15 @@ class AdminController extends CI_Controller{
     
     public function transaction_index(){
         $page = "transactions";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['transactions'] = $this->AdminBranchModel->fetchTransactions();
 
 
      $this->load->view('templates/admin-layout/header');
@@ -147,6 +165,8 @@ class AdminController extends CI_Controller{
     }
     public function jobs_index(){
         $page = "jobTitle";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -164,6 +184,8 @@ class AdminController extends CI_Controller{
 
     public function users_index(){
         $page = "users";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -181,6 +203,8 @@ class AdminController extends CI_Controller{
 
     public function profile_index(){
         $page = "profile";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -197,6 +221,8 @@ class AdminController extends CI_Controller{
     }
     public function serviceCharge_index(){
         $page = "serviceCharges";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -213,6 +239,8 @@ class AdminController extends CI_Controller{
     }
     public function countries_index(){
         $page = "countries";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -229,6 +257,8 @@ class AdminController extends CI_Controller{
     }
     public function regions_index(){
         $page = "regions";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -246,6 +276,8 @@ class AdminController extends CI_Controller{
     }
     public function locations_index(){
         $page = "locations";
+         #check auth
+         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -266,6 +298,10 @@ class AdminController extends CI_Controller{
     
     #ADMIN User 
     public function addUser(){
+
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
         $this->form_validation->set_rules('name','Name','required');
         $this->form_validation->set_rules('email','E-mail','required');
         $this->form_validation->set_rules('password','Password','required');
@@ -306,6 +342,10 @@ class AdminController extends CI_Controller{
     }
 
     public function getUser(){
+
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
         $id = $this->input->post('id');
 
         if($id === null || $id === ''){
@@ -325,6 +365,10 @@ class AdminController extends CI_Controller{
     }
 
     public function updateUser() {
+
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('email', 'E-mail', 'required');
         $this->form_validation->set_rules('role', 'Role', 'required');
@@ -377,7 +421,100 @@ class AdminController extends CI_Controller{
             }
         }
     }
+
+    public function deleteUser(){
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+        
+        $user_id = $this->input->post('id');
+
+        if($user_id === null || $user_id === ''){
+            return $this->response->status('id_null',400);
+        }else{
+            $delete = $this->UserModel->deleteUser($user_id);
+            if($delete !== 2){
+                #success
+                return $this->response->status('success',200);
+            }else{
+                #failed
+                return $this->response->status('error',500);
+            }
+        }
+    }
     
+
+    #transaction
+
+    public function getTransaction(){
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null');
+        }else{
+ 
+            $data = $this->AdminBranchModel->getTransactionByID($id);
+            if($data !== 2){
+                #success
+                echo json_encode($data);
+            }else{
+                return $this->response->status('error',500);
+            }
+            
+            
+        }
+    }
+
+    #customer
+    public function getCustomer(){
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ''){
+            return $this->response->status('id_null',400);
+        }else{
+            $data = $this->CustomerModel->getCustomer($id);
+            if($data != 2){
+                echo json_encode($data);
+            }else{
+                return $this->response->status('error',500);
+            }
+        }
+    }
+
+    public function updateCustomer(){
+         #check auth
+         $this->auth_library->check_login_ADMIN();
+
+        $this->form_validation->set_rules('customer_name','Name','required');
+        $this->form_validation->set_rules('address','Address','required');
+        $this->form_validation->set_rules('contact','Contact','required');
+
+        if($this->form_validation->run() == FALSE){
+            return $this->response->status('validation_error',400);
+        }else{
+            $data = $this->input->post();
+            $customer_id = $data['customer_id'];
+            $dataToUpdate = array(
+                'name' => $data['customer_name'],
+                'contact' => $data['contact'],
+                'address' => $data['address']
+
+            );
+
+            $update = $this->CustomerModel->updateCustomer($dataToUpdate,$customer_id);
+            if($update != 2){
+                #success
+                return $this->response->status('success',200);
+            }else{
+                return $this->response->status('error',500);
+            }
+        }
+    }
 
 
 

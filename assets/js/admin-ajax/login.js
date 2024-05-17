@@ -18,10 +18,19 @@ $(document).ready(function () {
             },
             success: function (resp) {
                 res(resp);
+                if (resp.message == 'success') {
+                    msgThenRedirect('Login Successfully!', 'success', 'admin');
+                }
             },
             error: function (xhr, status, error) {
                 // Handle AJAX errors
-                res(resp);
+                res(xhr.responseText);
+                if (xhr.responseJSON.message == 'invalid_credentials') {
+                    msg('Invalid Email OR Password!', 'error');
+                }
+                if (xhr.responseJSON.message == 'inactive') {
+                    msg('Your Account is Banned', 'error');
+                }
             },
             complete: function () {
                 // Re-enable UI elements after processing

@@ -33,31 +33,33 @@
                   <tr>
                     <th>No.</th>
                     <th>Customer Name</th> 
-                   
-                    <th>Date</th>               
+                    <th>Address</th>
+                    <th>Contact</th>           
                     <th>Action</th>
                   </tr>
                 </thead>
                 
                 <tbody>
+              <?php
+              
+              $i = 1;
 
+              foreach ($customers as $customer) { ?>
+                <tr>
+                    <td><?=$i; ?></td>
+                    <td><?=$customer->name; ?></td>
+                    <td><?=$customer->address; ?></td>  
+                    <td><?=$customer->contact; ?></td>                
+                    <td>
+                      <button type="button" id="edit_customer_btn" data-id="<?=$customer->customer_id; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                      <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
+                    </td>
+                  </tr>
 
-
-                      <tr>
-                        <td>1</td>
-                        <td>James Bulkman</td>
-                        
-                        <td>April 29 2024</td>
-                       
-                        <td>
-                          <button type="button" id="edit_customer_btn" data-id="" class="btn btn-warning bi bi-pencil"> Modify</button>
-                         <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
-                        </td>
-                      </tr>
-
-                
-             
-                     
+            <?php $i++;  }
+              
+              
+              ?>            
 
                 </tbody>
               </table>
@@ -84,25 +86,26 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form method="POST" id="upcat" >
+              <form method="POST" id="updateForm" >
+                <input type="hidden" id="customer-id" name="customer_id">
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Customer Name</label>                  
-                      <input type="text" class="form-control" name="upCustomerName" id="upCustomerName"  required>  
+                      <input type="text" class="form-control" name="customer_name" id="customer-name"  required>  
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Contact</label>                  
-                      <input type="text" class="form-control" name="upContact" id="upContact"  required>  
+                      <input type="text" class="form-control" maxlength="11" name="contact" id="contact"  required>  
                     </div>
                   </div>
                   <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Adress</label>                  
-                      <input type="text" class="form-control" name="upAddress" id="upAddress"  required>  
+                      <label for="validationDefault01" class="form-label">Address</label>                  
+                      <input type="text" class="form-control" name="address" id="address"  required>  
                     </div>
                   </div>
                 </div>                       
@@ -119,23 +122,5 @@
 
 <!---------------end of all Modal---------------------->
 
-
-
-
   </main> <!------------- end of Main ----->
-   
-  <script>
-$(document).ready(function(){
-
-    $(document).on('click','#edit_customer_btn',function(e){
-        e.preventDefault();
-
-        $("#editCustomerModal").modal('show');
-
-
-    });
-
-})
-
-
-  </script>
+  <script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/customer.js"></script>

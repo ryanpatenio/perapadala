@@ -2,6 +2,14 @@
 
 class SendTransactionController extends CI_Controller{
 
+    public function __construct()
+    {
+        parent::__construct();
+
+         #check auth Branch Manager
+         $this->auth_library->check_login_USER_BP();
+    }
+
     public function render(){
 
         $page = "sendTransaction";

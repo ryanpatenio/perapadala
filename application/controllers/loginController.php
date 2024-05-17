@@ -99,5 +99,13 @@ class LoginController extends CI_Controller {
         return $this->response->status('success',200);
         
     }
+     
+    public function logoutAdmin() {
+        // Destroy session
+        $this->session->sess_destroy();
+        
+        return $this->response->status('success',200);
+        
+    }
     
 }
