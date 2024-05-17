@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2024 at 03:21 AM
+-- Generation Time: May 17, 2024 at 08:36 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -103,9 +103,16 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`customer_id`, `name`, `contact`, `address`) VALUES
 (103, 'Isabelle Bell', '0938848384', 'Himamaylan City ,Brgy 2'),
-(104, 'Zephry Roberts', '09449954101', 'Bacolod City, Brgy Tangub sum-ag'),
-(105, 'Macy Salasa', 'Consequatur', 'Molestiae laborum N'),
-(106, 'Rana Flowers', 'Fugit et e', 'Dolor fugiat elit ');
+(104, 'Zephry Roberto', '09449954100', 'Bacolod City, Brgy Tangub sum-ag'),
+(105, 'Macy Salasa', '09388388488', 'Libacao, Himamaylan ,Negros Occidental'),
+(106, 'Rana Flowers', '09939988384', 'Kabankalan City, Negros Occidental'),
+(107, 'Ryan SY', '03999493995', 'Bacolod City, Brgy Tangub sum-ag'),
+(108, 'Nash Barber', '09898989899', 'Isabela, Negros Occidental'),
+(109, 'Charity Clements', '08989898989', 'Sipalay City, Negros Occidental'),
+(110, 'Tanek Peck', '09347373747', 'Hinobaan, Negros Occidental'),
+(111, 'Axel Washington', '09939983884', 'Dumaguete City, Negros Oriental'),
+(112, 'Darryl Foley', 'Cooper Jordan', 'Carly Bullock'),
+(113, 'Amethyst Holcomb', '09384838844', 'Bacolod City, Brgy Tangub');
 
 -- --------------------------------------------------------
 
@@ -125,23 +132,25 @@ CREATE TABLE `employees` (
   `job_id` int(11) NOT NULL DEFAULT 0,
   `hire_date` date NOT NULL,
   `employee_status` int(11) NOT NULL DEFAULT 1,
-  `bm_status` int(11) NOT NULL DEFAULT 0
+  `bm_status` int(11) NOT NULL DEFAULT 0,
+  `avatar` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employee_id`, `fname`, `lname`, `email`, `password`, `contact`, `address`, `branch_id`, `job_id`, `hire_date`, `employee_status`, `bm_status`) VALUES
-(1, 'Jed', 'Araceli', 'jed@gmail.com', '$2y$10$YsJBp5jW18gfh.f0b65YbuYBD0R/bLqG77kvjZ38FKx1skv.s2kTG', '09770772409', 'Isabela', 13, 1, '2024-05-08', 1, 1),
-(2, 'Dennis', 'Ong', 'dennis@yahoo.com', '123', '09770772409', 'Hinigaran', 0, 2, '2024-05-04', 1, 0),
-(3, 'Daryl', 'Ong', 'daryl@gmail.com', '123', '0', '0', 14, 1, '2024-05-04', 1, 1),
-(9, 'Lester Tyler', 'May Mckenzie', 'zerycir@mailinator.com', '$2y$10$DHJxSproMlvt/BDHfPqxR.tzvPBPB292c1zcpcT/C/q', '01-Oct-1980', '12-Jun-2001', 0, 2, '2023-07-25', 1, 0),
-(10, 'Nerea Sosa', 'Cathleen Ewing', 'hatiw@mailinator.com', '$2y$10$mJCm8q5TgMP9RthqR1ZiFOgxkWPfNH65PwKZq1TFfrx', 'Sydney Charles', 'Joseph Callahan', 0, 1, '1970-02-25', 1, 0),
-(11, 'Colette York', 'Justine Underwood', 'gogucabyb@mailinator.com', '$2y$10$cWa3rbCuzqxuwiS1zKE8pOJX5aNBKZIRxVhA6l19XHV', '909088575', 'Ignatius Blackwell', 16, 1, '1987-06-19', 1, 1),
-(12, 'Ignatius Shannon', 'Harrison Hurst', 'sample@yahoo.com', '$2y$10$Yz34Hu84BR7iLv.sHOvrweZt5FXZDQIcb.uCnfRTRKO', 'Yvette Hammond', 'Indigo Mayo', 0, 2, '2024-05-12', 1, 0),
-(13, 'Fitzgerald Gibbs', 'Winter Davis', 'sample2@yahoo.com', '$2y$10$Zc96CFTjgGwEquwZw26QH.Ivaql5206OdzZOBdY.2xZmCpFyGSrU6', 'Phelan Harding', 'Lavinia Mcpherson', 16, 2, '2024-05-12', 1, 0),
-(14, 'Jena Howard', 'Kyla Spence', 'user@yahoo.com', '$2y$10$Lt.g6MSQa3TGGoFsxMmm5O5z0ooU1GiErdpbfWQ7Jebqe1WlaDkm2', 'Meghan Patterson', 'Willa Richmond', 16, 2, '2024-05-12', 1, 0);
+INSERT INTO `employees` (`employee_id`, `fname`, `lname`, `email`, `password`, `contact`, `address`, `branch_id`, `job_id`, `hire_date`, `employee_status`, `bm_status`, `avatar`) VALUES
+(1, 'Jed', 'Araceli', 'jed@gmail.com', '$2y$10$YsJBp5jW18gfh.f0b65YbuYBD0R/bLqG77kvjZ38FKx1skv.s2kTG', '09770772409', 'Isabela', 13, 1, '2024-05-08', 1, 1, NULL),
+(2, 'Dennis', 'Ong', 'dennis@yahoo.com', '$2y$10$s.ojx2iynLbIp7t5TkeaR.t/HhhK9NFe.H3v9J8hAgjyIrKNh4XV.', '09770772409', 'Hinigaran', 13, 2, '2024-05-04', 1, 0, NULL),
+(3, 'Daryl', 'Ong', 'daryl@gmail.com', '123', '0', '0', 14, 1, '2024-05-04', 1, 1, NULL),
+(9, 'Lester Tyler', 'May Mckenzie', 'zerycir@mailinator.com', '$2y$10$DHJxSproMlvt/BDHfPqxR.tzvPBPB292c1zcpcT/C/q', '01-Oct-1980', '12-Jun-2001', 0, 2, '2023-07-25', 1, 0, NULL),
+(10, 'Nerea Sosa', 'Cathleen Ewing', 'hatiw@mailinator.com', '$2y$10$mJCm8q5TgMP9RthqR1ZiFOgxkWPfNH65PwKZq1TFfrx', 'Sydney Charles', 'Joseph Callahan', 0, 1, '1970-02-25', 1, 0, NULL),
+(11, 'Mark', 'Zuckerberg', 'user123@yahoo.com', '$2y$10$ayw9ChYRVcqlSCx9tCj10O7KTM0lvHg3pWNFtGrpsH6w1CDDYyIBy', '9090885100', 'Ignatius Blackwell', 16, 1, '1987-06-19', 1, 1, 'avatar_20240517082823.jpg'),
+(12, 'Ignatius Shannon', 'Harrison Hurst', 'sample@yahoo.com', '$2y$10$Yz34Hu84BR7iLv.sHOvrweZt5FXZDQIcb.uCnfRTRKO', 'Yvette Hammond', 'Indigo Mayo', 0, 2, '2024-05-12', 1, 0, NULL),
+(13, 'Fitzgerald Gibbs', 'Winter Davis', 'sample2@yahoo.com', '$2y$10$Zc96CFTjgGwEquwZw26QH.Ivaql5206OdzZOBdY.2xZmCpFyGSrU6', 'Phelan Harding', 'Lavinia Mcpherson', 16, 2, '2024-05-12', 1, 0, NULL),
+(14, 'Jena Howard', 'Kyla Spence', 'user@yahoo.com', '$2y$10$II7cFq2.3b6ihXyZX3uzwO6.zVwCHOrhjZi8x7vf/oWthZ6zKCBOO', '09388388388', 'Brgy Humana, Bacolod City', 16, 2, '2024-05-12', 1, 0, NULL),
+(15, 'Allistair Orr', 'Alfreda Johnston', 'fuxecyza@mailinator.com', '$2y$10$03CaErMJwR/EwUSHEBasrepjd8mgercxL0CvGtzmULXUe87NVSY/S', 'Clayton Sanders', 'Sipalay City, Negros Occidental', 0, 2, '2024-05-17', 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,7 +218,9 @@ INSERT INTO `regions` (`region_id`, `name`, `country_id`) VALUES
 (1, 'Region 8', 2),
 (2, 'Region 7', 2),
 (3, 'Region 6', 2),
-(5, 'region 9', 2);
+(5, 'region 9', 2),
+(6, 'Region 10', 2),
+(7, 'Region 11', 2);
 
 -- --------------------------------------------------------
 
@@ -235,7 +246,14 @@ CREATE TABLE `transactions` (
 INSERT INTO `transactions` (`transaction_id`, `branch_id`, `transaction_code`, `percent`, `transaction_date`, `status`, `transaction_claimed`, `employee_id`) VALUES
 (105, 16, 'WSP-406-HHI-2405-1104', '2%', '2024-05-12 11:04:25', 1, '2024-05-12 13:56:10', 14),
 (106, 16, 'HXI-374-OPQ-2405-1155', '2%', '2024-05-12 11:55:32', 1, '2024-05-12 13:56:16', 14),
-(107, 16, 'RAD-832-HPT-2405-1203', '2%', '2024-05-12 12:03:38', 0, NULL, 13);
+(107, 16, 'RAD-832-HPT-2405-1203', '2%', '2024-05-12 12:03:38', 0, NULL, 13),
+(108, 13, 'DAC-663-MQT-2405-0753', '2%', '2024-05-14 07:53:00', 0, NULL, 2),
+(109, 16, 'RQA-084-XFO-2405-0611', '2%', '2024-05-15 06:11:29', 0, NULL, 11),
+(110, 16, 'JBB-568-AIW-2405-0616', '2%', '2024-05-15 06:16:14', 0, NULL, 11),
+(111, 16, 'BBC-243-JMD-2405-0303', '2%', '2024-05-15 15:03:27', 0, NULL, 11),
+(112, 16, 'PZL-395-OXE-2405-0305', '2%', '2024-05-15 15:05:18', 0, NULL, 11),
+(113, 16, 'JDZ-757-GWJ-2405-0931', '2%', '2024-05-17 09:31:30', 1, '2024-05-17 09:32:45', 11),
+(114, 16, 'APS-421-FWY-2405-0225', '2%', '2024-05-17 14:25:36', 0, NULL, 14);
 
 -- --------------------------------------------------------
 
@@ -261,9 +279,16 @@ CREATE TABLE `transaction_details` (
 --
 
 INSERT INTO `transaction_details` (`transaction_details_id`, `transaction_id`, `sender_customer_id`, `amount`, `receiver_name`, `receiver_address`, `receiver_contact`, `fee`, `sender_relation`, `purpose`) VALUES
-(94, 105, 104, '9000', 'Jescie Dunlop', 'Himamaylan City , Brgy 5', '09399493112', '180.00', 'Friend', 'Allowance'),
+(94, 105, 104, '9000', 'Jescie Dunlop', 'Himamaylan City , Brgy 5', '09399493110', '180.00', 'Friend', 'Allowance'),
 (95, 106, 105, '1000', 'Jessamine Dalton', 'Aliquip temporibus m', 'Cillum omni', '20.00', 'Numquam voluptas omn', 'Fugit labore enim p'),
-(96, 107, 106, '2000', 'Lila Michael', 'Magni non est totam', 'Ea qui culp', '40.00', 'Rerum culpa cum eve', 'Eaque nihil quam sed');
+(96, 107, 106, '2000', 'Lila Michael', 'Magni non est totam', 'Ea qui culp', '40.00', 'Rerum culpa cum eve', 'Eaque nihil quam sed'),
+(97, 108, 107, '2000', 'Henry Matter', 'Sipalay City', '09498583883', '40.00', 'Friend', 'Bayad Utang'),
+(98, 109, 108, '9200', 'Kiayada Doyle', 'Aristotle Wiley', '08987787878', '184.00', 'Bromance', 'Allowance'),
+(99, 110, 109, '13000', 'Cheyenne Owen', 'Owen Fernandez', '09787878787', '260.00', 'Friend', 'allowance'),
+(100, 111, 110, '2100', 'Zeus Nguyen', 'Carol Kline', 'Maia Johnson', '42.00', 'Ulric Morris', 'Bo Sweet'),
+(101, 112, 111, '780', 'Maya Morrison', 'Yoko Norman', 'TaShya Robinson', '15.60', 'Alexis Hurst', 'Rachel Houston'),
+(102, 113, 112, '570', 'Yeo Perkins', 'Lucy Roach', 'Sybil Jefferson', '11.40', 'Mari Mendoza', 'Ronan Williams'),
+(103, 114, 113, '970', 'Tarik Burges', 'Sipalay City, Negros Occidental', '0938848388', '19.40', 'Corrupti eos quis ', 'Accusamus nesciunt ');
 
 -- --------------------------------------------------------
 
@@ -273,11 +298,23 @@ INSERT INTO `transaction_details` (`transaction_details_id`, `transaction_id`, `
 
 CREATE TABLE `user` (
   `user_id` bigint(20) NOT NULL,
-  `email` varchar(50) NOT NULL DEFAULT '0',
-  `password` varchar(50) NOT NULL DEFAULT '0',
+  `name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 0
+  `status` int(11) NOT NULL DEFAULT 0,
+  `avatar` varchar(250) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `name`, `email`, `password`, `role`, `status`, `avatar`) VALUES
+(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$Avp4smGziHpxz.J70yfKLuL2nOKQDQztxF./gG7s2I3C2oCRVBHxK', 1, 1, '0'),
+(4, 'Jedi Diah', 'jed-admin@yahoo.com', '$2y$10$4dgDiLyj37bYRQY0u.MXWOPfm9evxFIkSlGUYGhd6xSmnzEzhmvie', 2, 1, '0'),
+(5, 'Mark Anthony', 'mark-admin@yahoo.com', '$2y$10$MkwSYAEqKwu/eUPiS3axY.c9zk0L08I7Y.6oAZJG2IqLh2QkPL6QC', 2, 1, '0'),
+(6, 'Henry Gregor', 'henry-admin@yahoo.com', '$2y$10$cOmMey4sLweXMGPrKWA/0O1WBI.rYuA4epf6sjXIxUm0tiwibsL2.', 2, 1, '0');
 
 --
 -- Indexes for dumped tables
@@ -385,13 +422,13 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `job`
@@ -403,31 +440,31 @@ ALTER TABLE `job`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `location_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `regions`
 --
 ALTER TABLE `regions`
-  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `transaction_details`
 --
 ALTER TABLE `transaction_details`
-  MODIFY `transaction_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `transaction_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
