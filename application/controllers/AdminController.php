@@ -8,18 +8,23 @@ class AdminController extends CI_Controller{
         {
             parent::__construct();
  
+            # LOAD NECESSARY HELPERS & LIBRARY
+            $this->load->helper('url');
+            $this->load->library('session');
             $this->load->helper('security');
+            $this->load->library('upload');
            
         
         }
 
-
+    #ADMIN LOGIN METHOD
     public function loginProcess(){
         $this->form_validation->set_rules('email','E-mail','required');
         $this->form_validation->set_rules('password','Password','required');
 
         if($this->form_validation->run() == FALSE){
-            return $this->response->status('validation_errors',400);
+            $this->response->status('validation_errors',400);
+            return;
         }else{
 
 
@@ -28,15 +33,21 @@ class AdminController extends CI_Controller{
             $password = $this->input->post('password');
     
             // Retrieve user from the database by email
-            $user = $this->UserModel->get_user_by_email($email);
+            $user = $this->UserModel->get_user_by_email_password($email);
 
             if($user !== 2){
+                #USER FOUND
                 
+                //echo json_encode($user);
+                #VALIDATE PASSWORD
                 if ($user && password_verify($password, $user->password)){
-                    #login successful
-                    #check if this user is not banned or removed
+                    #PASSWORD MATCH
+
+                    #CHECK USER STATUS 1 ACTIVE 0 NOT ACTIVE OR REMOVED
                     if($user->status !== 0){
-                        #active user
+                        #ACTIVE USER
+
+                        #SET ROLE
                         $role = '';
                         if($user->role == 1 || $user->role == '1'){
                             $role = 'SUPER_ADMIN';
@@ -44,7 +55,7 @@ class AdminController extends CI_Controller{
                             $role = 'SUB_ADMIN';
                         }
                         
-                        #create session array
+                        #CREATE SESSION ARRAY
                         $user_data = array(
                             'user_id' => $user->user_id,
                             'user_email' => $user->email,
@@ -54,29 +65,30 @@ class AdminController extends CI_Controller{
                             'logged_in' => TRUE
                         );
                         
+                        #SET SESSION
                         $this->session->set_userdata($user_data);
                         
                         #return success
                         return $this->response->status('success',200);
 
                     }else{
-                        #status is 0 meant remove or inactive
+                        #RETURN ERROR INACTIVE USER
                         return $this->response->status('inactive',400);
                         
                     }
                 }else{
-                    #invalid email or password
+                    #INVALID CREDENTIALS
                     return $this->response->status('invalid_credentials',400);
                 }
                
             }else{
-                #invalid credentials
+                #INVALID CREDENTIALS
                 return $this->response->status('invalid_credentials',400);
             }
 
-
             
-           
+            
+            
         }
     }
 
@@ -296,7 +308,7 @@ class AdminController extends CI_Controller{
     }
 
     
-    #ADMIN User 
+    #ADMIN USER
     public function addUser(){
 
          #check auth
@@ -308,11 +320,14 @@ class AdminController extends CI_Controller{
         $this->form_validation->set_rules('role','Role','required');
 
         if($this->form_validation->run() == FALSE){
-            return $this->response->status('validation_error',400);
+             $this->response->status('validation_error',400);
+             return;
         }
 
         $data = $this->input->post();
-        
+        $email = trim($data['email']);
+
+         
         $dataToInsert = array(
             'name' => $data['name'],
             'email' => $data['email'],
@@ -321,23 +336,49 @@ class AdminController extends CI_Controller{
             'status' => 1
 
         );
-
+       
         #check email if exist
-        $email_exist  = $this->UserModel->get_user_by_email(trim($data['email']));
-        if($email_exist  == 1){
+        $email_exist  = $this->UserModel->get_user_by_email($email);
+        if($email_exist == 1){
             #email exist
-            return $this->response->status('email_exist',400);
-        }else{
-            #insert the Data
-            $insert = $this->UserModel->addUser($dataToInsert);
-            if($insert !== 2){
-                #success
-                return $this->response->status('success',200);
-            }else{
-                return $this->response->status('error',500);
-            }
-        }       
+            $this->response->status('email_exist',400);
+            return;             
+        }
 
+       #check the image file
+        if (!empty($_FILES['my_avatar']['name'])){
+             # Set up all configuration
+             $config['upload_path'] = './uploads/avatar/';
+             $config['allowed_types'] = 'gif|jpg|jpeg|png';
+             $config['max_size'] = 5120; // 5MB in KB
+             $config['file_name'] = 'avatar_' . date('YmdHis');
+
+             $this->upload->initialize($config);
+
+             
+             if (!$this->upload->do_upload('my_avatar')) {
+                # Error in uploading
+                $error = $this->upload->display_errors();
+                 $this->response->status($error, 400);
+                 return;
+            } else {
+                # Get the upload data
+                $data = $this->upload->data();
+                $file_name = $data['file_name'];
+                $dataToInsert['avatar'] = $file_name;
+              
+            }
+        }
+
+          #insert the Data
+          $insert = $this->UserModel->addUser($dataToInsert);
+          if($insert !== 2){
+              #success
+              return $this->response->status('success',200);
+          }else{
+              return $this->response->status('error',500);
+          }
+       
        
     }
 
@@ -376,44 +417,101 @@ class AdminController extends CI_Controller{
         if ($this->form_validation->run() == FALSE) {
             return $this->response->status('validation_errors', 400);
         } else {
+            #get all form data
             $data = $this->input->post();
+
+            #password
+            $password = $this->input->post('password');
+
+            #SET FORM DATA
             $update_data = array(
                 'name' => $data['name'],                
                 'role' => $data['role']                
             );
-    
-            $password = $this->input->post('password');
-    
+            
+            #SET ALL NEEDED ID AND EMAIL
+            $user_id = $data['id'];
+            $email = trim($data['email']);
+
+            #get current avatar
+            $current_avatar = $this->UserModel->getUserAvatar($user_id);
+
+            if($current_avatar->avatar == 0 || $current_avatar->avatar == '0'){
+                #RETURN ERROR
+                $this->response->status('cannot_find_avatar',400);
+                return;
+            }
+          
             // Fetch the existing user data from the database based on the user ID
-            $existing_user = $this->UserModel->getUserById($data['id']);
-            if ($existing_user !== null) {
+            $existing_user = $this->UserModel->getUserById($user_id);
+            if ($existing_user !== 2) {
                 // Check if the email is being changed
-                if ($existing_user->email != $data['email']) {
+                if ($existing_user['email'] != $email) {
                     // Email is being changed, so check if the new email already exists
-                    $existing_email = $this->UserModel->get_user_by_email($data['email']);
+                    $existing_email = $this->UserModel->get_user_by_email($email);
     
                     if ($existing_email == 1) {
                         // Email already exists in the database for another user
                         // Return error
-                        return $this->response->status('email_exist', 400);
+                        $this->response->status('email_exist', 400);
+                        return;
                     } else {
-                        $update_data['email'] = $data['email'];
+                        #APPEND FORM DATA
+                        $update_data['email'] = $email;
                     }
                        
                 
                 }
     
-                // Check if password is provided
+                # Check if password is provided THEN APPEND PASSWORD IN THE FORM DATA
                 if ($password !== null && $password !== '') {
                     // Password is provided, update it
                     $update_data['password'] = password_hash($password, PASSWORD_DEFAULT);
                 }
+
+
+            #GET IMAGE FILE
+            if (!empty($_FILES['my_avatar2']['name'])) {
+                # Set up all configuration
+                $config['upload_path'] = './uploads/avatar/';
+                $config['allowed_types'] = 'gif|jpg|jpeg|png';
+                $config['max_size'] = 5120; // 5MB in KB
+                $config['file_name'] = 'avatar_' . date('YmdHis');
+
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload('my_avatar2')) {
+                    # Error in uploading
+                    $error = $this->upload->display_errors();
+                    $this->response->status($error, 400);
+                    return;
+                   
+                } else {
+                    # GET THE UPLOAD DATA
+                    $data = $this->upload->data();
+                    #GET THE FILE NAME 
+                    $file_name = $data['file_name'];
+                    #APPEND FORM DATA
+                    $update_data['avatar'] = $file_name;
+
+                    # DELETE OLD AVATAR PHOTO
+                    if ($current_avatar->avatar && file_exists('./uploads/avatar/' . $current_avatar->avatar)) {
+                        unlink('./uploads/avatar/' . $current_avatar->avatar);                       
+                    }else{
+                        $this->response->status('file_not_exist_dir',400);
+                        return;
+                    }
+
+                }
+            }
+
+ 
                
-                // Update user data
-                $update = $this->UserModel->updateUser($update_data, $data['id']);
+                #ALL SET & SUBMIT THE FORM IN THE USER MODEL
+                $update = $this->UserModel->updateUser($update_data, $user_id);
                 if ($update !== 2) {
-                    // Success
-                    return $this->response->status('success', 200);
+                    # SUCCESS
+                    return $this->response->status('success', 200);                   
                 } else {
                     // Failed to update
                     return $this->response->status('error', 500);
@@ -443,7 +541,7 @@ class AdminController extends CI_Controller{
     }
     
 
-    #transaction
+    #ADMIN TRANSACTION
 
     public function getTransaction(){
          #check auth
@@ -467,7 +565,7 @@ class AdminController extends CI_Controller{
         }
     }
 
-    #customer
+    #ADMIN CUSTOMER
     public function getCustomer(){
          #check auth
          $this->auth_library->check_login_ADMIN();

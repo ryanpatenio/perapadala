@@ -19,6 +19,18 @@ class UserModel extends CI_Model {
             ->get('user');
         if($query->num_rows() > 0){
             #found data
+            return 1;
+        }else{
+            return 2;
+        }
+        
+    }
+    public function get_user_by_email_password($email) {
+        // Query the database to get user by username
+        $query = $this->db->where('email',$email)
+            ->get('user');
+        if($query->num_rows() > 0){
+            #found data
             return $query->row();
         }else{
             return 2;
@@ -137,11 +149,32 @@ class UserModel extends CI_Model {
     }
    
 
-    public function getUserByID($id){
-        $query = $this->db->select('user_id,name,email,role')
+    public function getUserById($id){
+        $query = $this->db->select('user_id,name,email,role,avatar')
             ->from('user')
             ->where('user_id',$id)
             ->get();
+        if($query->num_rows() > 0){
+            $dd =  $query->row();
+
+            $url =  base_url('uploads/avatar/' . $dd->avatar);
+            $data = array(
+                'user_id' => $dd->user_id,
+                'name' => $dd->name,
+                'email'=> $dd->email,
+                'role' => $dd->role,
+                'avatar'=> $url
+
+            );
+            return $data;
+
+        }else{
+            return 2;
+        }
+    }
+    public function getUserAvatar($id){
+        $query  = $this->db->where('user_id',$id)
+            ->get('user');
         if($query->num_rows() > 0){
             return $query->row();
         }else{

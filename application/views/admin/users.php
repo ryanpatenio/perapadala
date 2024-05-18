@@ -95,8 +95,22 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
                 <div class="modal-body">
-                  <form method="POST" id="userForm" >
+                  <form method="POST" id="userForm" enctype="multipart/form-data" >
                       <div class="card-body">
+
+                      <div class="row">
+                          <div class="col">
+                          <img src="" id="display_avatar" alt="Profile" class=" w-25">
+                          </div>
+                        </div>
+
+                        <div class="row mb-2">
+                          <div class="col">
+                            <label for="img">Avatar</label>
+                            <input type="file" id="my-avatar" name="my_avatar" accept="image/png, image/jpeg" class="form-control" required>
+                          </div>
+                        </div>
+
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Name</label>
@@ -145,10 +159,26 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
                 <div class="modal-body">
-                  <form method="POST" id="updateForm" >
+                  <form method="POST" id="updateForm" enctype="multipart/form-data">
                       <input type="hidden" id="id" name="id">
 
-                  <div class="card-body">
+                    <div class="card-body">
+
+                      <div class="row">
+                          <div class="col">
+                          <img src="" id="display_avatar2" alt="Profile" class=" w-25">
+                          </div>
+                        </div>
+
+                        <div class="row mb-2">
+                          <div class="col">
+                            <label for="img">Avatar</label>
+                            <input type="file" id="my-avatar2" name="my_avatar2" accept="image/png, image/jpeg" class="form-control">
+                          </div>
+                        </div>
+
+                        
+
                         <div class="row mb-2">                  
                             <div class="col">
                               <label for="validationDefault01" class="form-label">Name</label>

@@ -7,20 +7,34 @@ $(document).ready(function () {
     $('#userForm').submit(function (e) {
         e.preventDefault();
 
-        const formData = $(this).serialize();
+
+        let fileInput = $('#my-avatar')[0];
+        let file = fileInput.files[0];
+
+        const formData = new FormData(this);
+        if (file.size > 5242880) { // 5MB in bytes
+            msg('File size must not be greater than 5MB', 'info');
+            return; // Stop form submission
+        }
+
+        // Include CSRF token if applicable
+        formData.append('csrf_token_name', '<?= $this->security->get_csrf_hash(); ?>');
+
 
         $.ajax({
             url: 'admin-add-user',
             method: 'post',
             data: formData,
             dataType: 'json',
+            contentType: false,
+            processData: false,
             
             beforeSend: function () {
                 
             },
 
             success: function (resp) {
-                // res(resp);
+                 res(resp);
                 formModalClose(addModal, $('#userForm'));
                 if (resp.message == 'success') {
                     message('New User Added Successfully!', 'success');
@@ -28,7 +42,7 @@ $(document).ready(function () {
             },
 
             error: function (xhr, status, error) {
-               // res(xhr.responseText);
+                res(xhr.responseText);
                 if (xhr.responseJSON.message == 'email_exist') {
                     msg('Email is Already Exist', 'info');
                 }
@@ -64,6 +78,7 @@ $(document).ready(function () {
             success: function (data) {
                 //res(data);
                 $('#id').val(data.user_id);
+                $('#display_avatar2').attr('src', data.avatar);
 
                 $('#name').val(data.name);
                 $('#email').val(data.email);
@@ -96,7 +111,20 @@ $(document).ready(function () {
     $('#updateForm').submit(function (e) {
         e.preventDefault();
 
-        const formData = $(this).serialize();
+        let fileInput = $('#my-avatar2')[0];
+        let file = fileInput.files[0];
+    
+        let formData = new FormData(this);
+    
+        // Check if a file is selected and validate its size
+        if (file) {
+            if (file.size > 5242880) { // 5MB in bytes
+                msg('File size must not be greater than 5MB', 'info');
+                return; // Stop form submission
+            }
+            formData.append('avatar', file); // Append the file to formData only if it exists
+        }
+
 
         swal({
             title: "Are you sure you want Update this User?",
@@ -112,25 +140,30 @@ $(document).ready(function () {
                     method: 'post',
                     data: formData,
                     dataType: 'json',
+                    contentType: false,
+                    processData: false,
                     
                     beforeSend: function () {
                         
                     },
         
                     success: function (resp) {
-                       // res(resp);
+                        //res(resp);
                         formModalClose(editModal, $('#updateForm'));
                         if (resp.message == 'success') {
                             message('User Updated Successfully!', 'success');
                         }
                     },
                     error: function (xhr, status, error) {
-                        //res(xhr.responseText);
+                       // res(xhr.responseText);
                         if (xhr.responseJSON.message == 'email_exist') {
                             msg('Email is already exist!', 'info');
                         }
                         if (xhr.status == 500) {
                             msg('Oops! Unexpected Internal Server Error!', 'error');
+                        }
+                        if (xhr.responseJSON.message == 'cannot_find_avatar') {
+                            msg('Oops! Unexpected Error! Old avatar cannot found in the avatar directory!, Contact Your Administrator!', 'error');
                         }
                     }
         
@@ -199,5 +232,24 @@ $(document).ready(function () {
 
     });
 
+    $('#my-avatar').change(function(e){
+        e.preventDefault();
+        let output_img = document.getElementById("display_avatar");
+          output_img.src=URL.createObjectURL(event.target.files[0]);
+            output_img.onload = function(){
+              URL.revokeObjectURL(output_img.src);
+            };
+           
+    });
+    
+    $('#my-avatar2').change(function(e){
+        e.preventDefault();
+        let output_img = document.getElementById("display_avatar2");
+          output_img.src=URL.createObjectURL(event.target.files[0]);
+            output_img.onload = function(){
+              URL.revokeObjectURL(output_img.src);
+            };
+           
+      });
 
 });

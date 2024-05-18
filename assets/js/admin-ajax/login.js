@@ -17,14 +17,14 @@ $(document).ready(function () {
                 $('#masterForm :input').prop('disabled', true);
             },
             success: function (resp) {
-                res(resp);
+               // res(resp);
                 if (resp.message == 'success') {
                     msgThenRedirect('Login Successfully!', 'success', 'admin');
                 }
             },
             error: function (xhr, status, error) {
                 // Handle AJAX errors
-                res(xhr.responseText);
+                //res(xhr.responseText);
                 if (xhr.responseJSON.message == 'invalid_credentials') {
                     msg('Invalid Email OR Password!', 'error');
                 }

@@ -71,25 +71,56 @@
 
         </li> <!-- End Messages Nav -->
 
+      <?php
+      #SET NEED TO SHOW
+      #SESSION DATA
+
+      #avatar
+      $avatar = $this->session->userdata('avatar');
+      $avatar_path = FCPATH . 'uploads/avatar/' . $avatar;
+      $default_avatar = base_url('assets/admin-assets/avatar/no_avatar.png');
+
+      if (file_exists($avatar_path) && !empty($avatar)) {
+          $avatar_url = base_url('uploads/avatar/' . $avatar);
+      } else {
+          $avatar_url = $default_avatar;
+      }
+
+      #NAME
+      $name = $this->session->userdata('user_name');
+
+      #ROLE
+      $role = $this->session->userdata('role');
+      $ROLE = '';
+      if($role == 'SUPER_ADMIN'){
+        $ROLE = 'ADMINISTRATOR';
+      }else{
+        $ROLE = 'SUB ADMINISTRATOR';
+      }
+
+      ?>
+
+
+
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;">Ryan WOng </span>
+            <img src="<?=$avatar_url; ?>" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" style="color: white;"><?=$name; ?> </span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
 
 
-              <h6>Ryan Wong</h6>
-              <span>Administrator</span>
+              <h6><?=$name; ?></h6>
+              <span><?=$ROLE; ?></span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="<?=base_url(); ?>admin-profile">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
