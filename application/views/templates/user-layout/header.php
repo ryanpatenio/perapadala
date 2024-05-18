@@ -20,16 +20,18 @@
         <!----Crypto Library ---->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 
-        <script>
-            $(document).on('click', '.keep-open', function (e) {
-                e.stopPropagation();
-            });
-    </script>
+       
       
 
 
         <!----- Jquery 3.1 CDN ---->
         <script src="<?= base_url();?>assets/admin-assets/vendor/jquery-min.js"></script>
+        <script>
+            $(document).on('click', '.keep-open', function (e) {
+                e.stopPropagation();
+            });
+        </script>
+        
         <style>
             .dot {
 
@@ -98,8 +100,8 @@
     <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
         <?php
         $loggedIn = $this->session->userdata('logged_in');
-        
-        if(!$loggedIn){
+        #CHECK IF LOGIN && CHECK THE ROLE || IN CASE THE ADMIN MISTAKENLY OPEN THIS DIRECTORY IT WILL ONLY SHOWS THE LOGIN BUTTON
+        if(!$loggedIn || $this->session->userdata('role') == 'SUB_ADMIN' || $this->session->userdata('role') == 'SUPER_ADMIN'){
             ?>
             <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
                 <span class="d-flex align-items-center">
@@ -121,6 +123,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle keep-open" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!-- Display logged-in user's name -->
+                    <!-- Branch Personnel Only Display -->
                     <?= $this->session->userdata['emp_name']; ?>
                     <span class="dot"></span>
                 </a>
@@ -132,6 +135,7 @@
                 </div>
             </li>
         <?php }else{ ?>
+            <!-- iF Branch Manager Mistakenly open this directory even he already login in his page This Will Show only the logout button -->
             <button class="btn btn-sm btn-primary">
             <a class="dropdown-item " href="#" id="logout">Logout</a>
             </button>

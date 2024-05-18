@@ -96,9 +96,10 @@ class AdminController extends CI_Controller{
     
 
     public function employee_index(){
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
+        
         $page = "employees";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -117,11 +118,11 @@ class AdminController extends CI_Controller{
     }
 
     public function branches_index(){
-        $page = "branches";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
-        
+        $page = "branches";
+       
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
@@ -139,11 +140,11 @@ class AdminController extends CI_Controller{
     }
 
     public function customer_index(){
-        $page = "customer";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
-        
+        $page = "customer";
+       
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
@@ -158,10 +159,10 @@ class AdminController extends CI_Controller{
     }
     
     public function transaction_index(){
-        $page = "transactions";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
+        $page = "transactions";
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -176,10 +177,10 @@ class AdminController extends CI_Controller{
      $this->load->view('templates/admin-layout/footer');
     }
     public function jobs_index(){
-        $page = "jobTitle";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
+        $page = "jobTitle";
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -195,10 +196,10 @@ class AdminController extends CI_Controller{
     }
 
     public function users_index(){
-        $page = "users";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
+        $page = "users";
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -214,9 +215,10 @@ class AdminController extends CI_Controller{
     }
 
     public function profile_index(){
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
+        
         $page = "profile";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
 
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
@@ -232,10 +234,10 @@ class AdminController extends CI_Controller{
      $this->load->view('templates/admin-layout/footer');
     }
     public function serviceCharge_index(){
-        $page = "serviceCharges";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
+        $page = "serviceCharges";
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -250,11 +252,11 @@ class AdminController extends CI_Controller{
      $this->load->view('templates/admin-layout/footer');
     }
     public function countries_index(){
-        $page = "countries";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
-        
+        $page = "countries";
+
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
@@ -268,11 +270,11 @@ class AdminController extends CI_Controller{
      $this->load->view('templates/admin-layout/footer');
     }
     public function regions_index(){
-        $page = "regions";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
-        
+        $page = "regions";
+       
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
 
@@ -286,11 +288,11 @@ class AdminController extends CI_Controller{
         $this->load->view('admin/'.$page,$data);
         $this->load->view('templates/admin-layout/footer');
     }
-    public function locations_index(){
-        $page = "locations";
-         #check auth
-         $this->auth_library->check_login_ADMIN();
+    public function locations_index(){       
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
 
+        $page = "locations";
         
         if(!file_exists(APPPATH.'views/admin/'.$page.'.php')){
          show_404();
@@ -544,7 +546,7 @@ class AdminController extends CI_Controller{
     #ADMIN TRANSACTION
 
     public function getTransaction(){
-         #check auth
+         # CHECK AUTH
          $this->auth_library->check_login_ADMIN();
 
         $id = $this->input->post('id');
@@ -567,7 +569,7 @@ class AdminController extends CI_Controller{
 
     #ADMIN CUSTOMER
     public function getCustomer(){
-         #check auth
+         # CHECK AUTH
          $this->auth_library->check_login_ADMIN();
 
         $id = $this->input->post('id');
@@ -585,7 +587,7 @@ class AdminController extends CI_Controller{
     }
 
     public function updateCustomer(){
-         #check auth
+         # CHECK AUTH
          $this->auth_library->check_login_ADMIN();
 
         $this->form_validation->set_rules('customer_name','Name','required');
@@ -616,6 +618,8 @@ class AdminController extends CI_Controller{
 
     #MY PASSWORD
     public function updatePassword(){
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
         
         $this->form_validation->set_rules('currentPassword','Old Password','required');
         $this->form_validation->set_rules('newPassword','New Password','required');
@@ -666,6 +670,9 @@ class AdminController extends CI_Controller{
 
     #ADMIN PROFILE
     public function updateProfile(){
+        # CHECK AUTH
+        $this->auth_library->check_login_ADMIN();
+
         $this->form_validation->set_rules('name','Full Name','required');
 
         if($this->form_validation->run() == FALSE){

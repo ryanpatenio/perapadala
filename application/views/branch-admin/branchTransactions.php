@@ -237,14 +237,14 @@
                   <div class="col-md-6 mb-2">                                        
                       <div class="mb-0">
                           <label for="" class="form-label">Sender Contact Number  </label>
-                          <input type="text" name="contact" class="form-control"  required id="sender-contact" placeholder="">
+                          <input type="text" name="contact" maxlength="11" class="form-control"  required id="sender-contact" placeholder="">
                       </div>                                       
                   </div>
                   
                   <div class="col-md-6 mb-2">                                        
                       <div class="mb-0">
                           <label for="" class="form-label">Receiver Contact Number</label>
-                          <input type="text" name="receiver_contact" class="form-control" required  id="r-contact" placeholder="">
+                          <input type="text" name="receiver_contact" maxlength="11" class="form-control" required  id="r-contact" placeholder="">
                       </div>                                       
                   </div>                                   
               </div>

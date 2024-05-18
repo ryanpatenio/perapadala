@@ -182,4 +182,14 @@ $(document).ready(function () {
         }
     });
 
+    $('#my_avatar').change(function(e){
+        e.preventDefault();
+        let output_img = document.getElementById("display_avatar");
+          output_img.src=URL.createObjectURL(event.target.files[0]);
+            output_img.onload = function(){
+              URL.revokeObjectURL(output_img.src);
+            };
+           
+    });
+
 });

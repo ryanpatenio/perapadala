@@ -124,7 +124,7 @@
                           <div class="row mb-2">                           
                             <div class="col">
                               <label for="contact">Contact</label>
-                              <input type="text" name="contact" class="form-control" placeholder="contact" required>
+                              <input type="text" name="contact" maxlength="11" class="form-control" placeholder="contact" required>
                             </div>  
                             <div class="col">
                               <label for="address">Address</label>
@@ -204,7 +204,7 @@
                             <div class="row mb-2">                           
                               <div class="col">
                                 <label for="contact">Contact</label>
-                                <input type="text" name="contact" id="edit-contact" class="form-control" placeholder="contact">
+                                <input type="text" name="contact" maxlength="11" id="edit-contact" class="form-control" placeholder="contact">
                               </div>  
                               <div class="col">
                                 <label for="address">Address</label>

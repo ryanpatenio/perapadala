@@ -49,7 +49,10 @@ class BranchTransactionController extends CI_Controller{
        
         $transaction_data = $this->BranchTransactionModel->getTransactionData($id); // Replace 'Your_model' and 'getTransactionData' with appropriate names
     
-        if (!$transaction_data) {
+        if (!$transaction_data || $transaction_data === 2) {
+            show_404(); // If no data found for the provided ID, show 404 page
+        }
+        if($id === null || $id === ''){
             show_404(); // If no data found for the provided ID, show 404 page
         }
     
