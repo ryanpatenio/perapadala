@@ -46,6 +46,34 @@
               </div>
             </div><!-- End Revenue Card -->
 
+
+             <!-- Revenue Card -->
+             <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Income <span>| This Month</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      ₱
+                    </div>
+                    <div class="ps-3">
+                      <h6>₱20 000</h6>
+                      <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">100%</span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12">
 
@@ -110,7 +138,7 @@
                   <div class="filter"></div>
 
                   <div class="card-body">
-                    <h5 class="card-title">Branche Name <span></span></h5>
+                    <h5 class="card-title">Branch Name <span></span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -181,52 +209,21 @@
                     <thead>
                       <tr>
                         <th scope="col">#trans Code</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Price</th>
-                    
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Fee</th>
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
+                     <tr>
+                        <th scope="row"><a href="#">BQWE-SEW-QSAD23</a></th>
+                        <td>Henry Tolero</td>
+                        <td>2000</td>
+                        <td>40</td>
+                        <td><span class="badge bg-success">Claimed</span></td>
+                      </tr>
                     
-<!-- 
-                      <tr>
-                        <th scope="row"><a href="#"><?php echo $data['order_code']; ?></a></th>
-                        <td><?php echo $data['name']; ?></td>
-                        <td><a href="index.php?page=product" class="text-primary"><?php echo $data['prod_name']; ?></a></td>
-                        <td><?php echo $data['qty']; ?></td>
-                        <td><?php echo '₱ '.$data['prod_price']; ?></td>
-                       
-
-                        <?php
-                          $status = $data['status'];
-                          $stat_res;$stat_col;
-                          //delivered = 2
-                          //claim = 1
-                          //pending = 0
-                          if($status === '0'){
-                            $stat_res = 'unclaim';
-                            $stat_col = 'danger';
-                          }else if($status === '1'){
-                            $stat_res = 'claim';
-                            $stat_col = 'success';
-                          }else if($status === '2'){
-                            $stat_res = 'Delivered';
-                            $stat_col = 'success';
-                          }
-
-                         ?>
-
-
-                        <td><span class="badge bg-<?php echo $stat_col; ?>"><?php echo  $stat_res; ?></span></td>
-                      </tr> -->
-
-
-
-                     
-                      
                     </tbody>
                   </table>
 

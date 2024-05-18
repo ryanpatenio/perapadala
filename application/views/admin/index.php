@@ -127,7 +127,7 @@
                   <div class="filter"></div>
 
                   <div class="card-body">
-                    <h5 class="card-title">Employees <span>| This Year</span></h5>
+                    <h5 class="card-title">Employees</span></h5>
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -225,52 +225,25 @@
                     <thead>
                       <tr>
                         <th scope="col">#trans Code</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Price</th>
-                    
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Fee</th>
+                        <th scope="col">Branch</th>                    
                         <th scope="col">Status</th>
                       </tr>
                     </thead>
                     <tbody>
                     
-<!-- 
                       <tr>
-                        <th scope="row"><a href="#"><?php echo $data['order_code']; ?></a></th>
-                        <td><?php echo $data['name']; ?></td>
-                        <td><a href="index.php?page=product" class="text-primary"><?php echo $data['prod_name']; ?></a></td>
-                        <td><?php echo $data['qty']; ?></td>
-                        <td><?php echo '₱ '.$data['prod_price']; ?></td>
-                       
-
-                        <?php
-                          $status = $data['status'];
-                          $stat_res;$stat_col;
-                          //delivered = 2
-                          //claim = 1
-                          //pending = 0
-                          if($status === '0'){
-                            $stat_res = 'unclaim';
-                            $stat_col = 'danger';
-                          }else if($status === '1'){
-                            $stat_res = 'claim';
-                            $stat_col = 'success';
-                          }else if($status === '2'){
-                            $stat_res = 'Delivered';
-                            $stat_col = 'success';
-                          }
-
-                         ?>
-
-
-                        <td><span class="badge bg-<?php echo $stat_col; ?>"><?php echo  $stat_res; ?></span></td>
-                      </tr> -->
-
-
-
+                        <th scope="row"><a href="#">BQQW-SWE-SAS-SADW</a></th>
+                        <th scope="row"><a href="#">Henry Sy</a></th>
+                        <th scope="row"><a href="#">1000</a></th>
+                        <th scope="row"><a href="#">20</a></th>
+                        <th scope="row"><a href="#">Kabankalan</a></th>
+                        <th scope="row"><button class="btn btn-sm btn-success">Claimed</button></th>
+         
+                      </tr>
                      
-                      
                     </tbody>
                   </table>
 
