@@ -1,11 +1,40 @@
 
 <main id="main" class="main">
 
+<?php
+      #SET NEED TO SHOW
+      #SESSION DATA
+
+      #avatar
+      $avatar = $this->session->userdata('avatar');
+      $avatar_path = FCPATH . 'uploads/avatar/' . $avatar;
+      $default_avatar = base_url('assets/admin-assets/avatar/no_avatar.png');
+
+      if (file_exists($avatar_path) && !empty($avatar)) {
+          $avatar_url = base_url('uploads/avatar/' . $avatar);
+      } else {
+          $avatar_url = $default_avatar;
+      }
+
+      #NAME
+      $name = $this->session->userdata('user_name');
+
+      #ROLE
+      $role = $this->session->userdata('role');
+      $ROLE = '';
+      if($role == 'SUPER_ADMIN'){
+        $ROLE = 'ADMINISTRATOR';
+      }else{
+        $ROLE = 'SUB ADMINISTRATOR';
+      }
+
+      ?>
+
     <div class="pagetitle">
       <h1>Profile</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="<?= base_url(); ?>admin">Home</a></li>
           <li class="breadcrumb-item">Users</li>
           <li class="breadcrumb-item active">Profile</li>
         </ol>
@@ -19,9 +48,9 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" alt="Profile" class="rounded-circle">
-              <h2>Ryan Wong</h2>
-              <h3>Admin</h3>
+              <img src="<?= $avatar_url; ?>" alt="Profile" class="rounded-circle">
+              <h2><?= $name; ?></h2>
+              <h3><?= $ROLE; ?></h3>
              
             </div>
           </div>
@@ -44,10 +73,6 @@
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li>
-
-                <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
                 </li>
 
@@ -61,12 +86,12 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8">Ryan Wong</div>
+                    <div class="col-lg-9 col-md-8"><?= $name; ?></div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Job</div>
-                    <div class="col-lg-9 col-md-8">Admin</div>
+                    <div class="col-lg-3 col-md-4 label">ROLE</div>
+                    <div class="col-lg-9 col-md-8"><?= $ROLE; ?></div>
                   </div>
 
                  
@@ -85,12 +110,10 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg" id="display_avatar" alt="Profile">
+                        <img src="<?=$avatar_url; ?>" id="display_avatar" alt="Profile">
                         <div class="pt-2">
 
-                        <input type="hidden" name="hidden_avatar" value="<?= base_url()?>assets/admin-assets/avatar/1664806140_pp.jpg">
-                      
-                          <input type="file" id="temp_avatar" name="temp_avatar" accept="image/*" class="form-control" title="Upload new profile image">
+                          <input type="file" id="my_avatar" name="my_avatar" accept="image/*" class="form-control" title="Upload new profile image">
                           <!-- <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a> -->
                         </div>
                       </div>
@@ -98,31 +121,18 @@
 
                     
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
+                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fname" type="text" class="form-control" id="fname" value="Ryan">
-                      </div>
-
-                      <label  for="lastName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
-                      <div class="col-md-8 col-lg-9 mt-2">
-                        <input name="lname" type="text" class="form-control" id="lname" value="Wong">
+                        <input name="name" type="text" class="form-control" id="name" value="<?=$name; ?>" required>
                       </div>
                     </div>
 
                    
 
                     <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">ROLE</label>
                       <div class="col-md-8 col-lg-9">
-
-                        <select id="edit_profile_job" class="form-control" name="edit_profile_job">
-
-                        
-                          <option value="">Admin</option>
-                        
-                         
-
-                        </select>                        
+                          <input type="text" class="form-control" value="<?=$ROLE;?>" readonly>                       
                       </div>
                     </div>
 
@@ -139,10 +149,8 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <form method="POST" id="prof_changePass_form">
 
-                
-
+                  <form method="POST" id="changePasswordForm">
                     <div class="row mb-3">
                       <label for="current_Password" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
@@ -160,13 +168,13 @@
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="renewPassword" class="form-control" id="renewPassword">
+                        <input  type="password" name="re_password" class="form-control" id="re-password">
                       </div>
                     </div>
                     <span id="error_message"></span>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" id="change-pass-btn" class="btn btn-primary">Change Password</button>
                     </div>
                   </form><!-- End Change Password Form -->
 

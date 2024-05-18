@@ -181,6 +181,15 @@ class UserModel extends CI_Model {
             return 2;
         }
     }
+    public function getUserPasswordByID($id){
+        $query  = $this->db->where('user_id',$id)
+            ->get('user');
+        if($query->num_rows() > 0){
+            return $query->row();
+        }else{
+            return 2;
+        }
+    }
 
     public function updateUser($data,$id){
         $update = $this->db->where('user_id',$id)

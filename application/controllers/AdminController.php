@@ -614,6 +614,55 @@ class AdminController extends CI_Controller{
         }
     }
 
+    #MY PASSWORD
+    public function updatePassword(){
+        
+        $this->form_validation->set_rules('currentPassword','Old Password','required');
+        $this->form_validation->set_rules('newPassword','New Password','required');
+
+        if($this->form_validation->run() == FALSE){
+            $this->response->status('error_validation',400);
+            return;
+        }
+        #ALL FORM DATA
+        $data = $this->input->post();
+        
+        $dataToUpdate = array(
+            'password' => password_hash($data['newPassword'],PASSWORD_DEFAULT),
+            
+        );
+
+        #USER ID
+        $my_user_id = $this->session->userdata('user_id');
+
+        #Current Password
+        $currentPassword = $data['currentPassword'];
+
+
+        #GET OLD PASSWORD
+        $user = $this->UserModel->getUserPasswordByID($my_user_id);
+
+        if($user !== 2){
+            #FOUND DATA
+            if (!password_verify($currentPassword, $user->password)){
+                #OLD PASSWORD NOT MATCH
+                $this->response->status('old_password_not_match',400);
+                return;
+            }
+            
+            #UPDATE PASSWORD
+            $update = $this->UserModel->updateUser($dataToUpdate,$my_user_id);
+            if($update !== 2){
+                #SUCCESS
+                return $this->response->status('success',200);
+                
+            }else{
+                #ERROR
+                return $this->response->status('error',500);
+            }            
+
+        }
+    }
 
 
 }

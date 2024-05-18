@@ -79,6 +79,9 @@ $route['admin-get-branch-transaction'] = 'adminController/getTransaction';
 $route['admin-edit-customer'] = 'adminController/getCustomer';
 $route['admin-update-customer'] = 'adminController/updateCustomer';
 
+#PROFILE ROUTES
+$route['admin-change-password'] = 'adminController/updatePassword';
+
 ##################################end of Admin Routes############################
 
 
