@@ -105,7 +105,7 @@
 
 
                   <!-- Profile Edit Form -->
-                  <form method="POST" id="edit_profile_form" enctype="multipart/form-data">
+                  <form method="POST" id="updateProfileForm" enctype="multipart/form-data">
                    
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>

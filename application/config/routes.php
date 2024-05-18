@@ -81,6 +81,7 @@ $route['admin-update-customer'] = 'adminController/updateCustomer';
 
 #PROFILE ROUTES
 $route['admin-change-password'] = 'adminController/updatePassword';
+$route['admin-update-profile'] = 'adminController/updateProfile';
 
 ##################################end of Admin Routes############################
 

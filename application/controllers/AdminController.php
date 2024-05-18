@@ -664,5 +664,92 @@ class AdminController extends CI_Controller{
         }
     }
 
+    #ADMIN PROFILE
+    public function updateProfile(){
+        $this->form_validation->set_rules('name','Full Name','required');
+
+        if($this->form_validation->run() == FALSE){
+            $this->response->status('validation_error',400);
+            return;
+        }
+        #ALL FORM DATA
+        $data = $this->input->post();
+
+        #name
+        $name = $data['name'];
+
+        #UPDATE DATA ARRAY
+        $updateData = array(
+            'name' => $data['name']
+        );
+
+        #USER ID
+        $user_id = $this->session->userdata('user_id');
+
+
+        #get current avatar
+        $current_avatar = $this->UserModel->getUserAvatar($user_id);
+
+        if($current_avatar->avatar == 0 || $current_avatar->avatar == '0'){
+            #RETURN ERROR
+            $this->response->status('cannot_find_avatar',400);
+            return;
+        }
+
+
+        #CHECK IF HAS FILE IMG
+        if (!empty($_FILES['my_avatar']['name'])) {
+            # Set up all configuration
+            $config['upload_path'] = './uploads/avatar/';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['max_size'] = 5120; // 5MB in KB
+            $config['file_name'] = 'avatar_' . date('YmdHis');
+
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('my_avatar')) {
+                # Error in uploading
+                $error = $this->upload->display_errors();
+                $this->response->status($error, 400);
+                return;
+
+            }else{
+                 # GET THE UPLOAD DATA
+                 $data = $this->upload->data();
+                 #GET THE FILE NAME 
+                 $file_name = $data['file_name'];
+                 #APPEND FORM DATA
+                 $updateData['avatar'] = $file_name;
+
+                # Update session with new avatar filename
+                $this->session->set_userdata('avatar', $file_name);
+
+                 # DELETE OLD AVATAR PHOTO
+                 if ($current_avatar->avatar && file_exists('./uploads/avatar/' . $current_avatar->avatar)) {
+                    unlink('./uploads/avatar/' . $current_avatar->avatar);                       
+                }else{
+                    $this->response->status('file_not_exist_dir',400);
+                    return;
+                }
+            }
+
+
+        }
+
+        #ALL SET & SUBMIT THE FORM IN THE USER MODEL
+        $update = $this->UserModel->updateUser($updateData, $user_id);
+        if ($update !== 2) {
+            # SUCCESS
+            # UPDATE SESSION NAME
+            $this->session->set_userdata('user_name', $name);
+           
+            return $this->response->status('success', 200);                   
+        } else {
+            // Failed to update
+            return $this->response->status('error', 500);
+        }
+
+    }
+
 
 }
