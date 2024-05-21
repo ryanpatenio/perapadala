@@ -2,6 +2,9 @@ $(document).ready(function () {
     const editModal = $('#editTransactionModal'); 
     const addModal = $('#newTransactionModal');
 
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+
     $('#addForm').submit(function (e) {
         e.preventDefault();
         

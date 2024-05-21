@@ -1,6 +1,8 @@
 $(document).ready(function(){
     const addModal = $('#newJobModal');
     const editModal = $('#editJobModal');
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
     
     $('#jobForm').submit(function(e){
       e.preventDefault()

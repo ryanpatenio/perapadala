@@ -1,7 +1,7 @@
 
-<main id="main" class="main">
+<main id="main" class="main" style="filter: blur(4px);">
 
-    <div class="pagetitle">
+    <div class="page-title">
       <h1>Dashboard</h1>
       <nav>
         <ol class="breadcrumb">
@@ -36,8 +36,8 @@
                       ₱
                     </div>
                     <div class="ps-3">
-                      <h6>₱20 000</h6>
-                      <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">100%</span>
+                      <h6 id="income-this-day"></h6>
+                      <!-- <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">100%</span> -->
 
                     </div>
                   </div>
@@ -63,9 +63,8 @@
                       ₱
                     </div>
                     <div class="ps-3">
-                      <h6>₱20 000</h6>
-                      <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">100%</span>
-
+                      <h6 id="income-this-month"></h6>
+                    
                     </div>
                   </div>
                 </div>
@@ -91,12 +90,9 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>
+                      <h6 id="customers-count">
 
-                     23
-
-
-
+                    
                       </h6>
                       
                     </div>
@@ -119,9 +115,9 @@
                         <i class="bi bi-people"></i>
                       </div>
                       <div class="ps-3">
-                        <h6>
+                        <h6 id="employees-count">
 
-                      1000
+                   
                         </h6>
                         <span class="text-success small pt-1 fw-bold">2%</span> <span class="text-muted small pt-2 ps-1">23% From Last Year</span>
 
@@ -133,7 +129,7 @@
 
             </div><!-- End Employees Card -->
 
-            <div class="col-xxl-4 col-xl-12">
+            <div class="col-xxl-8 col-xl-12">
                 <div class="card info-card customers-card">
                   <div class="filter"></div>
 
@@ -147,7 +143,16 @@
                       <div class="ps-3">
                         <h6>
 
-                     Bacolod Branch
+                    <?php
+                      $branch_name = $this->session->userdata('branch_name');
+                      if(!$branch_name){
+                        $branch_n = 'Error';
+                      }else{
+                        $branch_n = $branch_name;
+                      }
+                    ?>
+
+                    <?= $branch_n; ?>
                         </h6>
                        
                       </div>
@@ -208,6 +213,7 @@
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th scope="col">#trans Code</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">Amount</th>
@@ -216,13 +222,40 @@
                       </tr>
                     </thead>
                     <tbody>
-                     <tr>
-                        <th scope="row"><a href="#">BQWE-SEW-QSAD23</a></th>
-                        <td>Henry Tolero</td>
-                        <td>2000</td>
-                        <td>40</td>
-                        <td><span class="badge bg-success">Claimed</span></td>
+
+                    <?php
+                    
+                    $i = 1;
+
+                    foreach ($transactions as $transaction) {?>
+
+                      <tr>
+                          <td><?=$i; ?></td>
+                          <th scope="row"><a href="#"><?=$transaction->transaction_code; ?></a></th>
+                          <td><?=$transaction->customer_name; ?></td>
+                          <td><?=$transaction->amount; ?></td>
+                          <td><?=$transaction->fee; ?></td>
+
+                          <?php
+                          $status = '';
+                          $color = '';
+
+                          if($transaction->status == '0' || $transaction->status == 0){
+                            $status = 'In Progress';
+                            $color = 'warning';
+                          }else{
+                            $status = 'Claimed';
+                            $color = 'success';
+                          }
+
+                          ?>
+                          <td><span class="badge bg-<?=$color; ?>"><?=$status; ?></span></td>
                       </tr>
+
+                  <?php $i++;  }
+                    
+                    ?>
+                    
                     
                     </tbody>
                   </table>
@@ -315,4 +348,7 @@
 
 <script src="<?= base_url();?>assets/admin-assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/lineChart.js"></script>
+
+<script type="text/javascript" src="<?= base_url();?>assets/js/branch-manager/dashboardReports.js"></script>
+
 

@@ -12,7 +12,7 @@ class BranchManagerReportsModel extends CI_Model{
     }
 
     public function branchIncomeToday($employee_id){
-        $query = $this->db->select_sum('td.fee as branch_income')
+        $query = $this->db->select_sum('td.fee','branch_income')
             ->from('transactions t')
             ->join('transaction_details td', 't.transaction_id = td.transaction_id')
             ->join('branches b', 't.branch_id = b.branch_id')
@@ -28,7 +28,7 @@ class BranchManagerReportsModel extends CI_Model{
     }
 
     public function branchIncomeThisMonth($employee_id){
-        $query = $this->db->select_sum('td.fee as branch_income')
+        $query = $this->db->select_sum('td.fee','branch_income')
         ->from('transactions t')
         ->join('transaction_details td', 't.transaction_id = td.transaction_id')
         ->join('branches b', 't.branch_id = b.branch_id')
@@ -44,11 +44,15 @@ class BranchManagerReportsModel extends CI_Model{
         }
     }
 
-    public function branchCustomerToday(){
-        $query = $this->db->select('COUNT(customer_id) as customer_count_today')
-            ->from('customer')
-            ->where('DATE(cust_date)', 'DATE(NOW())', FALSE)
-            ->get();
+    public function branchCustomerToday($employee_id){
+       $query = $this->db->select('COUNT(c.customer_id) AS customer_count')
+        ->from('transactions t')
+        ->join('transaction_details td', 't.transaction_id = td.transaction_id')
+        ->join('branches b', 't.branch_id = b.branch_id')
+        ->join('customer c', 'td.sender_customer_id = c.customer_id')
+        ->where('b.employee_id', 11)
+        ->where('DATE(t.transaction_date)', 'DATE(NOW())', FALSE)
+        ->get();
 
         if($query->num_rows() > 0){
             return $query->row();

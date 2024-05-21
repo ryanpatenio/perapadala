@@ -1,7 +1,11 @@
 $(document).ready(function(){
     const addModal = $('#newRegionModal');
     const editModal = $('#editRegionModal');
-    
+  
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+  
+
         $('#newRegionForm').submit(function(e){
           e.preventDefault();
     

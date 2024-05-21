@@ -1,5 +1,7 @@
 $(document).ready(function () {
     const viewModal = $('#viewEmployeeModal');
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
 
     $(document).on('click','#view_btn',function(e){
         e.preventDefault();

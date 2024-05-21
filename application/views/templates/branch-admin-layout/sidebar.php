@@ -47,7 +47,3 @@
     </ul>
 
   </aside><!-- End Sidebar-->
-
-  <script>
-
-</script>

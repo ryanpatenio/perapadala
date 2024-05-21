@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+
 
     $('#profileAvatarForm').submit(function (e) {
         e.preventDefault();

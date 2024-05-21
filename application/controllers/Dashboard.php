@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller {
          show_404();
 
         }
-        $data['sample'] = 'data';
+        $data['recentTransactionsThisDay'] = $this->AdminReportsModel->recentTransactionThisDay();
 
 
         $this->load->view('templates/admin-layout/header');

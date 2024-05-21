@@ -17,7 +17,8 @@ class BranchAdminController extends CI_Controller{
         #check auth Branch Manager
         $this->auth_library->check_login_USER_BM();
     }
-    
+   
+   
 
     public function render(){
         $page = "index";
@@ -29,7 +30,7 @@ class BranchAdminController extends CI_Controller{
         }
       
 
-        $data['sample'] = 'data';
+        $data['transactions'] = $this->BranchManagerReportsModel->recentTransactionThisDayInThisBranch();
 
 
      $this->load->view('templates/branch-admin-layout/header');
@@ -361,7 +362,7 @@ class BranchAdminController extends CI_Controller{
    }
    
 
-   public function uploadAvatar() {
+    public function uploadAvatar() {
 
         $this->form_validation->set_rules('fname', 'First Name', 'required|alpha');
         $this->form_validation->set_rules('lname', 'Last Name', 'required|alpha');
@@ -419,6 +420,107 @@ class BranchAdminController extends CI_Controller{
     }
 
 
+    ##REPORTS
+    public function incomeThisDay(){
+        #EMPLOYEE ID
+        $employee_id = $this->session->userdata('emp_id');
 
+        if(!$employee_id){
+            $this->response->status('error',500);
+            return;
+        }
+
+        $data = $this->BranchManagerReportsModel->branchIncomeToday($employee_id);
+        if($data !== 2){
+            if($data->branch_income == 'null' || $data->branch_income == null){
+                $this->response->status('no_data',200);
+                return;
+            }
+            echo json_encode($data);
+            
+        }else{
+            #error
+            return $this->response->status('error',500);
+        }
+
+        
+    }
+
+    public function incomeThisMonth(){
+        #EMPLOYEE ID
+        $employee_id = $this->session->userdata('emp_id');
+
+        if(!$employee_id){
+            $this->response->status('error',500);
+            return;
+        }
+
+        $data = $this->BranchManagerReportsModel->branchIncomeThisMonth($employee_id);
+        if($data !== 2){
+            if($data->branch_income == 'null' || $data->branch_income == null){
+                $this->response->status('no_data',200);
+                return;
+            }
+            echo json_encode($data);
+            
+        }else{
+            #error
+            return $this->response->status('error',500);
+        }
+
+        
+    }
+    
+    
+    public function customerCountToday(){
+        #EMPLOYEE ID
+        $employee_id = $this->session->userdata('emp_id');
+
+        if(!$employee_id){
+            $this->response->status('error',500);
+            return;
+        }
+
+        $data = $this->BranchManagerReportsModel->branchCustomerToday($employee_id);
+        if($data !== 2){
+            if($data->customer_count == 'null' || $data->customer_count == null){
+                $this->response->status('no_data',200);
+                return;
+            }
+            echo json_encode($data);
+            
+        }else{
+            #error
+            return $this->response->status('error',500);
+        }
+
+        
+    }
+
+    
+    public function branchEmployeesCount(){
+        #EMPLOYEE ID
+        $employee_id = $this->session->userdata('emp_id');
+
+        if(!$employee_id){
+            $this->response->status('error',500);
+            return;
+        }
+
+        $data = $this->BranchManagerReportsModel->handleBranchPersonnel($employee_id);
+        if($data !== 2){
+            if($data->employee_count == 'null' || $data->employee_count == null){
+                $this->response->status('no_data',200);
+                return;
+            }
+            echo json_encode($data);
+            
+        }else{
+            #error
+            return $this->response->status('error',500);
+        }
+
+        
+    }
 
 }

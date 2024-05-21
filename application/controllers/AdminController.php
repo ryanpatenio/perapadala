@@ -759,4 +759,78 @@ class AdminController extends CI_Controller{
     }
 
 
+    #REPORTS
+    public function incomeThisDay(){
+        $data = $this->AdminReportsModel->incomeThisDay();
+
+        if($data !== 2){
+           if($data->income_this_day == 'null' || $data->income_this_day == null){
+                return $this->response->status('no_income',200);
+           }else{
+                echo json_encode($data);
+           }
+        }else{
+            return $this->response->status('error',500);
+        }
+    }
+
+    public function incomeThisMonth(){
+        $data = $this->AdminReportsModel->incomeThisMonth();
+
+        if($data !== 2){
+           if($data->income_this_month == 'null' || $data->income_this_month == null){
+                return $this->response->status('no_income',200);
+           }else{
+                echo json_encode($data);
+           }
+        }else{
+            return $this->response->status('error',500);
+        }
+    }
+    
+    public function customerCountThisYear(){
+        $data = $this->AdminReportsModel->countOfCustomerThisYear();
+
+        if($data !== 2){
+           if($data->customer_count == 'null' || $data->customer_count == null){
+                return $this->response->status('no_data',200);
+           }else{
+                echo json_encode($data);
+           }
+        }else{
+            return $this->response->status('error',500);
+        }
+    }
+
+    public function employeesCount(){
+        $data = $this->AdminReportsModel->countOfAllEmployees();
+
+        if($data !== 2){
+           if($data->employees_count == 'null' || $data->employees_count == null){
+                return $this->response->status('no_data',200);
+           }else{
+                echo json_encode($data);
+           }
+        }else{
+            return $this->response->status('error',500);
+        }
+    }
+
+   
+    public function branchesCount(){
+        $data = $this->AdminReportsModel->countOfAllBranches();
+
+        if($data !== 2){
+           if($data->branches_count == 'null' || $data->branches_count == null){
+                return $this->response->status('no_data',200);
+           }else{
+                echo json_encode($data);
+           }
+        }else{
+            return $this->response->status('error',500);
+        }
+    }
+    
+
+
 }

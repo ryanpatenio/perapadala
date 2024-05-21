@@ -13,7 +13,7 @@ class AdminReportsModel extends CI_Model{
     }
 
     public function incomeThisDay(){
-        $query = $this->db->select_sum('td.fee as income_this_day')
+        $query = $this->db->select_sum('td.fee','income_this_day')
             ->from('transactions t')
             ->join('transaction_details td', 't.transaction_id = td.transaction_id')
             ->where('DATE(t.transaction_date)', 'DATE(NOW())', FALSE)
@@ -27,7 +27,7 @@ class AdminReportsModel extends CI_Model{
     }
 
     public function incomeThisMonth(){
-        $query = $this->db->select_sum('td.fee as income_this_month')
+        $query = $this->db->select_sum('td.fee','income_this_month')
             ->from('transactions t')
             ->join('transaction_details td', 't.transaction_id = td.transaction_id')
             ->where('MONTH(t.transaction_date)', 'MONTH(CURRENT_DATE())', FALSE)
@@ -57,7 +57,7 @@ class AdminReportsModel extends CI_Model{
             }
     }
     public function countOfAllEmployees(){
-        $query = $this->db->select('COUNT(employee_id) as employee_count')
+        $query = $this->db->select('COUNT(employee_id) as employees_count')
             ->from('employees')
             ->where('employee_status !=', 0)
             ->get();

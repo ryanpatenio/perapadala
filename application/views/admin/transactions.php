@@ -1,5 +1,5 @@
 
-<main id="main" class="main">
+<main id="main" class="main" style="filter: blur(4px);">
     <div class="pageTitle">
       <h1>Transactions</h1>
       <nav>

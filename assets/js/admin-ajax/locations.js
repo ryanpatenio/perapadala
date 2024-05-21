@@ -2,7 +2,8 @@
 $(document).ready(function(){
     const addModal = $('#newLocationModal');
     const editModal = $('#upLocationModal');
-
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
    
 
     $('#newLocationForm').submit(function(e){

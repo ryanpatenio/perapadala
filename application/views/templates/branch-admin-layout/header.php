@@ -32,12 +32,28 @@
 
   <script src="<?= base_url();?>assets/admin-assets/vendor/jquery-min.js"></script>
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin - v2.3.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <style>
+  /* Loader styles */
+#loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000; /* Make sure it's above other elements */
+}
+
+/* Blur effect */
+.blur {
+    filter: blur(5px);
+    pointer-events: none; /* Disable interactions with blurred content */
+}
+
+</style>
 
   <style>
      @media print {
@@ -84,6 +100,10 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center bg-dark">
+
+  <div id="loader" style="display:block">
+      <img src="<?= base_url();?>assets/loader/loader3.gif" alt="Loading...">
+  </div>
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="<?= base_url()?>" class="logo d-flex align-items-center">
@@ -159,7 +179,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="<?= base_url(); ?>branch-My-profile">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>

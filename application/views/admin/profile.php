@@ -1,5 +1,5 @@
 
-<main id="main" class="main">
+<main id="main" class="main" style="filter: blur(4px);">
 
 <?php
       #SET NEED TO SHOW

@@ -2,6 +2,10 @@ $(document).ready(function(){
     const addModal = $('#newBranchModal');
     const editModal = $('#editBranchModal');
   
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+  
+  
     var newOption = $('<option>', {
         value: 'rm',
         text: 'Remove Branch Manager',

@@ -2,7 +2,8 @@ $(document).ready(function () {
     
     const addModal = $('#newUserModal');
     const editModal = $('#editUserModal');
-    
+    $('#main').css('filter', 'none');
+    $('#loader').hide();    
 
     $('#userForm').submit(function (e) {
         e.preventDefault();

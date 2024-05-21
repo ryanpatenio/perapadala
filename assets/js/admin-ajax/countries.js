@@ -3,6 +3,10 @@ $(document).ready(function(){
     const addModal = $('#newCountryModal');
     const editModal = $('#editCountryModal');
   
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+  
+
     $('#countryForm').submit(function(e){
       e.preventDefault();
   

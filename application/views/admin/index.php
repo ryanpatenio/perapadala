@@ -1,5 +1,5 @@
 
-<main id="main" class="main">
+<main id="main" class="main" style="filter: blur(4px);">
 
     <div class="pagetitle">
       <h1>Dashboard</h1>
@@ -45,15 +45,15 @@
                     <div class="ps-3">
 
                    
-                      <h6>
-                      ₱
-                      23903
+                      <h6 id="income-this-day">
+                     
+                      
                       
                       
                
                         
                       </h6>
-                      <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">30% from Last Month</span>
+                      <!-- <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">30% from Last Month</span> -->
 
                     </div>
                   </div>
@@ -75,12 +75,11 @@
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      ₱
+                    ₱
                     </div>
                     <div class="ps-3">
-                      <h6>₱20 000</h6>
-                      <span class="text-success small pt-1 fw-bold">20%</span> <span class="text-muted small pt-2 ps-1">100%</span>
-
+                      <h6 id="income-this-month"></h6>
+                     
                     </div>
                   </div>
                 </div>
@@ -105,15 +104,11 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>
-
-                     23
-
+                      <h6 id="customer-count">
 
 
                       </h6>
-                      <span class="text-success small pt-1 fw-bold">2%</span> <span class="text-muted small pt-2 ps-1">23% From Last Year</span>
-
+                     
                     </div>
                   </div>
 
@@ -134,12 +129,11 @@
                         <i class="bi bi-people"></i>
                       </div>
                       <div class="ps-3">
-                        <h6>
+                        <h6 id="employees-count">
 
-                      1000
+                     
                         </h6>
-                        <span class="text-success small pt-1 fw-bold">2%</span> <span class="text-muted small pt-2 ps-1">23% From Last Year</span>
-
+                      
                       </div>
                     </div>
 
@@ -160,12 +154,11 @@
                         <i class="bi bi-geo-alt"></i>
                       </div>
                       <div class="ps-3">
-                        <h6>
+                        <h6 id="branches-count">
 
-                      1000
+                     
                         </h6>
-                        <span class="text-success small pt-1 fw-bold">2%</span> <span class="text-muted small pt-2 ps-1">23% From Last Year</span>
-
+                       
                       </div>
                     </div>
 
@@ -220,10 +213,11 @@
 
                 <div class="card-body">
                   <h5 class="card-title">Recent Transactions <span>| Today</span></h5>
-
+   
                   <table class="table table-borderless datatable">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th scope="col">#trans Code</th>
                         <th scope="col">Customer Name</th>
                         <th scope="col">Amount</th>
@@ -233,16 +227,38 @@
                       </tr>
                     </thead>
                     <tbody>
-                    
-                      <tr>
-                        <th scope="row"><a href="#">BQQW-SWE-SAS-SADW</a></th>
-                        <th scope="row"><a href="#">Henry Sy</a></th>
-                        <th scope="row"><a href="#">1000</a></th>
-                        <th scope="row"><a href="#">20</a></th>
-                        <th scope="row"><a href="#">Kabankalan</a></th>
-                        <th scope="row"><button class="btn btn-sm btn-success">Claimed</button></th>
+                    <?php
+                      $i = 1;
+                      foreach ($recentTransactionsThisDay as $transaction) { ?>
+                       
+                       <tr>
+                          <td><?=$i; ?></td>
+                          <th scope="row"><a href="#"><?=$transaction->transaction_code; ?></a></th>
+                          <td><?=$transaction->customer_name; ?></td>
+                          <td><?=$transaction->amount; ?></td>
+                          <td><?=$transaction->fee; ?></td>
+                          <td><?=$transaction->branch_name; ?></td>
+
+                          <?php 
+                            $status = '';
+                            $color = '';
+                            if($transaction->status == '0' || $transaction->status == 0){
+                              $status = 'In Progress';
+                              $color = 'warning';
+                            }else{
+                              $status = 'Claimed';
+                              $color = 'success';
+                            }
+
+                          ?>
+                          <td><span class="badge bg-<?=$color; ?>"><?=$status; ?></span></td>
          
-                      </tr>
+                       </tr>
+
+
+                    <?php $i++;  }
+                    ?>
+                     
                      
                     </tbody>
                   </table>
@@ -336,3 +352,5 @@
 <script src="<?= base_url();?>assets/admin-assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/lineChart.js"></script>
 
+<!---REPORTS---->
+<script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/dashboardReports.js"></script>

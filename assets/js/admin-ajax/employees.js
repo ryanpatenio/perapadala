@@ -4,6 +4,8 @@ $(document).ready(function(){
     const viewModal = $('#viewEmployeeModal');
     const assignModal = $('#assignModal');
     const removeModal = $('#removeAssignModal');
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
 
       $('#newEmployeeForm').submit(function(e){
         e.preventDefault();

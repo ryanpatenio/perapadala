@@ -83,6 +83,15 @@ $route['admin-update-customer'] = 'adminController/updateCustomer';
 $route['admin-change-password'] = 'adminController/updatePassword';
 $route['admin-update-profile'] = 'adminController/updateProfile';
 
+
+#REPORTS
+$route['admin-get-income-this-day'] = 'adminController/incomeThisDay';
+$route['admin-get-income-this-month'] = 'adminController/incomeThisMonth';
+$route['admin-get-customer-count-this-year'] = 'adminController/customerCountThisYear';
+$route['admin-get-employees-count'] = 'adminController/employeesCount';
+$route['admin-get-branches-count'] = 'adminController/branchesCount';
+
+
 ##################################end of Admin Routes############################
 
 
@@ -114,6 +123,12 @@ $route['print-me/(:any)'] = 'branchAdminController/printMe/$1';
 #branch Manager Profile
 $route['bm-change-pass'] = 'branchAdminController/changePass';
 $route['bm-avatar-upload'] = 'branchAdminController/uploadAvatar';
+
+##REPORTS
+$route['branch-get-income-this-day'] = 'branchAdminController/incomeThisDay';
+$route['branch-get-income-this-month'] = 'branchAdminController/incomeThisMonth';
+$route['branch-get-customer-count-today'] = 'branchAdminController/customerCountToday';
+$route['branch-get-employees-count'] = 'branchAdminController/branchEmployeesCount';
 #############################end of Branch admin Routes ########################
 
 
@@ -145,6 +160,7 @@ $route['view-transaction'] = 'branchTransactionController/viewTransaction';
 #user Profile
 $route['get-bp-profile'] = 'branchTransactionController/getProfile';
 $route['update-bp-profile'] = 'branchTransactionController/updateProfile';
+
 
 
 ###End of USER ROUTE ###########################

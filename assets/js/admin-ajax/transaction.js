@@ -1,6 +1,9 @@
 $(document).ready(function () {
     const viewModal = $('#viewTransactionModal');
     
+    $('#main').css('filter', 'none');
+    $('#loader').hide(); 
+
     $(document).on('click','#view_btn',function(e){
         e.preventDefault();
 

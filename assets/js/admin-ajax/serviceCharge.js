@@ -3,6 +3,10 @@ $(document).ready(function () {
     const addModal = $('#serviceChargeModal');
     const editModal = $('#upServiceChargeModal');
 
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
+
+    
     $('#serviceChargeForm').submit(function (e) {
         e.preventDefault();
         

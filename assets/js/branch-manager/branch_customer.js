@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
     const editModal = $('#editCustomerModal');
+
+    $('#main').css('filter', 'none');
+    $('#loader').hide();
     
     $(document).on('click','#edit_customer_btn',function(e){
         e.preventDefault();
