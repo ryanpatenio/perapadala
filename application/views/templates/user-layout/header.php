@@ -118,7 +118,7 @@
                 <a class="btn btn-danger rounded-pill px-3 mb-2 mb-lg-0" href="<?=base_url();?>sendTransaction">Send Money</a>
             </li>
             <li class="nav-item px-1">
-                <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" href="<?=base_url();?>branchTransaction">All Transaction</a>
+                <a class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" href="<?=base_url();?>branchTransaction">My Transaction</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle keep-open" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
