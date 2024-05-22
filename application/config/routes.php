@@ -91,6 +91,9 @@ $route['admin-get-customer-count-this-year'] = 'adminController/customerCountThi
 $route['admin-get-employees-count'] = 'adminController/employeesCount';
 $route['admin-get-branches-count'] = 'adminController/branchesCount';
 
+#CHARTS
+$route['admin-get-chart'] = 'adminController/getCharts';
+
 
 ##################################end of Admin Routes############################
 
@@ -129,6 +132,10 @@ $route['branch-get-income-this-day'] = 'branchAdminController/incomeThisDay';
 $route['branch-get-income-this-month'] = 'branchAdminController/incomeThisMonth';
 $route['branch-get-customer-count-today'] = 'branchAdminController/customerCountToday';
 $route['branch-get-employees-count'] = 'branchAdminController/branchEmployeesCount';
+
+
+##CHARTS
+$route['branch-get-chart'] = 'branchAdminController/getChartsReport';
 #############################end of Branch admin Routes ########################
 
 

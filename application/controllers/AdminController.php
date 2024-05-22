@@ -832,5 +832,12 @@ class AdminController extends CI_Controller{
     }
     
 
+    #CHARTS
+    public function getCharts(){
+        $data = $this->AdminReportsModel->graphReports();
+
+        echo json_encode($data);
+    }
+
 
 }

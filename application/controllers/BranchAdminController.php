@@ -22,7 +22,7 @@ class BranchAdminController extends CI_Controller{
 
     public function render(){
         $page = "index";
-
+        $employee_id = $this->session->userdata('emp_id');
         
         if(!file_exists(APPPATH.'views/branch-admin/'.$page.'.php')){
          show_404();
@@ -30,7 +30,7 @@ class BranchAdminController extends CI_Controller{
         }
       
 
-        $data['transactions'] = $this->BranchManagerReportsModel->recentTransactionThisDayInThisBranch();
+        $data['transactions'] = $this->BranchManagerReportsModel->recentTransactionThisDayInThisBranch($employee_id);
 
 
      $this->load->view('templates/branch-admin-layout/header');
@@ -521,6 +521,21 @@ class BranchAdminController extends CI_Controller{
         }
 
         
+    }
+
+    ##CHARTS
+    public function getChartsReport(){
+        #ID
+        $employee_id = $this->session->userdata('emp_id');
+        #DATA
+        $data = $this->BranchManagerReportsModel->graphReportInThisBranch($employee_id);
+        if(!$employee_id){
+            $this->response->status('error',500);
+            return;
+        }
+
+        echo json_encode($data);
+
     }
 
 }

@@ -183,7 +183,7 @@
                 </div>
 
                 <div class="card-body">
-                  <h5 class="card-title">Reports <span></span></h5>
+                  <h5 class="card-title">Reports <span>| This Year</span></h5>
 
                   <!-- Line Chart -->
                   <div id="reportsChart"></div>
@@ -281,76 +281,14 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  <script>
-
- 
-
-
-
-                    // document.addEventListener("DOMContentLoaded", () => {
-                    //   new ApexCharts(document.querySelector("#reportsChart"), {
-                    //     series: [{
-                        //   name: 'Sales',
-                        //   data: [31, 40, 28, 51, 42, 82, 56],
-                        // }, {
-           //                name: 'Revenue',
-           //                data: [11, 32, 45, 32, 34, 52, 41]
-           //              }, {
-           //                name: 'Customers',
-           //                data: [15, 11, 32, 18, 9, 24, 11]
-           //              }],
-           //              chart: {
-           //                height: 350,
-           //                type: 'area',
-           //                toolbar: {
-           //                  show: false
-           //                },
-           //              },
-           //              markers: {
-           //                size: 5
-           //              },
-           //              colors: ['#4154f1', '#2eca6a', '#ff771d'],
-           //              fill: {
-           //                type: "gradient",
-           //                gradient: {
-           //                  shadeIntensity: 1,
-           //                  opacityFrom: 0.3,
-           //                  opacityTo: 0.4,
-           //                  stops: [0, 90, 100]
-           //                }
-           //              },
-           //              dataLabels: {
-           //                enabled: false
-           //              },
-           //              stroke: {
-           //                curve: 'smooth',
-           //                width: 2
-           //              },
-           //              xaxis: {
-           //                type: 'datetime',//lower date
-           //                categories: ["2016-09-19T00:00:00.000Z", "2017-09-19T01:30:00.000Z", "2019-09-19T02:30:00.000Z", "2020-09-19T03:30:00.000Z", "2021-09-19T04:30:00.000Z", "2022-09-19T05:30:00.000Z"]
-           //              },
-           //              tooltip: {
-           //                x: {
-           //                  format: 'dd/MM/yy HH:mm'
-           //                },
-           //              }
-           //            }).render();
-           //          });
-         
-           // var chart = new ApexCharts(document.querySelector(apexChart));
-           //  chart.render();
-                  </script>
-                  <!-- End Line Chart -->
-
-
+  
 <!----------for notification script--------------->
 
 <!-----checking if the user is ADMIN OR Staff to include the apex chart-->
 
 
 <script src="<?= base_url();?>assets/admin-assets/vendor/apexcharts/apexcharts.min.js"></script>
-<script type="text/javascript" src="<?= base_url();?>assets/admin-assets/lineChart.js"></script>
+
 
 <!---REPORTS---->
 <script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/dashboardReports.js"></script>

@@ -161,3 +161,107 @@ const branchEmployees = () => {
     });
 }
 
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const apexChart = "#reportsChart";
+
+    // Initial chart options
+    var options = {
+        series: [{
+            name: 'Income',
+            data: []
+        }, {
+            name: 'Customers',
+            data: []
+        }],
+        chart: {
+            height: 350,
+            type: 'area',
+            toolbar: {
+                show: false
+            },
+        },
+        markers: {
+            size: 5
+        },
+        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+        fill: {
+            type: "gradient",
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.3,
+                opacityTo: 0.4,
+                stops: [0, 90, 100]
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 2
+        },
+        xaxis: {
+            type: 'date',
+            categories: []  // Initially empty, will be updated with data
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy'
+            },
+        }
+    };
+
+    // Create the chart
+    var chart = new ApexCharts(document.querySelector(apexChart), options);
+    chart.render();
+
+    // Function to fetch data and update the chart
+    function getGraph() {
+        $.ajax({
+            url: 'branch-get-chart', // Adjust this URL if necessary
+            type: 'GET',
+            dataType: 'json',
+           
+            success: function (response) {
+                //res(response)
+                const revenue = [];
+                const customer = [];
+                const dates = [];
+
+                $.each(response, function(i, item) {
+                    revenue.push(item.income);
+                    customer.push(item.customer_count);
+                    dates.push(item.year);
+                });
+
+                // Update chart series
+                chart.updateSeries([{
+                    name: 'Income',
+                    data: revenue
+                }, {
+                    name: 'Customers',
+                    data: customer
+                }]);
+
+                // Update chart x-axis
+                chart.updateOptions({
+                    xaxis: {
+                        categories: dates
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    // Initial call to fetch and display data
+    getGraph();
+
+    setInterval(() => {
+        getGraph(); 
+    }, 10000);
+});
