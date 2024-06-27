@@ -12,7 +12,7 @@ $(document).ready(function () {
                 // res(resp)
                 modalClose(logoutModal);
                 if (resp.message == 'success') {
-                    msgThenRedirect('Logout Successfully!', 'success','/perapadala/admin-login');
+                    Redirect('/perapadala/admin-login','attempting to logout...');
                }
             },
             error: function (xhr, status, error) {

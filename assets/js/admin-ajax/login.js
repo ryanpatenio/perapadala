@@ -15,11 +15,12 @@ $(document).ready(function () {
             beforeSend: function () {              
                 // For example, you can disable form inputs
                 $('#masterForm :input').prop('disabled', true);
+                $('#master_login_btn').prop('disabled', true);
             },
             success: function (resp) {
                // res(resp);
                 if (resp.message == 'success') {
-                    msgThenRedirect('Login Successfully!', 'success', 'admin');
+                   Redirect('admin','Attempting to login...');
                 }
             },
             error: function (xhr, status, error) {
@@ -35,6 +36,7 @@ $(document).ready(function () {
             complete: function () {
                 // Re-enable UI elements after processing
                 $('#masterForm :input').prop('disabled', false);
+                $('#master_login_btn').prop('disabled', false);
             }
         });
     });

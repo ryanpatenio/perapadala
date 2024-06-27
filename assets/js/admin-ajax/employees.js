@@ -7,6 +7,8 @@ $(document).ready(function(){
     $('#main').css('filter', 'none');
     $('#loader').hide();
 
+
+    //add Form
       $('#newEmployeeForm').submit(function(e){
         e.preventDefault();
 
@@ -18,16 +20,25 @@ $(document).ready(function(){
           data:formData,
           dataType:'json',
 
+          beforeSend:function(){
+            logs(true);
+          },
+
           success:function(response){
              //res(response)
+             $('#loader').hide();
             formModalClose(addModal,$('#newEmployeeForm'));
 
             if(response.message == 'success'){
               message('New Employee added Successfully!','success');
             }
           },
+          complete:function(){
+            logs(false);
+          },
 
           error:function(xhr,status,error){
+
             res(xhr.responseText);
             if(xhr.responseJSON.message == 'email_exist'){
               msg('Email is already Exist','info');
@@ -46,7 +57,10 @@ $(document).ready(function(){
 
       });
 
+      //End of Add FORM
 
+
+      //Edit FORM
       $(document).on('click','#edit_btn',function(e){
         e.preventDefault()
 
@@ -59,6 +73,11 @@ $(document).ready(function(){
           method:'post',
           data:{id:id},
           dataType:'json',
+
+          beforeSend:function(){
+            logs(true);
+            loader(true);
+          },
 
           success:function(data){
             $('#e-id').val(data.employee_id);
@@ -83,8 +102,13 @@ $(document).ready(function(){
 
           },
 
+          complete:function(){
+            logs(false);
+            loader(false);
+          },
+
           error:function(xhr,status,error){
-            
+            loader(false);
             res(xhr.responseText);
             if(xhr.status == 400){
               msg('Oops! unexpected Error return ID null','error');
@@ -100,6 +124,11 @@ $(document).ready(function(){
      
       });
 
+      //END of EDIT FORM
+
+
+
+      //UPDATE FORM
       $('#updateForm').submit(function(e){
         e.preventDefault();
         const formData = $(this).serialize();
@@ -119,12 +148,19 @@ $(document).ready(function(){
                 data:formData,
                 dataType:'json',
 
+                beforeSend:function(){
+                  logs(true);
+                },
+
                 success:function(response){
                  // res(response)
                   formModalClose(editModal,$('#updateForm'));
                   if(response.message == 'success'){
                     message('Employee Updated Successfully!','success');
                   }
+                },
+                complete:function(){
+                  logs(false);
                 },
 
                 error:function(xhr,status,error){
@@ -157,10 +193,12 @@ $(document).ready(function(){
           }
         });
 
-        
-
       });
+
+      //END OF UPDATE FORM
       
+
+      //ASSIGN BUTTON TO RETRIEVE DATA
       $(document).on('click','#assign-btn',function(e){
         e.preventDefault();
         const id = $(this).attr('data-id');       
@@ -172,6 +210,11 @@ $(document).ready(function(){
           method:'post',
           data:{id:id},
           dataType:'json',
+
+          beforeSend:function(){
+            logs(true);
+            loader(true);
+          },
 
           success:function(data){
            // res(data)
@@ -204,19 +247,28 @@ $(document).ready(function(){
               $('#branch').append('<option value="' + branches.branch_id + '">' + branches.branch_name + '</option>');
           }
 
-             
+          assignModal.modal('show');
             
+          },
+
+          complete:function(){
+            logs(false);
+            loader(false);
           },
 
           error:function(xhr,status,error){
             res(xhr.responseText);
+            loader(false);
           }
 
         });
-        assignModal.modal('show');
+       
 
       });
 
+      //END OF ASSIGN BUTTON TO RETRIEVE DATA
+
+      //ASSIGN FORM
       $('#assignForm').submit(function(e){
         e.preventDefault();
 
@@ -237,12 +289,20 @@ $(document).ready(function(){
                 data:formData,
                 dataType:'json',
 
+                beforeSend:function(){
+                  logs(true);
+                },
+
                 success:function(resp){
                   //res(resp);
                   formModalClose(assignModal,$('#assignForm'));
                   if(resp.message == 'success'){
                     message('The employee has been successfully assigned to the branches','success');
                   }
+                },
+
+                complete:function(){
+                  logs(false);
                 },
 
                 error:function(xhr,status,error){
@@ -263,6 +323,9 @@ $(document).ready(function(){
 
       });
 
+      //END OF ASSIGN FORM
+
+      //REMOVE BTN
       $(document).on('click','#remove-btn',function(e){
           e.preventDefault();
 
@@ -273,6 +336,11 @@ $(document).ready(function(){
                   method:'post',
                   data:{id:id},
                   dataType:'json',
+
+                  beforeSend:function(){
+                    logs(true);
+                    loader(true);
+                  },
 
                   success:function(data){
                     //res(data);
@@ -285,14 +353,24 @@ $(document).ready(function(){
                     $('#branch-id').val(data.branch_id);
                     removeModal.modal('show');
                   },
+
+                  complete:function(){
+                    logs(false);
+                    loader(false);
+                  },
+
                   error:function(xhr,status,error){
                     res(xhr.responseText);
+                    loader(false);
                   }
 
           });        
               
       });
 
+      //END OF REMOVE BTN
+
+      //REMOVE EMPLOYEE FORM
       $('#removeEmployeeForm').submit(function(e){
         e.preventDefault();
 
@@ -313,12 +391,19 @@ $(document).ready(function(){
                     data:formData,
                     dataType:'json',
 
+                    beforeSend:function(){
+                      logs(true);
+                    },
+
                     success:function(resp){
                       //res(resp)
                       formModalClose(removeModal,$('#removeEmployeeForm'));
                       if(resp.message == 'success'){
                         message('Employee Assigned Branches was successfully remove','success');
                       }
+                    },
+                    complete:function(){
+                      logs(false);
                     },
 
                     error:function(xhr,status,error){
@@ -339,7 +424,10 @@ $(document).ready(function(){
 
       });
 
+      //END OF REMOVE EMPLOYEE FORM
 
+
+      //VIEW BTN
       $(document).on('click','#viewBtn',function(e){
         e.preventDefault()
         resetForm($('#viewForm'));
@@ -350,6 +438,11 @@ $(document).ready(function(){
           method:'post',
           data:{id:id},
           dataType:'json',
+
+          beforeSend:function(){
+            logs(true);
+            loader(true);
+          },
 
           success:function(data){
             
@@ -368,8 +461,13 @@ $(document).ready(function(){
             $('#viewEmployeeModal').modal('show');
            
           },
+          complete:function(){
+            logs(false);
+            loader(false);
+          },
 
           error:function(xhr,status,error){
+            loader(false);
             res(xhr.responseText);
             if(xhr.status == 500){
               msg('Oops! unexpected Internal Server Error!','error');
@@ -385,3 +483,4 @@ $(document).ready(function(){
       
 
     });
+//END OF VIEW BTN

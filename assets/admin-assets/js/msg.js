@@ -14,6 +14,38 @@ function message($text='',$msg_type=''){
 
         });
  }
+ function logs(_logs){
+  _logs == false;
+
+  if(_logs === true){
+    console.log('Sending Request to API...');
+  }else{
+    console.log('Request Completed...');
+  }
+
+ }
+
+ function loader(_status){
+  _status == false;
+
+  if(_status === true){
+    $('#loader').show();
+  }else{
+    $('#loader').hide();
+  }
+ }
+
+ function Redirect(_url,_logs){
+
+  console.log(_logs);
+
+    setTimeout(function() {
+      // Delay 1 second to proceed
+      window.location.href = _url;
+
+    }, 1000);
+  
+ }
 
 
 function msg($text='',$msg_type=''){
